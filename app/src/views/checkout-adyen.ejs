@@ -1,0 +1,101 @@
+<script src="https://checkoutshopper-live.adyen.com/checkoutshopper/sdk/3.15.1/adyen.js"
+  integrity="sha384-18bB9irNIu0hQBFN+kxYgjeiMARTx7ukMoeFWLw/Autuyi+w0S9nXsf5Fn/VwmI+" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://checkoutshopper-live.adyen.com/checkoutshopper/sdk/3.15.1/adyen.css"
+  integrity="sha384-4ppagynsoxB4LNdDTdpX1No72EGOMm13+Y89hg+nz+dAIAWchOBTEnLL7u/hi6eM" crossorigin="anonymous" />
+<script>
+  async function initCheckout() {
+    try {
+      const paymentMethodsResponse = await callServer("/api/getPaymentMethods");
+
+      const configuration = {
+        paymentMethodsResponse: paymentMethodsResponse,
+        clientKey: "<%= process.env.ADYEN_CLIENT_KEY %>",
+        locale: "en-GB",
+        environment: "test",
+        onSubmit: (state, component) => {
+          if (state.isValid) {
+            handleSubmission(state, component, "/api/initiatePayment");
+          }
+        },
+        onAdditionalDetails: (state, component) => {
+          handleSubmission(state, component, "/api/submitAdditionalDetails");
+        },
+        paymentMethodsConfiguration: {
+          card: {
+            hasHolderName: true,
+            holderNameRequired: true,
+            enableStoreDetails: true,
+            hideCVC: false,
+            name: 'Credit or debit card'
+          }
+        }
+      };
+      const checkout = new AdyenCheckout(configuration);
+      checkout.create('dropin').mount(document.getElementById('dropin'));
+    } catch (error) {
+      console.error(error);
+      alert("Error occurred. Look at console for details");
+    }
+  }
+
+  async function handleSubmission(state, component, url) {
+    state.data.userId = "<%= subscribeRequest.userId %>";
+    state.data.productId = "<%= subscribeRequest.productId %>";
+    state.data.subscriptionName = "<%= subscriptionName %>";
+    state.data.returnUrl = "/"
+    try {
+      const res = await callServer(url, state.data);
+      handleServerResponse(res, component);
+    } catch (error) {
+      console.error(error);
+      alert("Error occurred. Look at console for details");
+    }
+  }
+
+  // Calls your server endpoints
+  async function callServer(url, data) {
+    const res = await fetch(url, {
+      method: "POST",
+      body: data ? JSON.stringify(data) : "",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    return await res.json();
+  }
+
+  // Handles responses sent from your server to the client
+  function handleServerResponse(res, component) {
+    let checkoutUrl = window.location.pathname + window.location.search
+
+    if (res.action) {
+      component.handleAction(res.action);
+    } else {
+      switch (res.resultCode) {
+        case "Authorised":
+          window.location.href = "/success";
+          break;
+        case "Pending":
+        case "Received":
+          window.location.href = "/pending";
+          break;
+        default:
+          window.location.href = `/fail?checkoutUrl=${checkoutUrl}`;
+          break;
+      }
+    }
+  }
+
+  initCheckout();
+
+</script>
+
+<h1>Checkout</h1>
+<div id="payment-page">
+  <div class="container">
+    <div class="payment-container">
+      <div id=dropin class="payment"></div>
+    </div>
+  </div>
+</div>

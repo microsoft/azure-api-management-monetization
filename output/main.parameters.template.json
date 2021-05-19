@@ -1,0 +1,57 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "apimServiceName": {
+            "value": ""
+        },
+        "apimPublisherEmail": {
+            "value": ""
+        },
+        "apimPublisherName": {
+            "value": ""
+        },
+        "appServiceHostingPlanName": {
+            "value": ""
+        },
+        "appServiceName": {
+            "value": ""
+        },
+        "servicePrincipalClientId": {
+            "value": "" // The client ID of the service principal that the web app uses to manage APIM
+        },
+        "servicePrincipalClientSecret": {
+            "value": "" // The client secret for the service principal
+        },
+        "servicePrincipalObjectId": {
+            "value": "" // THe object ID for the service principal
+        },
+        "servicePrincipalTenantId": {
+            "value": "" // The ID of the tenant that the service principal resides in
+        },
+        "paymentProvider":{
+            "value": "Stripe" // Value should be Adyen or Stripe
+        },
+        "stripeApiKey": {
+            "value": "" // Required if using Stripe
+        },
+        "stripePublicKey": {
+            "value": "" // Required if using Stripe
+        },
+        "checkoutSuccessfulUrl": {
+            "value": ""
+        },
+        "checkoutCancelledUrl": {
+            "value": ""
+        },
+        "adyenApiKey": {
+            "value": "" // Required if using Adyen
+        },
+        "adyenClientKey": {
+            "value": "" // Required if using Adyen
+        },
+        "adyenMerchantAccount":{
+            "value": "" // Required if using Adyen
+        }
+    }
+}

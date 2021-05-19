@@ -1,0 +1,16 @@
+<h1>Subscribe</h1>
+
+<div>Product: <%= product.name %> </div>
+
+<form action="/subscribe" method="post">
+    <label for="subscriptionName">Subscription name</label>
+    <input id="subscriptionName" name="subscriptionName" type="text"/>
+    <input type="submit" value="Checkout">
+    <input type="hidden" name="operation" value="<%= subscribeRequest.operation %>"/>
+    <input type="hidden" name="returnUrl" value="<%= subscribeRequest.returnUrl %>"/>
+    <input type="hidden" name="productId" value="<%= subscribeRequest.productId %>"/>
+    <input type="hidden" name="subscriptionId" value="<%= subscribeRequest.subscriptionId %>"/>
+    <input type="hidden" name="userId" value="<%= subscribeRequest.userId %>"/>
+    <input type="hidden" name="salt" value="<%= subscribeRequest.salt %>"/>
+    <input type="hidden" name="sig" value="<%= subscribeRequest.sig %>"/>
+</form>

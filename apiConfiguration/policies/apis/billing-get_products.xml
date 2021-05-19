@@ -1,0 +1,19 @@
+<policies>
+    <inbound>
+        <base />
+        <set-backend-service base-url="https://management.azure.com/subscriptions/{{subscriptionId}}/resourceGroups/{{resourceGroupName}}/providers/Microsoft.ApiManagement/service/{{apimServiceName}}" />
+        <set-query-parameter name="api-version" exists-action="override">
+            <value>2019-12-01</value>
+        </set-query-parameter>
+        <authentication-managed-identity resource="https://management.azure.com/" />
+    </inbound>
+    <backend>
+        <base />
+    </backend>
+    <outbound>
+        <base />
+    </outbound>
+    <on-error>
+        <base />
+    </on-error>
+</policies>

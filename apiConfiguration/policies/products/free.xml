@@ -1,0 +1,15 @@
+<policies>
+  <inbound>
+    <base />
+    <quota calls="100" renewal-period="2592000" />
+  </inbound>
+  <backend>
+    <base />
+  </backend>
+  <outbound>
+    <base />
+  </outbound>
+  <on-error>
+    <base />
+  </on-error>
+</policies>

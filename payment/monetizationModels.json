@@ -1,0 +1,104 @@
+[
+    {
+        "id": "payg",
+        "pricingModelType": "Metered",
+        "recurring": {
+            "interval": "month",
+            "intervalCount": 1
+        },
+        "prices": {
+            "metered": {
+                "currency": "usd",
+                "unitAmount": 15
+            }
+        }
+    },
+    {
+        "id": "developer",
+        "pricingModelType": "Freemium",
+        "recurring": {
+            "interval": "month",
+            "intervalCount": 1
+        },   
+        "prices": {
+            "unit": {
+                "currency": "usd",
+                "unitAmount": 0,       
+                "quota": 1
+            },
+            "metered": {
+                "currency": "usd",
+                "unitAmount": 20
+            }
+        }
+    },
+    {
+        "id": "basic",
+        "pricingModelType": "Tier",
+        "recurring": {
+            "interval": "month",
+            "intervalCount": 1
+        },
+        "prices": {
+            "unit": {
+                "currency": "usd",
+                "unitAmount": 1495,
+                "quota": 500
+            }
+        }
+    },
+    {
+        "id": "standard",
+        "pricingModelType": "TierWithOverage",
+        "recurring": {
+            "interval": "month",
+            "intervalCount": 1
+        },
+        "prices": {
+            "unit": {
+                "currency": "usd",
+                "unitAmount": 8995,
+                "quota": 1000
+            },
+            "metered": {
+                "currency": "usd",
+                "unitAmount": 10
+            }
+        }
+    },
+    {
+        "id": "pro",
+        "pricingModelType": "TierWithOverage",
+        "recurring": {
+            "interval": "month",
+            "intervalCount": 1
+        },
+        "prices": {
+            "unit": {
+                "currency": "usd",
+                "unitAmount": 44900,
+                "quota": 5000,
+                "maxUnits": 1
+            },
+            "metered": {
+                "currency": "usd",
+                "unitAmount": 6
+            }
+        }
+    },
+    {
+        "id": "enterprise",
+        "pricingModelType": "Unit",
+        "recurring": {
+            "interval": "month",
+            "intervalCount": 1
+        },
+        "prices": {
+            "unit": {
+                "currency": "usd",
+                "unitAmount": 74900,
+                "quota": 15000
+            }
+        }
+    }
+]

@@ -1,0 +1,109 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Billing API
+  license:
+    name: Microsoft
+paths:
+  '/monetizationModels':
+    get:
+      summary: Gets a list of monetization models for products
+      operationId: get_monetization_models
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                   type: array
+                   items:
+                    $ref: "#/components/schemas/monetizationModel"
+  '/products':
+    get:
+      summary: Gets a list of APIM products
+      operationId: get_products
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                   type: array
+                   items:
+                    $ref: "#/components/schemas/product"
+components:
+  schemas:
+    product:
+      type: object
+      properties:
+        name:
+          type: string
+        properties:
+          type: object
+          properties:
+            displayName:
+              type: string
+            description:
+              type: string
+            additionalProperties: true
+        additionalProperties: true
+        
+    monetizationModel:
+      type: object
+      properties:
+        id:
+          type: string
+          example: standard
+        pricingModelType:
+          type: string
+          enum:
+            - Metered
+            - UnitAndMeteredOverage
+            - Unit
+          example: UnitAndMeteredOverage
+        recurring:
+          type: object
+          properties:
+            interval:
+              type: string
+              enum:
+                - day
+                - month
+                - year
+              example: month
+            intervalCount:
+              type: integer
+              example: 1
+        prices:
+          type: object
+          properties:
+            unit:
+              type: object
+              properties:
+                currency:
+                  type: string
+                  example: usd
+                unitAmount:
+                  type: number
+                  example: 89.95
+                quota:
+                  type: integer
+                  example: 50000
+                maxUnits:
+                  type: integer
+                  example: 1
+            metered:
+              type: object
+              properties:
+                currency:
+                  type: string
+                  example: usd
+                unitAmount:
+                  type: number
+                  example: 0.00095

@@ -1,0 +1,37 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Address API
+  license:
+    name: Microsoft
+paths:
+  '/address/validate':
+    post:
+      summary: Validate Address
+      operationId: validate_address
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addressValidateRequest'
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/addressValidateResponse'
+components:
+  schemas:
+    addressValidateRequest:
+      type: object
+      properties:
+        address:
+          type: string
+          example: "One Microsoft Way, Redmond, WA 98052, United States"
+    addressValidateResponse:
+      type: object
+      properties:
+        valid:
+          type: boolean
+          example: true

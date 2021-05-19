@@ -1,0 +1,25 @@
+<policies>
+    <inbound>
+        <base />
+         <send-request mode="new" response-variable-name="monetizationModels" timeout="20" ignore-error="true">
+            <set-url>{{monetizationModelsUrl}}</set-url>
+            <set-method>GET</set-method>
+        </send-request>
+        <return-response>
+            <set-status code="200"/>
+            <set-header name="Content-Type" exists-action="override">
+                <value>application/json</value>
+            </set-header>
+            <set-body>@(((IResponse)context.Variables["monetizationModels"]).Body.As<string>())</set-body>
+        </return-response>
+    </inbound>
+    <backend>
+        <base />
+    </backend>
+    <outbound>
+        <base />
+    </outbound>
+    <on-error>
+        <base />
+    </on-error>
+</policies>
