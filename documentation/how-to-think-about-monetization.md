@@ -96,10 +96,7 @@ Choose an appropriate solution to collect payment for usage of your APIs.  Provi
 - Payment platforms (e.g. Stripe) - calculate the payment based on the raw API usage metrics by applying the specific revenue model that the customer has chosen.  Therefore, the payment platform needs to be configured to reflect your monetisation strategy.
 - Payment providers (e.g. Adyen) - are only concerned with the facilitating the payment transaction.  Therefore, you will need to apply your monetisation strategy (i.e. translate API usage metrics into a payment) prior to calling this service.
 
-Use Microsoft's Azure API Management (APIM) to accelerate and de-risk the implementation by using built-in capabilities provided in APIM to implement the monetisation strategy as follows:
-
-- APIM Products - package up the underlying APIs so that the offerings available to API consumers align one-to-one with the revenue model;
-- APIM Policies - implement the quality of service aspects of the revenue model by controlling usage levels for each product.
+Use Microsoft's Azure API Management (APIM) to accelerate and de-risk the implementation by using built-in capabilities provided in APIM.  See [link]() for more details about the specific features in APIM that can be leveraged to support implementation.
 
 Building on the example above, the customer stages could be implemented in APIM as follows: 
 
@@ -113,11 +110,9 @@ Building on the example above, the customer stages could be implemented in APIM 
 | Scale                    | Pro                          | Tier + Overage     | No quota set - Consumer can continue to make & pay for additional calls, rate limit of 1,200 calls / minute |
 | Global growth            | Enterprise                   | Unit               | No quota set - Consumer can continue to make & pay for additional calls, rate limit of 3,500 calls / minute |
 
-Use the APIM Developer Portal to launch your API and support onboarding API consumers.  Here you can make use of delegation feature to hand off identity management to other platforms.
-
-Use APIM's built-in analytics to gain insights about the usage and performance of your APIs.  Regularly monitor how your API is being consumed to enable you to make evidence based decisions. For example, if evidence shows you are churning customers, you should repeat steps 1 to 5 above to uncover the source and make changes accordingly to address it.
-
 Use the sample projects to build flexibility into how you codify your monetization strategy into systems to enable you respond dynamically and to make minimise the risk and cost of making changes.
+
+Regularly monitor how your API is being consumed to enable you to make evidence based decisions. For example, if evidence shows you are churning customers, you should repeat steps 1 to 5 above to uncover the source and make changes accordingly to address it.
 
 ## Ongoing evolution
 
