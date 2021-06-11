@@ -81,6 +81,33 @@ The objective is to maximise the lifetime value (LTV) that you generate from eac
 - Keep the revenue model as simple as possible by balancing the need to provide choice with the risk of overwhelming customers with a confusing array of options. Keep the number of dimensions used to differentiate across the revenue model tiers as few as possible.
 - Be transparent by providing clear documentation about the different options and giving your customers tools to help choose the revenue model that best suits their needs.
 
+For example, to support the customer stages above, we would need six types of subscription:
+
+- `Free` - enables the API Consumer to trial the API in an obligation and cost free way, to determine whether it fulfils a use case. This removes all barriers to entry.
+- `Freemium` - allows the API Consumer to use the API for free, but to transition into a paid for service as demand increases.
+- `Metered` - the API Consumer can make as many calls as they want per month, and will pay a fixed amount per call.
+- `Tier` - the API Consumer pays for a set amount of calls per month, and if they exceed this limit they pay an overage amount per additional call. If they regularly incur overage, they have the option to upgrade to the next tier.
+- `Tier + Overage` - the API Consumer pays for a set amount of calls per month, and if they exceed this limit they pay a set amount per additional call.
+- `Unit` - the API Consumer pays for a set amount of call per month. If they exceed this limit they have to pay for another unit of calls.
+
+These are modelled in the sample project and are applied to the customer stages identified above as follows:
+
+| Customer Lifecycle Stage | Revenue model (APIM Product) | Subscription type  | Quality of Service (APIM Product Policies)                                                                  |
+|--------------------------|------------------------------|--------------------|-------------------------------------------------------------------------------------------------------------|
+| Investigation            | Free                         | Free               | Quota set to limit the Consumer to 100 calls / month                                                        |
+| Implementation           | Developer                    | Freemium           | No quota set - Consumer can continue to make & pay for calls, rate limit of 100 calls / minute              |
+| Preview                  | PAYG                         | Metered            | No quota set - Consumer can continue to make & pay for calls, rate limit of 200 calls / minute              |
+| Initial production usage | Basic                        | Tier               | Quota set to limit the Consumer to 50,000 calls / month, rate limit of 100 calls / minute                   |
+| Initial growth           | Standard                     | Tier + Overage     | No quota set - Consumer can continue to make & pay for additional calls, rate limit of 100 calls / minute   |
+| Scale                    | Pro                          | Tier + Overage     | No quota set - Consumer can continue to make & pay for additional calls, rate limit of 1,200 calls / minute |
+| Global growth            | Enterprise                   | Unit               | No quota set - Consumer can continue to make & pay for additional calls, rate limit of 3,500 calls / minute |
+
+An example of `Tier` pricing is the Basic product, in which a consumer pays $14.95 / month and can make up to 50,000 calls.
+
+An example of `Metered` pricing is the PAYG product, in which consumers are charged a flat rate of $0.15 / 100 calls. 
+
+An example of `Tier + Overage` pricing is the Standard product, in which consumers are charged $89.95 / month for 100,000 calls. And are charged an additional $0.10 / 100 additional calls.
+
 ### Step 5 - calibrate
 
 Calibrate the pricing across the revenue model to:
@@ -96,21 +123,13 @@ Choose an appropriate solution to collect payment for usage of your APIs.  Provi
 - Payment platforms (e.g. Stripe) - calculate the payment based on the raw API usage metrics by applying the specific revenue model that the customer has chosen.  Therefore, the payment platform needs to be configured to reflect your monetisation strategy.
 - Payment providers (e.g. Adyen) - are only concerned with the facilitating the payment transaction.  Therefore, you will need to apply your monetisation strategy (i.e. translate API usage metrics into a payment) prior to calling this service.
 
-Use Microsoft's Azure API Management (APIM) to accelerate and de-risk the implementation by using built-in capabilities provided in APIM.  See [link]() for more details about the specific features in APIM that can be leveraged to support implementation.
+Use Microsoft's Azure API Management (APIM) to accelerate and de-risk the implementation by using built-in capabilities provided in APIM.  See [How APIM supports monetization](how-APIM-supports-monetisation.md) for more details about the specific features in APIM that can be leveraged to support implementation.
 
-Building on the example above, the customer stages could be implemented in APIM as follows: 
+Use the same approach as the sample project to implement a solution that builds flexibility into how you codify your monetization strategy in the underlying systems.  This will enable you to respond dynamically and to make minimise the risk and cost of making changes.
 
-| Customer Lifecycle Stage | Revenue Model (APIM Product) | Monetization Model | Quality of Service (APIM Product Policies)                                                                  |
-|--------------------------|------------------------------|--------------------|-------------------------------------------------------------------------------------------------------------|
-| Investigation            | Free                         | Free               | Quota set to limit the Consumer to 100 calls / month                                                        |
-| Implementation           | Developer                    | Freemium           | No quota set - Consumer can continue to make & pay for calls, rate limit of 100 calls / minute              |
-| Preview                  | PAYG                         | Metered            | No quota set - Consumer can continue to make & pay for calls, rate limit of 200 calls / minute              |
-| Initial production usage | Basic                        | Tier               | Quota set to limit the Consumer to 50,000 calls / month, rate limit of 100 calls / minute                   |
-| Initial growth           | Standard                     | Tier + Overage     | No quota set - Consumer can continue to make & pay for additional calls, rate limit of 100 calls / minute   |
-| Scale                    | Pro                          | Tier + Overage     | No quota set - Consumer can continue to make & pay for additional calls, rate limit of 1,200 calls / minute |
-| Global growth            | Enterprise                   | Unit               | No quota set - Consumer can continue to make & pay for additional calls, rate limit of 3,500 calls / minute |
+For a description of how the sample project works from an API consumer perspective see "How the sample project works in practice"[documentation\how-the-sample-project-works-in-practice.md].
 
-Use the sample projects to build flexibility into how you codify your monetization strategy into systems to enable you respond dynamically and to make minimise the risk and cost of making changes.
+Follow the [README](../README.md) and [Deployment and initialization](Initialisation.md) documents to implement the sample project in your own Azure subscription.
 
 Regularly monitor how your API is being consumed to enable you to make evidence based decisions. For example, if evidence shows you are churning customers, you should repeat steps 1 to 5 above to uncover the source and make changes accordingly to address it.
 

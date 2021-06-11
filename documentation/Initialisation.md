@@ -1,4 +1,4 @@
-# Initialisation and deployment
+# Deployment and initialisation guide
 
 Currently the easiest way to deploy this project is using the `Deploy to Azure` button in the Github repository.
 
