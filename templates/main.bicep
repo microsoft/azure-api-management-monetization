@@ -7,16 +7,16 @@ param apimPublisherEmail string
 @description('The name of the owner of the APIM service')
 param apimPublisherName string
 
+@description('The pricing tier of this API Management service')
 @allowed([
   'Developer'
   'Standard'
   'Premium'
 ])
-@description('The pricing tier of this API Management service')
 param apimSku string = 'Developer'
 
-@maxValue(2)
 @description('The instance size of this API Management service.')
+@maxValue(2)
 param apimSkuCount int = 1
 
 @description('The App Service hosting plan name')
@@ -31,11 +31,11 @@ param appServiceSkuName string = 'F1'
 @minValue(1)
 param appServiceSkuCapacity int = 1
 
+@description('The payment provider - Adyen or Stripe')
 @allowed([
   'Stripe'
   'Adyen'
 ])
-@description('The payment provider - Adyen or Stripe')
 param paymentProvider string
 
 @secure()
@@ -67,8 +67,8 @@ param servicePrincipalClientId string
 @description('The object ID of the service principal that the Web App uses to manage APIM')
 param servicePrincipalObjectId string
 
-@description('The client secret for the service principal')
 @secure()
+@description('The client secret for the service principal')
 param servicePrincipalClientSecret string
 
 @description('The AAD tenant in which the service principal resides')
