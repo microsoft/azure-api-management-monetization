@@ -1,19 +1,5 @@
 param location string = resourceGroup().location
 
-@allowed([
-  'F1'
-  'D1'
-  'B1'
-  'B2'
-  'B3'
-  'S1'
-  'S2'
-  'S3'
-  'P1'
-  'P2'
-  'P3'
-  'P4'
-])
 param skuName string = 'F1'
 
 @minValue(1)
@@ -44,11 +30,12 @@ param containerImage string
 param containerPort int
 
 param servicePrincipalClientId string
+
 @secure()
 param servicePrincipalClientSecret string
 param servicePrincipalTenantId string
 
-var linuxFxVersion = concat('DOCKER|', containerImage)
+var linuxFxVersion = 'DOCKER|${containerImage}'
 
 resource hostingPlan 'Microsoft.Web/serverfarms@2020-12-01' = {
   name: hostingPlanName
@@ -60,15 +47,12 @@ resource hostingPlan 'Microsoft.Web/serverfarms@2020-12-01' = {
   sku: {
     name: skuName
   }
-  dependsOn: []
 }
-
 
 resource webSite 'Microsoft.Web/sites@2018-11-01' = {
   name: webSiteName
   location: location
   properties: {
-    name: webSiteName
     siteConfig: {
       linuxFxVersion: linuxFxVersion
       alwaysOn: true
@@ -76,13 +60,11 @@ resource webSite 'Microsoft.Web/sites@2018-11-01' = {
     serverFarmId: hostingPlan.id
     clientAffinityEnabled: false
   }
-  dependsOn: [
-    hostingPlan
-  ]
 }
 
 resource webSiteAppSettings 'Microsoft.Web/sites/config@2020-06-01' = {
-  name: '${webSite.name}/appsettings'
+  parent: webSite
+  name: 'appsettings'
   properties: {
     NODE_ENV: 'production'
     SERVER_PORT: '8000'
@@ -93,7 +75,7 @@ resource webSiteAppSettings 'Microsoft.Web/sites/config@2020-06-01' = {
     STRIPE_PUBLIC_KEY: stripePublicKey
     STRIPE_API_KEY: stripeApiKey
     WEBSITES_PORT: string(containerPort)
-    WEBSITES_ENABLE_APP_SERVICE_STORAGE: false
+    WEBSITES_ENABLE_APP_SERVICE_STORAGE: 'false'
     APIM_SERVICE_NAME: apimServiceName
     APIM_SERVICE_AZURE_SUBSCRIPTION_ID: subscription().subscriptionId
     APIM_SERVICE_AZURE_RESOURCE_GROUP_NAME: resourceGroup().name

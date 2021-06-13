@@ -1,57 +1,89 @@
-param ApimServiceName string
+param apimServiceName string
 
-resource ApimServiceName_free_guests_group 'Microsoft.ApiManagement/service/products/groups@2019-01-01' = {
-  name: '${ApimServiceName}/free/guests'
-}
+resource apiManagementService 'Microsoft.ApiManagement/service@2020-12-01' existing = {
+  name: apimServiceName
 
-resource ApimServiceName_free_developers_group 'Microsoft.ApiManagement/service/products/groups@2019-01-01' = {
-  name: '${ApimServiceName}/free/developers'
-}
+  resource freeProduct 'products' existing = {
+    name: 'free'
 
-resource ApimServiceName_developer_guests_group 'Microsoft.ApiManagement/service/products/groups@2019-01-01' = {
-  name: '${ApimServiceName}/developer/guests'
-}
+    resource guestsGroup 'groups' = {
+      name: 'guests'
+    }
 
-resource ApimServiceName_developer_developers_group 'Microsoft.ApiManagement/service/products/groups@2019-01-01' = {
-  name: '${ApimServiceName}/developer/developers'
-}
+    resource developersGroup 'groups' = {
+      name: 'developers'
+    }
+  }
 
-resource ApimServiceName_payg_guests_group 'Microsoft.ApiManagement/service/products/groups@2019-01-01' = {
-  name: '${ApimServiceName}/payg/guests'
-}
+  resource developerProduct 'products' existing = {
+    name: 'developer'
 
-resource ApimServiceName_payg_developers_group 'Microsoft.ApiManagement/service/products/groups@2019-01-01' = {
-  name: '${ApimServiceName}/payg/developers'
-}
+    resource guestsGroup 'groups' = {
+      name: 'guests'
+    }
 
-resource ApimServiceName_basic_guests_group 'Microsoft.ApiManagement/service/products/groups@2019-01-01' = {
-  name: '${ApimServiceName}/basic/guests'
-}
+    resource developersGroup 'groups' = {
+      name: 'developers'
+    }
+  }
 
-resource ApimServiceName_basic_developers_group 'Microsoft.ApiManagement/service/products/groups@2019-01-01' = {
-  name: '${ApimServiceName}/basic/developers'
-}
+  resource paygProduct 'products' existing = {
+    name: 'payg'
 
-resource ApimServiceName_standard_guests_group 'Microsoft.ApiManagement/service/products/groups@2019-01-01' = {
-  name: '${ApimServiceName}/standard/guests'
-}
+    resource guestsGroup 'groups' = {
+      name: 'guests'
+    }
 
-resource ApimServiceName_standard_developers_group 'Microsoft.ApiManagement/service/products/groups@2019-01-01' = {
-  name: '${ApimServiceName}/standard/developers'
-}
+    resource developersGroup 'groups' = {
+      name: 'developers'
+    }
+  }
 
-resource ApimServiceName_pro_guests_group 'Microsoft.ApiManagement/service/products/groups@2019-01-01' = {
-  name: '${ApimServiceName}/pro/guests'
-}
+  resource basicProduct 'products' existing = {
+    name: 'basic'
 
-resource ApimServiceName_pro_developers_group 'Microsoft.ApiManagement/service/products/groups@2019-01-01' = {
-  name: '${ApimServiceName}/pro/developers'
-}
+    resource guestsGroup 'groups' = {
+      name: 'guests'
+    }
 
-resource ApimServiceName_enterprise_guests_group 'Microsoft.ApiManagement/service/products/groups@2019-01-01' = {
-  name: '${ApimServiceName}/enterprise/guests'
-}
+    resource developersGroup 'groups' = {
+      name: 'developers'
+    }
+  }
 
-resource ApimServiceName_enterprise_developers_group 'Microsoft.ApiManagement/service/products/groups@2019-01-01' = {
-  name: '${ApimServiceName}/enterprise/developers'
+  resource standardProduct 'products' existing = {
+    name: 'standard'
+
+    resource guestsGroup 'groups' = {
+      name: 'guests'
+    }
+
+    resource developersGroup 'groups' = {
+      name: 'developers'
+    }
+  }
+
+  resource proProduct 'products' existing = {
+    name: 'pro'
+
+    resource guestsGroup 'groups' = {
+      name: 'guests'
+    }
+
+    resource developersGroup 'groups' = {
+      name: 'developers'
+    }
+  }
+
+  resource enterpriseProduct 'products' existing = {
+    name: 'enterprise'
+
+    resource guestsGroup 'groups' = {
+      name: 'guests'
+    }
+
+    resource developersGroup 'groups' = {
+      name: 'developers'
+    }
+  }
 }
