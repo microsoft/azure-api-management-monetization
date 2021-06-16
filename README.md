@@ -6,7 +6,7 @@ The objective is to show how you can enable consumers to subscribe to an API tha
 
 To use this demo, you will need to deploy the solution into your own Azure subscription and to set up your own Stripe / Adyen account.  It is **not** a managed service - you will be responsible for managing the resources that are deployed on Azure, adapting the solution to meet your specific use case and keeping the solution up to date.
 
-The following documents provide further background and context:
+Read the following documents to get further background and context:
 
 | Document                                                                                              | Purpose 
 |-------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|

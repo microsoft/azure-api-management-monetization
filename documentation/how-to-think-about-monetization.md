@@ -1,4 +1,4 @@
-# How to think about monetization with Azure API Management
+# How to think about monetization
 
 Modern web APIs underpin the digital economy. They *generate revenue* by providing a company's *intellectual property* (IP) to *3rd parties*.
 
