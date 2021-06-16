@@ -1,8 +1,18 @@
 # Azure API Management - Monetization
 
-This solution provides an example of how to integrate Azure API Management (APIM) with payment providers - the options in this example are Stripe, or Adyen. This integration allows consumers to subscribe to public APIs and enter their payment details in order to activate those subscriptions.
+This is a **demo project** providing two working examples of how to integrate Azure API Management (APIM) with payment providers - one based on integration with [Stripe](https://stripe.com/), the other with [Adyen](https://www.adyen.com/).
 
-To find out more about how this works, read the [API subscription guide](documentation/API-Subscription.md)!
+The objective is to show how you can enable consumers to subscribe to an API that you wish to make public, enter their payment details in order to activate the subscription and trigger automated payment based on their usage of the API.
+
+To use this demo, you will need to deploy the solution into your own Azure subscription and to set up your own Stripe / Adyen account.  It is **not** a managed service - you will be responsible for managing the resources that are deployed on Azure, adapting the solution to meet your specific use case and keeping the solution up to date.
+
+The following documents provide further background and context:
+
+| Document                                                                                              | Purpose 
+|-------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
+| [how to think about monetization](documentation\how-to-think-about-monetization.md)                   | Makes recommendations about how to design a successful monetization strategy for your API.             |
+| [how APIM supports monetisation](documentation\how-APIM-supports-monetisation.md)                     | Provides an overview of the APIM features that can be used to accelerate and de-risk API monetization. |
+| [how the sample project works in practice](documentation\how-the-sample-project-works-in-practice.md) | Describes the end to end user journey enabled by the demo project.                                     |
 
 ## Architecture
 
@@ -10,7 +20,7 @@ The following diagram illustrates the architecture for integration with Stripe a
 
 ![](documentation/architecture-stripe.png)
 
-The architecture for the Adyen integraiton is also available in the [Adyen documentation](documentation\Adyen.md).
+The architecture for the Adyen integration is also available in the [Adyen documentation](documentation\Adyen.md).
 
 ## Prerequisites
 
