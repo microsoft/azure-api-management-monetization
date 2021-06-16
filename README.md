@@ -27,16 +27,22 @@ The architecture for the Adyen integration is also available in the [Adyen docum
 ### Required tools
 
 - [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7.1)
-- [Az CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
+- [Az CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) - version 2.21.0 or later
+- [NodeJS](https://nodejs.org/en/download/)
 
 ### Service Principal
 
 In order to run the deployment, you will need a service principal set up in the AAD tenant that will be used by the Web App to update the status of APIM subscriptions. 
 
-The simplest way to do this is using the Az CLI - run the following commands:
+The simplest way to do this is using the Az CLI.
 
+First, you need to [Sign in with Azure CLI](https://docs.microsoft.com/en-us/cli/azure/authenticate-azure-cli) by using the following command:
 ```
 az login
+```
+Then you can [Create an Azure service principal with the Azure CLI](https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli) through the following command:
+
+```
 az ad sp create-for-rbac -n "<name-for-your-service-principal>" --skip-assignment
 ```
 
@@ -79,11 +85,10 @@ You will need to [create an Adyen test account](https://www.adyen.com/signup).
 ## Deploying the example
 
 The following resources are deployed as part of the example:
-- API Management service
-- API Management resources (APIs, Products, Policies, Named Values)
-- App Service Plan
-- Web App for Containers, using the [billing portal app container image](./documentation/Initialisation.md#billing-portal)
-- Service Principal RBAC assignment
+- [API Management service](https://azure.microsoft.com/en-gb/services/api-management/) - setting up API Management resources required to support the demo project (APIs, Products, Policies, Named Values)
+- (App Service Plan)[https://docs.microsoft.com/en-us/azure/app-service/overview]
+- [Web App for Containers](https://azure.microsoft.com/en-gb/services/app-service/containers/), using the [billing portal app container image](./documentation/Initialisation.md#billing-portal)
+- (Service Principal RBAC[https://docs.microsoft.com/en-us/azure/role-based-access-control/overview]) assignment
 
 Click the button below to deploy the example to Azure. You will be able to fill in the required parameters in the Azure Portal.
 
@@ -92,7 +97,7 @@ Click the button below to deploy the example to Azure. You will be able to fill 
 Alternatively, you can also deploy by running the `deploy.ps1` PowerShell script at the root of the repo, e.g.:
 
 ```powershell
-deploy.ps1 -TenantId "<azure-ad-tenant-id>" -SubscriptionId "<azure-subscription-id>" -ResourceGroupName "apimmonetization" -ResourceGroupLocation "uksouth" --ArtifactStorageAccountName "<name-of-artifact-storage-account>"
+deploy.ps1 -TenantId "<azure-ad-tenant-id>" -SubscriptionId "<azure-subscription-id>" -ResourceGroupName "apimmonetization" -ResourceGroupLocation "uksouth" -ArtifactStorageAccountName "<name-of-artifact-storage-account>"
 ```
 
  You must have the Azure CLI installed, and you will need to provide a parameters file for the `main.json` ARM template (the script expects this to be located at `output/main.parameters.json` by default).

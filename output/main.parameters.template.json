@@ -21,7 +21,7 @@
             "value": "" // The client ID of the service principal that the web app uses to manage APIM
         },
         "servicePrincipalClientSecret": {
-            "value": "" // The client secret for the service principal
+            "value": "" // The client password for the service principal
         },
         "servicePrincipalObjectId": {
             "value": "" // THe object ID for the service principal
