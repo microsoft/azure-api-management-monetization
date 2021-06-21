@@ -25,8 +25,22 @@ param appServiceHostingPlanName string
 @description('The App Service name')
 param appServiceName string
 
-@description('The pricing tier of the App Service to deploy, defaults to Free')
-param appServiceSkuName string = 'F1'
+@allowed([
+  'B1'
+  'B2'
+  'B3'
+  'S1'
+  'S2'
+  'S3'
+  'P1'
+  'P2'
+  'P3'
+  'P1V2'
+  'P2V2'
+  'P3V2'
+])
+@description('The pricing tier of the App Service plan to deploy, defaults to Basic')
+param appServiceSkuName string = 'B1'
 
 @minValue(1)
 param appServiceSkuCapacity int = 1
@@ -82,6 +96,18 @@ param artifactsBaseUrl string = 'https://raw.githubusercontent.com/microsoft/azu
 
 var contributorRoleId = subscriptionResourceId('Microsoft.Authorization/roleDefinitions/', 'b24988ac-6180-42a0-ab88-20f7382dd24c')
 
+module appService 'app-service.bicep' = {
+  name: 'appServiceDeploy'
+  params: {
+    hostingPlanName: appServiceHostingPlanName
+    webSiteName: appServiceName
+    skuName: appServiceSkuName
+    skuCapacity: appServiceSkuCapacity
+    apimServiceName: apimServiceName
+    containerImage: appServiceContainerImage
+  }
+}
+
 module apimInstance './apim-instance.bicep' = {
   name: 'apimInstanceDeploy'
   params: {
@@ -91,7 +117,7 @@ module apimInstance './apim-instance.bicep' = {
     sku: apimSku
     skuCount: apimSkuCount
     location: location
-    delegationUrl: 'https://${appServiceName}.azurewebsites.net/apim-delegation'
+    delegationUrl: '${appService.outputs.webSiteUrl}/apim-delegation'
   }
 }
 
@@ -181,21 +207,13 @@ module apimGlobalServicePolicy './apimmonetization-globalServicePolicy.bicep' = 
   ]
 }
 
-module appService 'app-service.bicep' = {
-  name: 'appServiceDeploy'
+module appServiceSettings 'app-service-settings.bicep' = {
+  name: 'appServiceSettingsDeploy'
   params: {
-    hostingPlanName: appServiceHostingPlanName
     webSiteName: appServiceName
-    skuName: appServiceSkuName
     apimServiceName: apimServiceName
-    apimAdminSubscriptionKey: apimInstance.outputs.adminSubscriptionKey
-    apimGatewayUrl: apimInstance.outputs.gatewayUrl
-    apimManagementUrl: apimInstance.outputs.managementUrl
-    apimDeveloperPortalUrl: apimInstance.outputs.developerPortalUrl
-    apimDelegationValidationKey: apimInstance.outputs.delegationValidationKey
     stripeApiKey: stripeApiKey
     stripePublicKey: stripePublicKey
-    containerImage: appServiceContainerImage
     containerPort: appServiceContainerPort
     servicePrincipalClientId: servicePrincipalClientId
     servicePrincipalClientSecret: servicePrincipalClientSecret
@@ -205,6 +223,9 @@ module appService 'app-service.bicep' = {
     adyenClientKey: adyenClientKey
     adyenMerchantAccount: adyenMerchantAccount
   }
+  dependsOn: [
+    apimInstance
+  ]
 }
 
 resource servicePrincipalContributorRole 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {

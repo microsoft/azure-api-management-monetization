@@ -16,7 +16,6 @@ param publisherName string
 param sku string = 'Developer'
 
 @description('The instance size of this API Management service.')
-@maxValue(2)
 param skuCount int = 1
 
 @description('Location for all resources.')
@@ -25,7 +24,7 @@ param location string = resourceGroup().location
 @description('The URL for delegation requests from APIM')
 param delegationUrl string
 
-@description('The validation key used for delegation requests from APIM. Default value will generate a new GUID.')
+@description('The validation key used for delegation requests from APIM. Default value will generate a new GUID. If deploying to production, consider setting this parameter explicitly to avoid the value being regenerated for new deployments.')
 param delegationValidationKeyRaw string = newGuid()
 
 var readerRoleId = subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'acdd72a7-3385-48ef-bd42-f606fba81ae7')
@@ -73,9 +72,3 @@ resource apimManagedIdentityReaderRole 'Microsoft.Authorization/roleAssignments@
     principalId: apiManagementService.identity.principalId
   }
 }
-
-output gatewayUrl string = apiManagementService.properties.gatewayUrl
-output managementUrl string = apiManagementService.properties.managementApiUrl
-output developerPortalUrl string = apiManagementService.properties.developerPortalUrl
-output adminSubscriptionKey string = apiManagementService::masterSubscription.properties.primaryKey
-output delegationValidationKey string = apiManagementServiceDelegation.properties.validationKey
