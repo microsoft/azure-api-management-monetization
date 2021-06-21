@@ -52,35 +52,6 @@ Implement of the monetization model requires APIM Product Policies and Stripe Pr
 | Pro           | Tier + Overage     | No quota set - Consumer can continue to make & pay for additional calls, rate limit of 1,200 calls / minute | `Metered`, graduated tiers, where the first tier flat amount is $449.95 / month for first 500,000 calls, next tiers per unit amount charge set to charge $0.06 / 100 calls |
 | Enterprise    | Unit               | No quota set - Consumer can continue to make & pay for additional calls, rate limit of 3,500 calls / minute | `Metered`, graduated tiers, where every tier flat amount is $749.95 / month for 1,500,000 calls                                                                            |
 
-## Initialisation and deployment
-
-The APIM service and billing portal are initialised as described in the [initialisation guide](Initialisation.md).
-
-Once the billing portal and APIM service have been deployed, and the products defined within APIM, the same products need to be initialised in Stripe, using [this PowerShell script](../payment/stripeInitialisation.ps1). To run the script, first ensure the Az CLI in installed and you are logged in (`az login`), then run using the following parameters:
-
-```powershell
-./payment/stripeInitialisation.ps1 `
-    -StripeApiKey "<the 'Initialization Key' API key (see readme)>" `
-    -ApimGatewayUrl "<the gateway URL of the APIM service - can find in Azure Portal>" `
-    -ApimSubscriptionKey "<the default admin subscription key for the APIM service - can find in Azure Portal>" `
-    -StripeWebhookUrl "<the URL of the billing portal App Service>/webhook/stripe" `
-    -AppServiceResourceGroup "<the name of the resource group containing the billing portal App Service>" `
-    -AppServiceName "<the name of the billing portal App Service>"
-```
-
-It first makes two API calls:
-
-- To retrieve the APIM products.
-- To retrieve the monetization model definitions.
-
-For each of the monetization models in the configuration file, the script:
-
-1. Finds the corresponding APIM product.
-2. Uses the Stripe CLI to create a Stripe product.
-3. For that Stripe product, creates the corresponding price for the model.
-4. Create a webhook in stripe which can be used to listen for Stripe subscription created events (which we can listen for and create APIM subscriptions when a Consumer completed checkout) and failed / cancelled Stripe subscription events (which we can use to deactivate APIM subscriptions when Consumers cease to pay for them).
-5. Finally, it adds the secret for connecting to the webhook to the settings of the billing portal app, so that the app can attach listeners and handle these events.
-
 ## Architecture
 
 ![](./architecture-stripe.png)
@@ -101,7 +72,31 @@ The Consumer flow is as follows:
 10. Consumer is billed monthly based on product they have signed up for and usage.
 11. If payment fails, subscription is suspended.
 
-Steps 1 through 6 are common to both the Stripe and Adyen implementation of this solution. The implementation for these steps is described in the [API Subscription guide](API-Subscription.md).
+### Consumer registers an account *(Step 1, 2, 3)*
+
+From the APIM developer portal (defined for your APIM account), consumers can browse APIs and products. 
+
+The developer portal for an APIM service is located at:
+
+`https://{ApimServiceName}.developer.azure-api.net`
+
+However, they cannot create a product subscription until they have created a user account.
+
+On selecting 'Sign Up', the user is redirected to the billing portal app where they can enter their details to create an account. This is handled via [user registration delegation](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-setup-delegation#-delegating-developer-sign-in-and-sign-up).
+
+On successful account creation, the consumer is redirected to the APIM developer portal, authenticated.
+
+Once an account has been created, in future the consumer can just sign in to the account.
+
+### Consumer subscribes to APIM product and retrieves API keys *(Step 4, 5)*
+
+From the APIM developer portal, consumers can browse products.
+
+From here, a consumer can select a product to create a new subscription. They will be redirected to the billing portal app when they select 'Subscribe'. This is handled via [product subscription delegation](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-setup-delegation#-delegating-product-subscription).
+
+### Billing portal *(Step 5, 6)*
+
+Once redirected to the billing portal, the consumer can enter a display name for their subscription and select 'Checkout', where they will be redirected to the checkout page, which varies depending on the payment provider configured.
 
 ### Stripe checkout session *(Step 7, 8)*
 

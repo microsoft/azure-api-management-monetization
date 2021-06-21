@@ -127,9 +127,9 @@ Use Microsoft's Azure API Management (APIM) to accelerate and de-risk the implem
 
 Use the same approach as the sample project to implement a solution that builds flexibility into how you codify your monetization strategy in the underlying systems.  This will enable you to respond dynamically and to make minimise the risk and cost of making changes.
 
-For a description of how the sample project works from an API consumer perspective see "How the sample project works in practice"[documentation\how-the-sample-project-works-in-practice.md].
+For a description of how the sample project works from an API consumer perspective see [How to implement monetization with Azure API Management and Stripe](./documentation/stripe-details.md) or [How to implement monetization with Azure API Management and Adyen](./documentation/adyen-details.md).
 
-Follow the [README](../README.md) and [Deployment and initialization](Initialisation.md) documents to implement the sample project in your own Azure subscription.
+Follow the [README](../README.md) to deploy the sample project in your own Azure subscription.
 
 Regularly monitor how your API is being consumed to enable you to make evidence based decisions. For example, if evidence shows you are churning customers, you should repeat steps 1 to 5 above to uncover the source and make changes accordingly to address it.
 

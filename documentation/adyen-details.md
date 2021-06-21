@@ -33,12 +33,6 @@ APIM is configured to create Products that mirror the revenue model (Free, Devel
 
 Adyen allows you to [tokenize](https://docs.adyen.com/online-payments/tokenization) a consumer's card details so that they can be securely stored (by Adyen) and used to authorize recurring transactions.
 
-## Initialisation and deployment
-
-The APIM service and billing portal are initialised as described in the [initialisation guide](Initialisation.md).
-
-You will also need to create an Adyen account, add the origin you'll be using to the list of allowed origins, and retrieve the API and client key. These steps are laid out in the [README](../README.md).
-
 ## Architecture
 
 ![](./architecture-adyen.png)
@@ -58,7 +52,31 @@ The Consumer flow is as follows:
 9. Consumer's APIM subscription is created
 10. Each month the usage is used to calculate the invoice, which is then charged to the consumer's card
 
-Steps 1 through 6 are common to both the [Stripe](Stripe.md) and Adyen implementation of this solution. For detailed steps read the [implementation guide](API-Subscription.md).
+### Consumer registers an account *(Step 1, 2, 3)*
+
+From the APIM developer portal (defined for your APIM account), consumers can browse APIs and products. 
+
+The developer portal for an APIM service is located at:
+
+`https://{ApimServiceName}.developer.azure-api.net`
+
+However, they cannot create a product subscription until they have created a user account.
+
+On selecting 'Sign Up', the user is redirected to the billing portal app where they can enter their details to create an account. This is handled via [user registration delegation](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-setup-delegation#-delegating-developer-sign-in-and-sign-up).
+
+On successful account creation, the consumer is redirected to the APIM developer portal, authenticated.
+
+Once an account has been created, in future the consumer can just sign in to the account.
+
+### Consumer subscribes to APIM product and retrieves API keys *(Step 4, 5)*
+
+From the APIM developer portal, consumers can browse products.
+
+From here, a consumer can select a product to create a new subscription. They will be redirected to the billing portal app when they select 'Subscribe'. This is handled via [product subscription delegation](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-setup-delegation#-delegating-product-subscription).
+
+### Billing portal *(Step 5, 6)*
+
+Once redirected to the billing portal, the consumer can enter a display name for their subscription and select 'Checkout', where they will be redirected to the checkout page, which varies depending on the payment provider configured.
 
 ### Adyen checkout *(Step 7, 8)*
 

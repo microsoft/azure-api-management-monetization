@@ -1,28 +1,22 @@
-# Deployment and initialisation guide
+# Deployment details
 
-Currently the easiest way to deploy this project is using the `Deploy to Azure` button in the Github repository.
-
-## Steps
-
-Run through the deployment steps set out in the [README](../README.md).
-
-### Additional steps explained
-
-#### Stripe initialisation
-
-If using Stripe as a payment provider, the products and prices will need to be updated. This is explained in more detail [here](Stripe.md).
+The following resources are deployed as part of the demo:
+- [API Management service](https://azure.microsoft.com/en-gb/services/api-management/) - setting up API Management resources required to support the demo project (APIs, Products, Policies, Named Values)
+- [App Service Plan](https://docs.microsoft.com/en-us/azure/app-service/overview)
+- [Web App for Containers](https://azure.microsoft.com/en-gb/services/app-service/containers/), using the [billing portal app container image](./documentation/Initialisation.md#billing-portal)
+- [Service Principal RBAC assignment](https://docs.microsoft.com/en-us/azure/role-based-access-control/overview)
 
 ## Technology
 
-This project is currently using [bicep](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/bicep-overview) for local development and deployment. Bicep is a templating language for declaratively deploying Azure resources. However, at the time of development the `Deploy to Azure` button does not support Bicep, so it must be decompiled into ARM templates prior to deployment. This happens when the solution is built (which is done by running the [build.ps1](../build.ps1) script, as outlined in the [README](../README.md)). 
+This project is currently using [bicep](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/bicep-overview) for local development and deployment. Bicep is a templating language for declaratively deploying Azure resources. However, at the time of development the `Deploy to Azure` button does not support Bicep, so it must be decompiled into an ARM template prior to deployment. This happens when the solution is built (which is done by running the [build.ps1](../build.ps1) script.
 
-The ARM templates which are generated on build can be found in the [/templates/generated](../templates/generated/) folder.
+The ARM template which is generated on build can be found in the [/output](../output/) folder.
 
-The deployment can then be run using the [deploy.ps1](../deploy.ps1) script (again as outlined in the [README](../README.md)).
+The deployment can then be run using the [deploy.ps1](../deploy.ps1) script (see steps in the [README](../README.md)).
 
 ## API Management Service
 
-Running the deploy.ps1 script deploys an instance of Azure API Management service. As part of this deployment we define a set of products, APIs (with accompanying policies) and named values. There is also a separate step which is used to update the email template for the subscription activation email, as explained above.
+Deploying the demo deploys an instance of Azure API Management service. As part of this deployment we define a set of products, APIs (with accompanying policies) and named values.
 
 ### Products 
 
