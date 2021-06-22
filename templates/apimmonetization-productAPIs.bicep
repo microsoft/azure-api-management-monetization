@@ -1,55 +1,69 @@
-param ApimServiceName string
+param apimServiceName string
 
-resource ApimServiceName_free_address 'Microsoft.ApiManagement/service/products/apis@2019-01-01' = {
-  name: '${ApimServiceName}/free/address'
-  dependsOn: []
-}
+resource apiManagementService 'Microsoft.ApiManagement/service@2020-12-01' existing = {
+  name: apimServiceName
 
-resource ApimServiceName_developer_address 'Microsoft.ApiManagement/service/products/apis@2019-01-01' = {
-  name: '${ApimServiceName}/developer/address'
-  dependsOn: [
-    ApimServiceName_free_address
-  ]
-}
+  resource freeProduct 'products' existing = {
+    name: 'free'
 
-resource ApimServiceName_payg_address 'Microsoft.ApiManagement/service/products/apis@2019-01-01' = {
-  name: '${ApimServiceName}/payg/address'
-  dependsOn: [
-    ApimServiceName_developer_address
-  ]
-}
+    resource addressApi 'apis' = {
+      name: 'address'
+    }
+  }
 
-resource ApimServiceName_basic_address 'Microsoft.ApiManagement/service/products/apis@2019-01-01' = {
-  name: '${ApimServiceName}/basic/address'
-  dependsOn: [
-    ApimServiceName_payg_address
-  ]
-}
+  resource developerProduct 'products' existing = {
+    name: 'developer'
 
-resource ApimServiceName_standard_address 'Microsoft.ApiManagement/service/products/apis@2019-01-01' = {
-  name: '${ApimServiceName}/standard/address'
-  dependsOn: [
-    ApimServiceName_basic_address
-  ]
-}
+    resource addressApi 'apis' = {
+      name: 'address'
+    }    
+  }
 
-resource ApimServiceName_pro_address 'Microsoft.ApiManagement/service/products/apis@2019-01-01' = {
-  name: '${ApimServiceName}/pro/address'
-  dependsOn: [
-    ApimServiceName_standard_address
-  ]
-}
+  resource paygProduct 'products' existing = {
+    name: 'payg'
 
-resource ApimServiceName_enterprise_address 'Microsoft.ApiManagement/service/products/apis@2019-01-01' = {
-  name: '${ApimServiceName}/enterprise/address'
-  dependsOn: [
-    ApimServiceName_pro_address
-  ]
-}
+    resource addressApi 'apis' = {
+      name: 'address'
+    }
+  }
 
-resource ApimServiceName_admin_billing 'Microsoft.ApiManagement/service/products/apis@2019-01-01' = {
-  name: '${ApimServiceName}/admin/billing'
-  dependsOn: [
-    ApimServiceName_enterprise_address
-  ]
+  resource basicProduct 'products' existing = {
+    name: 'basic'
+
+    resource addressApi 'apis' = {
+      name: 'address'
+    }
+  }
+
+  resource standardProduct 'products' existing = {
+    name: 'standard'
+
+    resource addressApi 'apis' = {
+      name: 'address'
+    }
+  }
+
+  resource proProduct 'products' existing = {
+    name: 'pro'
+
+    resource addressApi 'apis' = {
+      name: 'address'
+    }
+  }
+
+  resource enterpriseProduct 'products' existing = {
+    name: 'enterprise'
+
+    resource addressApi 'apis' = {
+      name: 'address'
+    }
+  }
+
+  resource adminProduct 'products' existing = {
+    name: 'admin'
+
+    resource addressApi 'apis' = {
+      name: 'address'
+    }
+  }
 }

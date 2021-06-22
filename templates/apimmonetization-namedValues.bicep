@@ -1,55 +1,59 @@
-param SubscriptionId string
-param ResourceGroupName string
-param ApimServiceName string
-param AppServiceName string
+param apimServiceName string
+param subscriptionId string
+param resourceGroupName string
+param appServiceName string
 param artifactsBaseUrl string
 
-resource ApimServiceName_subscriptionId 'Microsoft.ApiManagement/service/properties@2019-01-01' = {
+resource apiManagementService 'Microsoft.ApiManagement/service@2020-12-01' existing = {
+  name: apimServiceName
+}
+
+resource subscriptionIDProperty 'Microsoft.ApiManagement/service/properties@2019-01-01' = {
+  parent: apiManagementService
+  name: 'subscriptionId'
   properties: {
     secret: false
     displayName: 'subscriptionId'
-    value: SubscriptionId
+    value: subscriptionId
   }
-  name: '${ApimServiceName}/subscriptionId'
-  dependsOn: []
 }
 
-resource ApimServiceName_resourceGroupName 'Microsoft.ApiManagement/service/properties@2019-01-01' = {
+resource resourceGroupNameProperty 'Microsoft.ApiManagement/service/properties@2019-01-01' = {
+  parent: apiManagementService
+  name: 'resourceGroupName'
   properties: {
     secret: false
     displayName: 'resourceGroupName'
-    value: ResourceGroupName
+    value: resourceGroupName
   }
-  name: '${ApimServiceName}/resourceGroupName'
-  dependsOn: []
 }
 
-resource ApimServiceName_apimServiceName 'Microsoft.ApiManagement/service/properties@2019-01-01' = {
+resource apimServiceNameProperty 'Microsoft.ApiManagement/service/properties@2019-01-01' = {
+  parent: apiManagementService
+  name: 'apimServiceName'
   properties: {
     secret: false
     displayName: 'apimServiceName'
-    value: ApimServiceName
+    value: apimServiceName
   }
-  name: '${ApimServiceName}/apimServiceName'
-  dependsOn: []
 }
 
-resource ApimServiceName_appServiceName 'Microsoft.ApiManagement/service/properties@2019-01-01' = {
+resource appServiceNameProperty 'Microsoft.ApiManagement/service/properties@2019-01-01' = {
+  parent: apiManagementService
+  name: 'appServiceName'
   properties: {
     secret: false
     displayName: 'appServiceName'
-    value: AppServiceName
+    value: appServiceName
   }
-  name: '${AppServiceName}/appServiceName'
-  dependsOn: []
 }
 
-resource ApimServiceName_monetizationModelsUrl 'Microsoft.ApiManagement/service/properties@2019-01-01' = {
+resource monetizationModelsUrlProperty 'Microsoft.ApiManagement/service/properties@2019-01-01' = {
+  parent: apiManagementService
+  name: 'monetizationModelsUrl'
   properties: {
     secret: false
     displayName: 'monetizationModelsUrl'
-    value: concat(artifactsBaseUrl, '/payment/monetizationModels.json')
+    value: '${artifactsBaseUrl}/payment/monetizationModels.json'
   }
-  name: '${ApimServiceName}/monetizationModelsUrl'
-  dependsOn: []
 }
