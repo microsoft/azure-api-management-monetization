@@ -16,7 +16,7 @@ The remainder of this document describes these features in more detail:
 
 ### API Discovery
 
-Use the APIM developer portal to launch your API and onboard API consumers.  Place emphasis on developing good quality content for the developer portal that will enable API consumers to explore and use your APIs with as little friction as possible.  Ideally this should include testing with real API developers to check that the information provided is easy to fine, accurate, complete and intuitive.
+Use the APIM developer portal to launch your API and onboard API consumers.  Place emphasis on developing good quality content for the developer portal that will enable API consumers to explore and use your APIs with as little friction as possible.  Test the content with real API developers to check that the information provided is easy to fine, accurate, complete and intuitive.
 
 For details about how to add content and control the branding of the developer portal, see the [Overview of the developer portal](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-developer-portal)
 

@@ -12,7 +12,7 @@ The build script executes the following steps:
 ## Running the billing portal app locally
 
 If you are making changes to the billing portal app and want to run the app locally, you will need to do the following:
-- Deploy an instance of the APIM infrastructure (following the instructions in [Deploying the example](#deploying-the-example))
+- Deploy an instance of the APIM infrastructure (following the instructions in either the [Deploy with Stripe](./stripe-deploy.md) or [Deploy with Adyen](./adyen-deploy.md) documents)
 - Make a copy of `.env.sample` in `/app`, rename to `.env` and fill in the variables as per your environment
 - Use a tunneling app such as [ngrok](https://ngrok.com/) to create a public URL that is forwarding port 8080
 - Update the APIM delegation URL via the Azure Portal to point to `<public-forwarded-url>/apim-delegation`

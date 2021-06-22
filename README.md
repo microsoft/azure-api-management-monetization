@@ -2,16 +2,16 @@
 
 This is a **demo project** providing two working examples of how to integrate Azure API Management (APIM) with payment providers - one based on integration with [Stripe](https://stripe.com/), the other with [Adyen](https://www.adyen.com/).
 
-The objective is to show how you can enable consumers to subscribe to an API that you wish to make public, enter their payment details in order to activate the subscription and trigger automated payment based on their usage of the API.
+The objective is to show how you can enable consumers to discover an API that you wish to make public, enter their payment details in order to activate their subscription and trigger automated payment based on their usage of the API.
 
-To use this demo, you will need to deploy the solution into your own Azure subscription and to set up your own Stripe / Adyen account.  It is **not** a managed service - you will be responsible for managing the resources that are deployed on Azure, adapting the solution to meet your specific use case and keeping the solution up to date.
+To use this demo, you will need to deploy the solution into your own Azure subscription and to set up your own Stripe / Adyen account.  This is **not** a managed service - you will be responsible for managing the resources that are deployed on Azure, adapting the solution to meet your specific use case and keeping the solution up to date.
 
 Read the following documents to get further background and context:
 
 | Document                                                                                              | Purpose 
 |-------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
-| [how to think about monetization](documentation\how-to-think-about-monetization.md)                   | Makes recommendations about how to design a successful monetization strategy for your API.             |
-| [how APIM supports monetisation](documentation\how-APIM-supports-monetisation.md)                     | Provides an overview of the APIM features that can be used to accelerate and de-risk API monetization. |
+| [how to think about monetization](./documentation/how-to-think-about-monetization.md)                   | Makes recommendations about how to design a successful monetization strategy for your API.             |
+| [how APIM supports monetisation](./documentation/how-APIM-supports-monetisation.md)                     | Provides an overview of the APIM features that can be used to accelerate and de-risk API monetization. |
 
 
 ## Architecture
@@ -25,9 +25,9 @@ The following diagram illustrates the architecture for integrating API Managemen
 
 ### Required tools
 
-- [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7.1)
+- [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7.1) - version 7.1 or later
 - [Az CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) - version 2.21.0 or later
-- [NodeJS](https://nodejs.org/en/download/)
+- [NodeJS](https://nodejs.org/en/download/) - 
 
 ### Service Principal
 

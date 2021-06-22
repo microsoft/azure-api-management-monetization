@@ -3,7 +3,7 @@
 The following resources are deployed as part of the demo:
 - [API Management service](https://azure.microsoft.com/en-gb/services/api-management/) - setting up API Management resources required to support the demo project (APIs, Products, Policies, Named Values)
 - [App Service Plan](https://docs.microsoft.com/en-us/azure/app-service/overview)
-- [Web App for Containers](https://azure.microsoft.com/en-gb/services/app-service/containers/), using the [billing portal app container image](./documentation/Initialisation.md#billing-portal)
+- [Web App for Containers](https://azure.microsoft.com/en-gb/services/app-service/containers/), using the billing portal app container image.
 - [Service Principal RBAC assignment](https://docs.microsoft.com/en-us/azure/role-based-access-control/overview)
 
 ## Technology
@@ -133,4 +133,4 @@ Aside from APIM, the other resource that is deployed by the deployment script is
 
 As part of the main deployment, the billing portal app is deployed to [Azure Web App for Containers](https://azure.microsoft.com/en-gb/services/app-service/containers/). The container image is pulled from the [GitHub Container Registry](https://docs.github.com/en/packages/guides/about-github-container-registry) associated with this repo.
 
-Some additional configuration is added to the app as part of the payment provider initialisation, which is explained in more detail for both [Stripe](Stripe.md) and [Adyen](Adyen.md) separately.
+Some additional configuration is added to the app as part of the payment provider initialisation, which is explained in more detail for both [Stripe](./stripe-details.md) and [Adyen](./adyen-details.md) separately.

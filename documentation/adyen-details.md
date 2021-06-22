@@ -7,8 +7,8 @@ The pricing model describes the different strategies the API Provider can use to
 - `Free` - enables the API Consumer to trial the API in an obligation and cost free way, to determine whether it fulfils a use case. This removes all barriers to entry.
 - `Freemium` - allows the API Consumer to use the API for free, but to transition into a paid for service as demand increases.
 - `Metered` - the API Consumer can make as many calls as they want per month, and will pay a fixed amount per call.
-- `Tier` - the API Consumer pays for a set amount of calls per month, and if they exceed this limit they pay an overage amount per additional call. If they regularly incur overage, they have the option to upgrade to the next tier.
-- `Tier + Overage` - the API Consumer pays for a set amount of calls per month, and if they exceed this limit they pay a set amount per additional call.
+- `Tier` - the API Consumer pays for a set amount of calls per month, they cannot exceed this limit.
+- `Tier + Overage` - the API Consumer pays for a set amount of calls per month, and if they exceed this limit they pay an overage amount per additional call. If they regularly incur overage, it may be more economic to upgrade to the next tier.
 - `Unit` - the API Consumer pays for a set amount of call per month. If they exceed this limit they have to pay for another unit of calls.
 
 The revenue model describes how we can create products, which implement a specific monetization model, targeted at a specific API Consumer scenario:
@@ -76,7 +76,7 @@ From here, a consumer can select a product to create a new subscription. They wi
 
 ### Billing portal *(Step 5, 6)*
 
-Once redirected to the billing portal, the consumer can enter a display name for their subscription and select 'Checkout', where they will be redirected to the checkout page, which varies depending on the payment provider configured.
+Once redirected to the billing portal, the consumer can enter a display name for their subscription and select 'Checkout', where they will be redirected to the checkout page.
 
 ### Adyen checkout *(Step 7, 8)*
 
