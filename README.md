@@ -13,6 +13,7 @@ Read the following documents to get further background and context:
 | [how to think about monetization](./documentation/how-to-think-about-monetization.md)                   | Makes recommendations about how to design a successful monetization strategy for your API.             |
 | [how APIM supports monetisation](./documentation/how-APIM-supports-monetisation.md)                     | Provides an overview of the APIM features that can be used to accelerate and de-risk API monetization. |
 
+Follow the remainder of this README to put in place the pre-requisites and deploy the solution with your chosen payment provider.
 
 ## Architecture
 
@@ -70,7 +71,6 @@ You can deploy the demo using either [Stripe](https://stripe.com/) or [Adyen](ht
   - [How to implement monetization with Azure API Management and Stripe](./documentation/stripe-details.md)
   - [How to implement monetization with Azure API Management and Adyen](./documentation/adyen-details.md)
 - If you want to customize the demo, see [Advanced steps](./documentation/advanced-steps.md)
-
 
 ## Contributing
 
