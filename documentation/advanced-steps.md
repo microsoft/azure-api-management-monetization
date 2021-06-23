@@ -14,7 +14,11 @@ The build script executes the following steps:
 If you are making changes to the billing portal app and want to run the app locally, you will need to do the following:
 - Deploy an instance of the APIM infrastructure (following the instructions in either the [Deploy with Stripe](./stripe-deploy.md) or [Deploy with Adyen](./adyen-deploy.md) documents)
 - Make a copy of `.env.sample` in `/app`, rename to `.env` and fill in the variables as per your environment
-- Use a tunneling app such as [ngrok](https://ngrok.com/) to create a public URL that is forwarding port 8080
+- Use a tunneling app such as [ngrok](https://ngrok.com/) to create a public URL that is forwarding port 8080. If using ngrok, the steps are as follows:
+  - [Download ngrok](https://ngrok.com/download)
+  - Unzip the executable
+  - From the command line, run the ngrok executable to start an HTTP tunnel, using port 8080: `./ngrok http 8080`
+  - Use the URL (e.g. https://\<unique-value\>.ngrok.io) from the output to replace `<public-forwarded-url>` in the steps below
 - Update the APIM delegation URL via the Azure Portal to point to `<public-forwarded-url>/apim-delegation`
 - If you are using Stripe, you will need to update the Stripe webhook endpoint URL to `<public-forwarded-url>/webhook/stripe`
 - If you are using Adyen, you will need to update the allowed origins to include `<public-forwarded-url>`
