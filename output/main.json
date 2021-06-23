@@ -332,7 +332,7 @@
             "value": "[parameters('location')]"
           },
           "delegationUrl": {
-            "value": "[format('{0}/apim-delegation', reference(resourceId('Microsoft.Resources/deployments', 'appServiceDeploy'), '2019-10-01').outputs.webSiteUrl.value)]"
+            "value": "[uri(format('https://{0}', reference(resourceId('Microsoft.Resources/deployments', 'appServiceDeploy'), '2019-10-01').outputs.webSiteUrl.value), 'apim-delegation')]"
           }
         },
         "template": {
@@ -1302,12 +1302,6 @@
           "functions": [],
           "resources": [
             {
-              "type": "Microsoft.ApiManagement/service/portalsettings",
-              "apiVersion": "2021-01-01-preview",
-              "name": "[format('{0}/{1}', parameters('apimServiceName'), 'delegation')]",
-              "dependsOn": []
-            },
-            {
               "type": "Microsoft.Web/sites/config",
               "apiVersion": "2020-06-01",
               "name": "[format('{0}/{1}', parameters('webSiteName'), 'appsettings')]",
@@ -1317,7 +1311,7 @@
                 "APIM_MANAGEMENT_URL": "[reference(resourceId('Microsoft.ApiManagement/service', parameters('apimServiceName')), '2020-12-01').managementApiUrl]",
                 "APIM_GATEWAY_URL": "[reference(resourceId('Microsoft.ApiManagement/service', parameters('apimServiceName')), '2020-12-01').gatewayUrl]",
                 "APIM_DEVELOPER_PORTAL_URL": "[reference(resourceId('Microsoft.ApiManagement/service', parameters('apimServiceName')), '2020-12-01').developerPortalUrl]",
-                "APIM_ADMIN_SUBSCRIPTION_KEY": "[reference(resourceId('Microsoft.ApiManagement/service/subscriptions', parameters('apimServiceName'), 'master'), '2020-12-01').primaryKey]",
+                "APIM_ADMIN_SUBSCRIPTION_KEY": "[reference(resourceId('Microsoft.ApiManagement/service/subscriptions', parameters('apimServiceName'), 'master'), '2019-01-01').primaryKey]",
                 "STRIPE_PUBLIC_KEY": "[parameters('stripePublicKey')]",
                 "STRIPE_API_KEY": "[parameters('stripeApiKey')]",
                 "WEBSITES_PORT": "[string(parameters('containerPort'))]",
@@ -1325,7 +1319,7 @@
                 "APIM_SERVICE_NAME": "[parameters('apimServiceName')]",
                 "APIM_SERVICE_AZURE_SUBSCRIPTION_ID": "[subscription().subscriptionId]",
                 "APIM_SERVICE_AZURE_RESOURCE_GROUP_NAME": "[resourceGroup().name]",
-                "APIM_DELEGATION_VALIDATION_KEY": "[reference(resourceId('Microsoft.ApiManagement/service/portalsettings', parameters('apimServiceName'), 'delegation')).validationKey]",
+                "APIM_DELEGATION_VALIDATION_KEY": "[reference(resourceId('Microsoft.ApiManagement/service/portalsettings', parameters('apimServiceName'), 'delegation'), '2021-01-01-preview').validationKey]",
                 "AZURE_AD_SERVICE_PRINCIPAL_APP_ID": "[parameters('servicePrincipalAppId')]",
                 "AZURE_AD_SERVICE_PRINCIPAL_PASSWORD": "[parameters('servicePrincipalPassword')]",
                 "AZURE_AD_SERVICE_PRINCIPAL_TENANT_ID": "[parameters('servicePrincipalTenantId')]",
@@ -1334,9 +1328,7 @@
                 "ADYEN_CLIENT_KEY": "[parameters('adyenClientKey')]",
                 "ADYEN_API_KEY": "[parameters('adyenApiKey')]"
               },
-              "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service/portalsettings', parameters('apimServiceName'), 'delegation')]"
-              ]
+              "dependsOn": []
             }
           ],
           "outputs": {
@@ -1356,7 +1348,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.3.126.58533",
-      "templateHash": "17417539756303121115"
+      "templateHash": "11470252150669467726"
     }
   }
 }

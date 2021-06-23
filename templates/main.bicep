@@ -116,7 +116,7 @@ module apimInstance './apim-instance.bicep' = {
     sku: apimSku
     skuCount: apimSkuCount
     location: location
-    delegationUrl: '${appService.outputs.webSiteUrl}/apim-delegation'
+    delegationUrl: uri('https://${appService.outputs.webSiteUrl}', 'apim-delegation')
   }
 }
 

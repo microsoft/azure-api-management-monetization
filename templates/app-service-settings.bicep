@@ -24,11 +24,11 @@ param servicePrincipalTenantId string
 resource apiManagementService 'Microsoft.ApiManagement/service@2020-12-01' existing = {
   name: apimServiceName
 
-  resource masterSubscription 'subscriptions' existing = {
+  resource masterSubscription 'subscriptions@2019-01-01' existing = {
     name: 'master'
   }
 
-  resource serviceDelegation 'portalsettings@2021-01-01-preview' = {
+  resource serviceDelegation 'portalsettings@2021-01-01-preview' existing = {
     name: 'delegation'
   }
 }
