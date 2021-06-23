@@ -3,10 +3,10 @@ import Stripe from "stripe";
 import { ApimService } from "./apimService";
 import { BillingService } from "./billingService";
 
-// Containing functionality relating to Stripe billing - updating usage records
+/** Containing functionality relating to Stripe billing - updating usage records */
 export class StripeBillingService implements BillingService {
 
-    // When unsubscribing from APIM product, we cancel the Stripe subscription to stop the consumer being billed.
+    /** When unsubscribing from APIM product, we cancel the Stripe subscription to stop the consumer being billed. */
     public async unsubscribe(apimSubscriptionId: string) {
         const stripe = new Stripe(process.env.STRIPE_API_KEY, {
             apiVersion: '2020-08-27',
@@ -25,7 +25,7 @@ export class StripeBillingService implements BillingService {
         await stripe.subscriptions.del(stripeSubscription.id);
     }
 
-    // Stripe automatically bills consumers monthly according to their usage. To support this, we report usage to Stripe throughout the month.
+    /** Stripe automatically bills consumers monthly according to their usage. To support this, we report usage to Stripe throughout the month. */
     public static async reportUsageToStripe(): Promise<number> {
 
         const apimService = new ApimService();

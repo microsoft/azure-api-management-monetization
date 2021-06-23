@@ -7,7 +7,7 @@ import { BillingService } from "../services/billingService";
 export const register = (app: express.Application, billingService: BillingService) => {
     const apimService = new ApimService();
 
-    // Delegated sign up/in, sign out and subscription creation for APIM
+    /** Delegated sign up/in, sign out and subscription creation for APIM */
     app.get("/apim-delegation", async (req, res) => {
         const operation = req.query.operation as string;
         const errorMessage = req.query.errorMessage as string;
@@ -93,9 +93,7 @@ export const register = (app: express.Application, billingService: BillingServic
         }
     });
 
-    // Create a subscription for the user
-    // This includes validating the request, retrieving the user, and redirecting them to checkout
-    // On successful checkout, the subscription will be created
+    /** Create a subscription for the user. This includes validating the request, retrieving the user, and redirecting them to checkout. On successful checkout, the subscription will be created. */
     app.post("/subscribe", async (req, res) => {
         const subscribeRequest: SubscriptionRequest = {
             operation: req.body.operation as string,
@@ -129,7 +127,7 @@ export const register = (app: express.Application, billingService: BillingServic
         res.redirect("/checkout?" + redirectQuery);
     });
 
-    // Checkout, using redirect to specific payment provider view
+    /** Checkout, using redirect to specific payment provider view */
     app.get("/checkout", async (req, res) => {
         const operation = req.query.operation as string;
         const userId = req.query.userId as string;
@@ -157,7 +155,7 @@ export const register = (app: express.Application, billingService: BillingServic
         res.render(`checkout-${process.env.PAYMENT_PROVIDER.toLowerCase()}`, { subscribeRequest, subscriptionName, userEmail, title: "Checkout" });
     });
 
-    // Sign in user using APIM authentication service
+    /** Sign in user using APIM authentication service */
     app.post("/signIn", async (req, res) => {
         const email = req.body.email as string;
         const password = req.body.password as string;
@@ -195,7 +193,7 @@ export const register = (app: express.Application, billingService: BillingServic
         res.redirect(redirectUrl);
     });
 
-    // Sign up user by creating a new user via the APIM service
+    /** Sign up user by creating a new user via the APIM service */
     app.post("/signUp", async (req, res) => {
         const email = req.body.email as string;
         const password = req.body.password as string;
@@ -268,7 +266,7 @@ export const register = (app: express.Application, billingService: BillingServic
         res.render("fail", { title: 'Payment Failed', checkoutUrl });
     });
 
-    // Checkout cancelled, redirect to payment cancelled view
+    /** Checkout cancelled, redirect to payment cancelled view */
     app.get("/cancel", (req, res) => {
         const subscribeRequest: SubscriptionRequest = {
             operation: req.query.operation as string,
