@@ -38,12 +38,6 @@
         "stripePublicKey": {
             "value": "" // Required if using Stripe
         },
-        "checkoutSuccessfulUrl": {
-            "value": ""
-        },
-        "checkoutCancelledUrl": {
-            "value": ""
-        },
         "adyenApiKey": {
             "value": "" // Required if using Adyen
         },
