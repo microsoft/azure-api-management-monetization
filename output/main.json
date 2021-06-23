@@ -1243,10 +1243,10 @@
           "containerPort": {
             "value": "[parameters('appServiceContainerPort')]"
           },
-          "servicePrincipalClientId": {
+          "servicePrincipalAppId": {
             "value": "[parameters('servicePrincipalAppId')]"
           },
-          "servicePrincipalClientSecret": {
+          "servicePrincipalPassword": {
             "value": "[parameters('servicePrincipalPassword')]"
           },
           "servicePrincipalTenantId": {
@@ -1301,10 +1301,10 @@
             "containerPort": {
               "type": "int"
             },
-            "servicePrincipalClientId": {
+            "servicePrincipalAppId": {
               "type": "string"
             },
-            "servicePrincipalClientSecret": {
+            "servicePrincipalPassword": {
               "type": "secureString"
             },
             "servicePrincipalTenantId": {
@@ -1338,8 +1338,8 @@
                 "APIM_SERVICE_AZURE_SUBSCRIPTION_ID": "[subscription().subscriptionId]",
                 "APIM_SERVICE_AZURE_RESOURCE_GROUP_NAME": "[resourceGroup().name]",
                 "APIM_DELEGATION_VALIDATION_KEY": "[reference(resourceId('Microsoft.ApiManagement/service/portalsettings', parameters('apimServiceName'), 'delegation')).validationKey]",
-                "AZURE_AD_SERVICE_PRINCIPAL_CLIENT_ID": "[parameters('servicePrincipalClientId')]",
-                "AZURE_AD_SERVICE_PRINCIPAL_CLIENT_SECRET": "[parameters('servicePrincipalClientSecret')]",
+                "AZURE_AD_SERVICE_PRINCIPAL_APP_ID": "[parameters('servicePrincipalAppId')]",
+                "AZURE_AD_SERVICE_PRINCIPAL_PASSWORD": "[parameters('servicePrincipalPassword')]",
                 "AZURE_AD_SERVICE_PRINCIPAL_TENANT_ID": "[parameters('servicePrincipalTenantId')]",
                 "PAYMENT_PROVIDER": "[parameters('paymentProvider')]",
                 "ADYEN_MERCHANT_ACCOUNT": "[parameters('adyenMerchantAccount')]",
@@ -1368,7 +1368,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.3.126.58533",
-      "templateHash": "14149328310999912785"
+      "templateHash": "12179717086984231355"
     }
   }
 }

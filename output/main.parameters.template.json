@@ -18,16 +18,16 @@
             "value": "apimpaymentproviderdemo" // Change this to a globally unique value
         },
         "servicePrincipalAppId": {
-            "value": "<The app ID of the service principal that the web app uses to manage APIM>"
+            "value": "<The app ID of the service principal created as part of pre-requisites>"
         },
         "servicePrincipalPassword": {
-            "value": "<The password for the service principal>"
+            "value": "<The password for the service principal created as part of pre-requisites>"
         },
         "servicePrincipalObjectId": {
-            "value": "<The object ID for the service principal>"
+            "value": "<The object ID for the service principal created as part of pre-requisites>"
         },
         "servicePrincipalTenantId": {
-            "value": "<The ID of the tenant that the service principal resides in>" 
+            "value": "<The ID of the tenant that the service principal created as part of pre-requisites resides in>" 
         },
         "paymentProvider":{
             "value": "Stripe" // Value should be Adyen or Stripe

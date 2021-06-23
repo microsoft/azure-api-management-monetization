@@ -141,8 +141,8 @@ export class ApimService {
     private async initialize() {
         if (!this.initialized) {
             const authResponse = await msRestNodeAuth.loginWithServicePrincipalSecretWithAuthResponse(
-                process.env.AZURE_AD_SERVICE_PRINCIPAL_CLIENT_ID,
-                process.env.AZURE_AD_SERVICE_PRINCIPAL_CLIENT_SECRET,
+                process.env.AZURE_AD_SERVICE_PRINCIPAL_APP_ID,
+                process.env.AZURE_AD_SERVICE_PRINCIPAL_PASSWORD,
                 process.env.AZURE_AD_SERVICE_PRINCIPAL_TENANT_ID
             );
 

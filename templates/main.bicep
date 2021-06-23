@@ -215,8 +215,8 @@ module appServiceSettings 'app-service-settings.bicep' = {
     stripeApiKey: stripeApiKey
     stripePublicKey: stripePublicKey
     containerPort: appServiceContainerPort
-    servicePrincipalClientId: servicePrincipalAppId
-    servicePrincipalClientSecret: servicePrincipalPassword
+    servicePrincipalAppId: servicePrincipalAppId
+    servicePrincipalPassword: servicePrincipalPassword
     servicePrincipalTenantId: servicePrincipalTenantId
     paymentProvider: paymentProvider
     adyenApiKey: adyenApiKey

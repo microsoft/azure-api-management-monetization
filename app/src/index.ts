@@ -29,7 +29,7 @@ app.use(
   }
 );
 
-const port = process.env.SERVER_PORT;
+const port = process.env.SERVER_PORT || 8080;
 
 app.use(expressLayouts)
 app.set("views", path.join(__dirname, "views"));
