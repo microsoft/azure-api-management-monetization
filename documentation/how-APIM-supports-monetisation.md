@@ -8,9 +8,15 @@ Microsoft's Azure API Management (APIM) platform has a range of built-in capabil
 
 This document highlights the APIM features that will enable key elements of your monetization strategy to be implemented.
 
+Use APIM to make your API public and provide consumers a frictionless experience to discover, enter payment details, activate their subscription, consume the API, monitor usage and automatically pay for their usage of the API.  The diagram below introduces the key features in APIM that enable this solution:
+
+![](architecture-overview.png)
+
+The remainder of this document describes these features in more detail:
+
 ### API Discovery
 
-Use the APIM developer portal to launch your API and onboard API consumers.  Place emphasis on developing good quality content for the developer portal that will enable API consumers to explore and use your APIs with as little friction as possible.  Ideally this should include testing with real API developers to check that the information provided is easy to fine, accurate, complete and intuitive.
+Use the APIM developer portal to launch your API and onboard API consumers.  Place emphasis on developing good quality content for the developer portal that will enable API consumers to explore and use your APIs with as little friction as possible.  Test the content with real API developers to check that the information provided is easy to fine, accurate, complete and intuitive.
 
 For details about how to add content and control the branding of the developer portal, see the [Overview of the developer portal](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-developer-portal)
 
@@ -84,4 +90,4 @@ In the sample projects, the ARM scripts are augmented by a JSON file which defin
 
 ## Initialisation and deployment
 
-This repository provides a sample project that puts the APIM features above into practice and integrating APIM with two popular payment platforms.  The steps required to deploy and initialise the sample project are provided in the [README](../README.md) and the [deployment and initialisation guide](Initialisation.md).
+This repository provides a sample project that puts the APIM features above into practice, integrating APIM with two popular payment platforms.  The steps required to deploy and initialise the demo project are provided in the [README](../README.md).

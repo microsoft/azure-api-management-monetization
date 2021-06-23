@@ -1,47 +1,59 @@
-# Deployment and initialisation guide
+# Deployment details
 
-Currently the easiest way to deploy this project is using the `Deploy to Azure` button in the Github repository.
-
-## Steps
-
-Run through the deployment steps set out in the [README](../README.md).
-
-### Additional steps explained
-
-#### Stripe initialisation
-
-If using Stripe as a payment provider, the products and prices will need to be updated. This is explained in more detail [here](Stripe.md).
+The following resources are deployed as part of the demo:
+- [API Management service](https://azure.microsoft.com/en-gb/services/api-management/) - setting up API Management resources required to support the demo project (APIs, Products, Policies, Named Values)
+- [App Service Plan](https://docs.microsoft.com/en-us/azure/app-service/overview)
+- [Web App for Containers](https://azure.microsoft.com/en-gb/services/app-service/containers/), using the billing portal app container image.
+- [Service Principal RBAC assignment](https://docs.microsoft.com/en-us/azure/role-based-access-control/overview)
 
 ## Technology
 
-This project is currently using [bicep](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/bicep-overview) for local development and deployment. Bicep is a templating language for declaratively deploying Azure resources. However, at the time of development the `Deploy to Azure` button does not support Bicep, so it must be decompiled into ARM templates prior to deployment. This happens when the solution is built (which is done by running the [build.ps1](../build.ps1) script, as outlined in the [README](../README.md)). 
+This project is currently using [bicep](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/bicep-overview) for local development and deployment. Bicep is a templating language for declaratively deploying Azure resources. However, at the time of development the `Deploy to Azure` button does not support Bicep, so it must be decompiled into an ARM template prior to deployment. This happens when the solution is built (which is done by running the [build.ps1](../build.ps1) script.
 
-The ARM templates which are generated on build can be found in the [/templates/generated](../templates/generated/) folder.
+The ARM template which is generated on build can be found in the [/output](../output/) folder.
 
-The deployment can then be run using the [deploy.ps1](../deploy.ps1) script (again as outlined in the [README](../README.md)).
+The deployment can then be run using the [deploy.ps1](../deploy.ps1) script (see steps in the [README](../README.md)).
 
 ## API Management Service
 
-Running the deploy.ps1 script deploys an instance of Azure API Management service. As part of this deployment we define a set of products, APIs (with accompanying policies) and named values. There is also a separate step which is used to update the email template for the subscription activation email, as explained above.
+Deploying the demo deploys an instance of Azure API Management service. As part of this deployment we define a set of products, APIs (with accompanying policies) and named values.
 
 ### Products 
 
-The products on the APIM instance are defined in [apiConfiguration/config.yaml](../apiConfiguration/config.yaml).
+The products on the APIM instance are defined as resources as part of the Bicep templates in [templates/apimmonetization-products.bicep](../templates/apimmonetization-products.bicep).
 
 An example product definition is as follows:
 
-```yaml
-name: basic
-displayName: Basic
-description: Basic tier with a monthly quota of 50,000 calls.
-terms: Terms here
-subscriptionRequired: true
-approvalRequired: true
-state: published
-policy: .\apiConfiguration\policies\products\basic.xml
+```bicep
+resource ApimServiceName_basic 'Microsoft.ApiManagement/service/products@2019-01-01' = {
+  properties: {
+    description: 'Basic tier with a monthly quota of 50,000 calls.'
+    terms: 'Terms here'
+    subscriptionRequired: true
+    approvalRequired: true
+    state: 'published'
+    displayName: 'Basic'
+  }
+  name: '${ApimServiceName}/basic'
+  dependsOn: []
+}
 ```
 
-Here we are defining the basic product. We define a name, display name, and description. We make it so that subscription is required in order to use this product, and approval is required before that subscription is activated. We also link to a policy file for that product. The policy file for the basic product is:
+Here we are defining the basic product. We define a name, display name, and description. We make it so that subscription is required in order to use this product, and approval is required before that subscription is activated. 
+
+We also have a separate resource to link to a policy file for that product. 
+
+```bicep
+resource ApimServiceName_basic_policy 'Microsoft.ApiManagement/service/products/policies@2019-01-01' = {
+  properties: {
+    value: concat(artifactsBaseUrl, '/apiConfiguration/policies/products/basic.xml')
+    format: 'xml-link'
+  }
+  name: '${ApimServiceName_basic.name}/policy'
+}
+```
+
+The policy file for the basic product is:
 
 ```xml
 <policies>
@@ -64,7 +76,7 @@ Here we are defining the basic product. We define a name, display name, and desc
 
 Here we are defining an inbound policy that limits a single subscription to 50,000 calls per month. It also adds a rate limiting policy to ensure that a single subscription is limited to 100 calls every minute. 
 
-The ARM templates for deploying these policies are generated from the [/templates/apimmonetization-productGroups bicep file](../templates/apimmonetization-productGroups.bicep). As part of deployment, we define who can access each product. For the following products:
+As part of deployment, we define who can access each product in the [/templates/apimmonetization-productGroups.bicep](../templates/apimmonetization-productGroups.bicep) Bicep file. For the following products:
 
 - Free
 - Developer
@@ -85,9 +97,9 @@ There are two APIs which are defined as part of the deployment of the APIM insta
 - The address API
 - The billing API
 
-The overall configuration of these APIs is also defined in [apiConfiguration/config.yaml](../apiConfiguration/config.yaml).
+The resources for these APIs are also defined as part of the Bicep templates, in [templates/apimmonetization-apis-billing.bicep](../templates/apimmonetization-apis-billing.bicep) and [templates/apimmonetization-apis-address.bicep](../templates/apimmonetization-apis-address.bicep).
 
-We can see that each API is linked to specific products.
+The links between APIs and products are defined in [templates/apimmonetization-productAPIs.bicep](../templates/apimmonetization-productAPIs.bicep).
 
 #### Address API
 
@@ -95,7 +107,7 @@ The address API is the example API which we are giving consumers access to via A
 
 See [apiConfiguration/openApi/address.yaml](../apiConfiguration/openApi/address.yaml) for the definition for this API.
 
-In [apiConfiguration/config.yaml](../apiConfiguration/config.yaml) we can also see that this API can be accessed using a range of policies: free, developer, payg, basic, standard, pro, enterprise. I.e. this is a consumer-facing API that can be accessed using any of the tiers.
+In [templates/apimmonetization-productAPIs.bicep](../templates/apimmonetization-productAPIs.bicep) we can also see that this API can be accessed using a range of products: free, developer, payg, basic, standard, pro, enterprise. I.e. this is a consumer-facing API that can be accessed using any of the tiers.
 
 This means that anyone that signs up to any of the above products will be able to access this API using their API key. However, depending on the product they may be limited to a specific number of calls per month, or a specific rate of calls per minute.
 
@@ -117,7 +129,7 @@ This API is only exposed under the `Admin` product and will not be exposed to co
 
 In summary, we have defined one internal (billing) and one external (address) API. The only API that consumers will be able to subscribe to (using the set of differently priced products) will be the address API.
 
-Each of these APIs and products is defined in [apiConfiguration/config.yaml](../apiConfiguration/config.yaml), and each has a set of policies defined, and an Open API definition attached.
+Each of these APIs and products is defined in the Bicep templates, and each has a set of policies defined, and an Open API definition attached.
 
 ### Named Values
 
@@ -139,4 +151,4 @@ Aside from APIM, the other resource that is deployed by the deployment script is
 
 As part of the main deployment, the billing portal app is deployed to [Azure Web App for Containers](https://azure.microsoft.com/en-gb/services/app-service/containers/). The container image is pulled from the [GitHub Container Registry](https://docs.github.com/en/packages/guides/about-github-container-registry) associated with this repo.
 
-Some additional configuration is added to the app as part of the payment provider initialisation, which is explained in more detail for both [Stripe](Stripe.md) and [Adyen](Adyen.md) separately.
+Some additional configuration is added to the app as part of the payment provider initialisation, which is explained in more detail for both [Stripe](./stripe-details.md) and [Adyen](./adyen-details.md) separately.
