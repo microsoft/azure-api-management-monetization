@@ -103,7 +103,6 @@ module appService 'app-service.bicep' = {
     webSiteName: appServiceName
     skuName: appServiceSkuName
     skuCapacity: appServiceSkuCapacity
-    apimServiceName: apimServiceName
     containerImage: appServiceContainerImage
   }
 }

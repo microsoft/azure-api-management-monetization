@@ -22,23 +22,9 @@ param skuCapacity int = 1
 param hostingPlanName string
 param webSiteName string
 
-param apimServiceName string
-
 param containerImage string
 
 var linuxFxVersion = 'DOCKER|${containerImage}'
-
-resource apiManagementService 'Microsoft.ApiManagement/service@2020-12-01' existing = {
-  name: apimServiceName
-
-  resource masterSubscription 'subscriptions' existing = {
-    name: 'master'
-  }
-
-  resource serviceDelegation 'portalsettings@2021-01-01-preview' = {
-    name: 'delegation'
-  }
-}
 
 resource hostingPlan 'Microsoft.Web/serverfarms@2020-12-01' = {
   name: hostingPlanName

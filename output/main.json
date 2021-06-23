@@ -212,9 +212,6 @@
           "skuCapacity": {
             "value": "[parameters('appServiceSkuCapacity')]"
           },
-          "apimServiceName": {
-            "value": "[parameters('apimServiceName')]"
-          },
           "containerImage": {
             "value": "[parameters('appServiceContainerImage')]"
           }
@@ -256,9 +253,6 @@
             "webSiteName": {
               "type": "string"
             },
-            "apimServiceName": {
-              "type": "string"
-            },
             "containerImage": {
               "type": "string"
             }
@@ -268,12 +262,6 @@
             "linuxFxVersion": "[format('DOCKER|{0}', parameters('containerImage'))]"
           },
           "resources": [
-            {
-              "type": "Microsoft.ApiManagement/service/portalsettings",
-              "apiVersion": "2021-01-01-preview",
-              "name": "[format('{0}/{1}', parameters('apimServiceName'), 'delegation')]",
-              "dependsOn": []
-            },
             {
               "type": "Microsoft.Web/serverfarms",
               "apiVersion": "2020-12-01",
@@ -1368,7 +1356,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.3.126.58533",
-      "templateHash": "12179717086984231355"
+      "templateHash": "17417539756303121115"
     }
   }
 }
