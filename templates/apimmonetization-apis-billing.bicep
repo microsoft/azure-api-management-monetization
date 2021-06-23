@@ -1,8 +1,14 @@
-param ApimServiceName string
+param apimServiceName string
 param serviceUrl object
 param artifactsBaseUrl string
 
-resource ApimServiceName_billing 'Microsoft.ApiManagement/service/apis@2019-01-01' = {
+resource apiManagementService 'Microsoft.ApiManagement/service@2020-12-01' existing = {
+  name: apimServiceName
+}
+
+resource billingApi 'Microsoft.ApiManagement/service/apis@2019-01-01' = {
+  parent: apiManagementService
+  name: 'billing'
   properties: {
     isCurrent: false
     subscriptionRequired: true
@@ -12,31 +18,31 @@ resource ApimServiceName_billing 'Microsoft.ApiManagement/service/apis@2019-01-0
     protocols: [
       'https'
     ]
-    value: concat(artifactsBaseUrl, '/apiConfiguration/openApi/billing.yaml')
+    value: '${artifactsBaseUrl}/apiConfiguration/openApi/billing.yaml'
     format: 'openapi-link'
   }
-  name: '${ApimServiceName}/billing'
-  dependsOn: []
-}
 
-resource ApimServiceName_billing_get_monetization_models_policy 'Microsoft.ApiManagement/service/apis/operations/policies@2019-01-01' = {
-  properties: {
-    value: concat(artifactsBaseUrl, '/apiConfiguration/policies/apis/billing-get_monetization_models.xml')
-    format: 'rawxml-link'
-  }
-  name: '${ApimServiceName}/billing/get_monetization_models/policy'
-  dependsOn: [
-    ApimServiceName_billing
-  ]
-}
+  resource getMonetizationModelsOperation 'operations' existing = {
+    name: 'get_monetization_models'
 
-resource ApimServiceName_billing_get_products_policy 'Microsoft.ApiManagement/service/apis/operations/policies@2019-01-01' = {
-  properties: {
-    value: concat(artifactsBaseUrl, '/apiConfiguration/policies/apis/billing-get_products.xml')
-    format: 'xml-link'
+    resource policy 'policies' = {
+      name: 'policy'
+      properties: {
+        value: '${artifactsBaseUrl}/apiConfiguration/policies/apis/billing-get_monetization_models.xml'
+        format: 'rawxml-link'
+      }
+    }
   }
-  name: '${ApimServiceName}/billing/get_products/policy'
-  dependsOn: [
-    ApimServiceName_billing
-  ]
+
+  resource getProductsOperation 'operations' existing = {
+    name: 'get_products'
+
+    resource policy 'policies' = {
+      name: 'policy'
+      properties: {
+        value: '${artifactsBaseUrl}/apiConfiguration/policies/apis/billing-get_products.xml'
+        format: 'xml-link'
+      }    
+    }
+  }
 }

@@ -1,8 +1,14 @@
-param ApimServiceName string
+param apimServiceName string
 param serviceUrl object
 param artifactsBaseUrl string
 
-resource ApimServiceName_address 'Microsoft.ApiManagement/service/apis@2019-01-01' = {
+resource apiManagementService 'Microsoft.ApiManagement/service@2020-12-01' existing = {
+  name: apimServiceName
+}
+
+resource addressApi 'Microsoft.ApiManagement/service/apis@2019-01-01' = {
+  parent: apiManagementService
+  name: 'address'
   properties: {
     isCurrent: false
     subscriptionRequired: true
@@ -12,20 +18,19 @@ resource ApimServiceName_address 'Microsoft.ApiManagement/service/apis@2019-01-0
     protocols: [
       'https'
     ]
-    value: concat(artifactsBaseUrl, '/apiConfiguration/openApi/address.yaml')
+    value: '${artifactsBaseUrl}/apiConfiguration/openApi/address.yaml'
     format: 'openapi-link'
   }
-  name: '${ApimServiceName}/address'
-  dependsOn: []
-}
 
-resource ApimServiceName_address_validate_address_policy 'Microsoft.ApiManagement/service/apis/operations/policies@2019-01-01' = {
-  properties: {
-    value: concat(artifactsBaseUrl, '/apiConfiguration/policies/apis/address-validate_address.xml')
-    format: 'xml-link'
+  resource validateAddressOperation 'operations' existing = {
+    name: 'validate_address'
+
+    resource policy 'policies' = {
+      name: 'policy'
+      properties: {
+        value: '${artifactsBaseUrl}/apiConfiguration/policies/apis/address-validate_address.xml'
+        format: 'xml-link'
+      }
+    }
   }
-  name: '${ApimServiceName}/address/validate_address/policy'
-  dependsOn: [
-    ApimServiceName_address
-  ]
 }

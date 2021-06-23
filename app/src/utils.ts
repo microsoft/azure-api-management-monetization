@@ -1,6 +1,6 @@
 export class Utils {
 
-    // This ensures that URLs for contacting the APIM service contain the Azure subscription, resource group ahd service name
+    /** This ensures that URLs for contacting the APIM service contain the Azure subscription, resource group and service name */
     public static ensureUrlArmified(resourceUrl: string): string {
         const regex = /subscriptions\/.*\/resourceGroups\/.*\/providers\/microsoft.ApiManagement\/service/i;
         const isArmUrl = regex.test(resourceUrl);

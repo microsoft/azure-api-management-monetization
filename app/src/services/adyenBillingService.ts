@@ -12,14 +12,16 @@ export interface Invoice {
     currency: string
 }
 
-// Contains functionality relating to Adyen billing - invoices and taking payment via users' saved payment methods
+/** Contains functionality relating to Adyen billing - invoices and taking payment via users' saved payment methods */
 export class AdyenBillingService implements BillingService {
     public async unsubscribe(apimSubscriptionId: string) {
-        // We only charge for active subscriptions, so not necessary to update any state here.
-        // You can add logic in here to e.g. bill the customer for a pro-rated month, or remove their saved payment details
+        /*
+            We only charge for active subscriptions, so not necessary to update any state here.
+            You can add logic in here to e.g. bill the customer for a pro-rated month, or remove their saved payment details
+        */
     }
 
-    // From the usage, calculate the invoices for all subscriptions for the past month
+    /** From the usage, calculate the invoices for all subscriptions for the past month */
     public static async calculateInvoices(month: number, year: number): Promise<Invoice[]> {
         const startDate = new Date(year, month, 1);
         let endDate = new Date(startDate);
@@ -123,7 +125,7 @@ export class AdyenBillingService implements BillingService {
         return invoices;
     }
 
-    // Use Adyen and the consumer's stored card details to take payment for an invoice
+    /** Use Adyen and the consumer's stored card details to take payment for an invoice */
     public static async takePaymentFromUser(invoice: Invoice) {
         const checkout = this.GetAdyenCheckout();
 
@@ -170,7 +172,7 @@ export class AdyenBillingService implements BillingService {
         }
     }
 
-    // Retrieve Adyen checkout API access client
+    /** Retrieve Adyen checkout API access client */
     public static GetAdyenCheckout() {
         const config = new Config();
         // Set your X-API-KEY with the API key from the Customer Area.
