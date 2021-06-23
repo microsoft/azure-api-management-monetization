@@ -76,7 +76,7 @@ $env:STRIPE_API_KEY = $StripeApiKey
 $monetizationModels = Invoke-WebRequest -Uri $ApimGatewayUrl/billing/monetizationModels -Headers @{"Ocp-Apim-Subscription-Key"=$ApimSubscriptionKey} | ConvertFrom-Json
 $apimProducts = Invoke-WebRequest -Uri $ApimGatewayUrl/billing/products -Headers @{"Ocp-Apim-Subscription-Key"=$ApimSubscriptionKey} | ConvertFrom-Json
 
-foreach ($model in $monetizationModels.result) {
+foreach ($model in $monetizationModels) {
     $apimProduct = $apimProducts.value | Where-Object { $_.name -eq $model.id }
     . $stripe post /v1/products  `
         -d "name=$($apimProduct.properties.displayName)"    `
