@@ -15,20 +15,20 @@ param adyenMerchantAccount string = ''
 
 param containerPort int
 
-param servicePrincipalClientId string
+param servicePrincipalAppId string
 
 @secure()
-param servicePrincipalClientSecret string
+param servicePrincipalPassword string
 param servicePrincipalTenantId string
 
 resource apiManagementService 'Microsoft.ApiManagement/service@2020-12-01' existing = {
   name: apimServiceName
 
-  resource masterSubscription 'subscriptions' existing = {
+  resource masterSubscription 'subscriptions@2019-01-01' existing = {
     name: 'master'
   }
 
-  resource serviceDelegation 'portalsettings@2021-01-01-preview' = {
+  resource serviceDelegation 'portalsettings@2021-01-01-preview' existing = {
     name: 'delegation'
   }
 }
@@ -55,8 +55,8 @@ resource webSiteAppSettings 'Microsoft.Web/sites/config@2020-06-01' = {
     APIM_SERVICE_AZURE_SUBSCRIPTION_ID: subscription().subscriptionId
     APIM_SERVICE_AZURE_RESOURCE_GROUP_NAME: resourceGroup().name
     APIM_DELEGATION_VALIDATION_KEY: apiManagementService::serviceDelegation.properties.validationKey
-    AZURE_AD_SERVICE_PRINCIPAL_CLIENT_ID: servicePrincipalClientId
-    AZURE_AD_SERVICE_PRINCIPAL_CLIENT_SECRET: servicePrincipalClientSecret
+    AZURE_AD_SERVICE_PRINCIPAL_APP_ID: servicePrincipalAppId
+    AZURE_AD_SERVICE_PRINCIPAL_PASSWORD: servicePrincipalPassword
     AZURE_AD_SERVICE_PRINCIPAL_TENANT_ID: servicePrincipalTenantId
     PAYMENT_PROVIDER: paymentProvider
     ADYEN_MERCHANT_ACCOUNT: adyenMerchantAccount

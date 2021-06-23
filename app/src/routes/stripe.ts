@@ -7,7 +7,7 @@ import { MonetizationService } from "../services/monetizationService";
 
 export const register = (app: express.Application) => {
 
-    // Create a new Stripe checkout session for the user
+    /** Create a new Stripe checkout session for the user */
     app.post(`/api/checkout/session`, async (req: any, res) => {
         const userEmail = req.body.userEmail;
         const apimUserId = req.body.apimUserId;
@@ -53,7 +53,7 @@ export const register = (app: express.Application) => {
         res.json({ id: session.id });
     });
 
-    // Listens for Stripe events for successful subscription creation, update or deletion
+    /** Listens for Stripe events for successful subscription creation, update or deletion */
     app.post(
         '/webhook/stripe',
         // Stripe requires the raw body to construct the event

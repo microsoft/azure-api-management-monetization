@@ -2,7 +2,7 @@ import { ProductContract } from "@azure/arm-apimanagement/esm/models";
 import fetch from "node-fetch";
 
 export class MonetizationService {
-    // Retrieve our defined monetization model for a given APIM product
+    /** Retrieve our defined monetization model for a given APIM product */
     public static async getMonetizationModelFromProduct(product: ProductContract) {
 
         const monetizationModelsUrl = `${process.env.APIM_GATEWAY_URL}/billing/monetizationModels`;

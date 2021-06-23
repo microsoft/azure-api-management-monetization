@@ -6,7 +6,7 @@ import { Guid } from "js-guid";
 
 export const register = (app: express.Application) => {
 
-  // Retrieve the available payment methods from Adyen for the merchant.
+  /** Retrieve the available payment methods from Adyen for the merchant. */
   app.post("/api/getPaymentMethods", async (req, res) => {
     try {
       const checkout = AdyenBillingService.GetAdyenCheckout();
@@ -22,7 +22,7 @@ export const register = (app: express.Application) => {
     }
   });
 
-  // Save a user's card details for future payments
+  /** Save a user's card details for future payments */
   app.post("/api/initiatePayment", async (req, res) => {
     try {
       const checkout = AdyenBillingService.GetAdyenCheckout();
@@ -56,7 +56,7 @@ export const register = (app: express.Application) => {
     }
   });
 
-  // Used to submit additional payment details
+  /** Used to submit additional payment details */
   app.post("/api/submitAdditionalDetails", async (req, res) => {
     // Create the payload for submitting payment details
     const payload = {
