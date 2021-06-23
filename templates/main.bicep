@@ -75,15 +75,15 @@ param appServiceContainerImage string = 'ghcr.io/microsoft/azure-api-management-
 @description('Port for the App Service container')
 param appServiceContainerPort int = 8000
 
-@description('The client ID of the service principal that the Web App uses to manage APIM')
-param servicePrincipalClientId string
+@description('The app ID of the service principal that the Web App uses to manage APIM')
+param servicePrincipalAppId string
 
 @description('The object ID of the service principal that the Web App uses to manage APIM')
 param servicePrincipalObjectId string
 
 @secure()
-@description('The client secret for the service principal')
-param servicePrincipalClientSecret string
+@description('The password for the service principal')
+param servicePrincipalPassword string
 
 @description('The AAD tenant in which the service principal resides')
 param servicePrincipalTenantId string
@@ -215,8 +215,8 @@ module appServiceSettings 'app-service-settings.bicep' = {
     stripeApiKey: stripeApiKey
     stripePublicKey: stripePublicKey
     containerPort: appServiceContainerPort
-    servicePrincipalClientId: servicePrincipalClientId
-    servicePrincipalClientSecret: servicePrincipalClientSecret
+    servicePrincipalClientId: servicePrincipalAppId
+    servicePrincipalClientSecret: servicePrincipalPassword
     servicePrincipalTenantId: servicePrincipalTenantId
     paymentProvider: paymentProvider
     adyenApiKey: adyenApiKey

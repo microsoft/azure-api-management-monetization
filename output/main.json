@@ -137,10 +137,10 @@
         "description": "Port for the App Service container"
       }
     },
-    "servicePrincipalClientId": {
+    "servicePrincipalAppId": {
       "type": "string",
       "metadata": {
-        "description": "The client ID of the service principal that the Web App uses to manage APIM"
+        "description": "The app ID of the service principal that the Web App uses to manage APIM"
       }
     },
     "servicePrincipalObjectId": {
@@ -149,10 +149,10 @@
         "description": "The object ID of the service principal that the Web App uses to manage APIM"
       }
     },
-    "servicePrincipalClientSecret": {
+    "servicePrincipalPassword": {
       "type": "secureString",
       "metadata": {
-        "description": "The client secret for the service principal"
+        "description": "The password for the service principal"
       }
     },
     "servicePrincipalTenantId": {
@@ -1244,10 +1244,10 @@
             "value": "[parameters('appServiceContainerPort')]"
           },
           "servicePrincipalClientId": {
-            "value": "[parameters('servicePrincipalClientId')]"
+            "value": "[parameters('servicePrincipalAppId')]"
           },
           "servicePrincipalClientSecret": {
-            "value": "[parameters('servicePrincipalClientSecret')]"
+            "value": "[parameters('servicePrincipalPassword')]"
           },
           "servicePrincipalTenantId": {
             "value": "[parameters('servicePrincipalTenantId')]"
@@ -1368,7 +1368,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.3.126.58533",
-      "templateHash": "13279679684278974458"
+      "templateHash": "14149328310999912785"
     }
   }
 }

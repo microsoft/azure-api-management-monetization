@@ -17,11 +17,11 @@
         "appServiceName": {
             "value": "apimpaymentproviderdemo" // Change this to a globally unique value
         },
-        "servicePrincipalClientId": {
-            "value": "<The client ID of the service principal that the web app uses to manage APIM>"
+        "servicePrincipalAppId": {
+            "value": "<The app ID of the service principal that the web app uses to manage APIM>"
         },
-        "servicePrincipalClientSecret": {
-            "value": "<The client secret for the service principal>"
+        "servicePrincipalPassword": {
+            "value": "<The password for the service principal>"
         },
         "servicePrincipalObjectId": {
             "value": "<The object ID for the service principal>"
