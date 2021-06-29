@@ -31,7 +31,7 @@ Follow these steps to implement the demo project:
 
 1. Choose the payment provider you want to implement - either [Stripe](https://stripe.com/) or [Adyen](https://www.adyen.com/).
 
-1. Read the overview: either [How to implement monetization with Azure API Management and Stripe](./documentation/stripe-deploy.md) or [How to implement monetization with Azure API Management and Adyen](./documentation/adyen-deploy.md) to understand more about Stripe / Adyen, how they integrate with APIM, the architecture adopted and the consumer flow through the solution.
+1. Read the overview: either [How to implement monetization with Azure API Management and Stripe](./documentation/stripe-details.md) or [How to implement monetization with Azure API Management and Adyen](./documentation/adyen-details.md) to understand more about Stripe / Adyen, how they integrate with APIM, the architecture adopted and the consumer flow through the solution.
 
 1. Follow the deployment instructions in either [Deploy demo with Stripe](./documentation/stripe-deploy.md) or [Deploy demo with Adyen](./documentation/adyen-deploy.md) to set up the pre-requisites, deploy the resources onto Azure and complete remaining steps post deployment to implement the demo project.
 

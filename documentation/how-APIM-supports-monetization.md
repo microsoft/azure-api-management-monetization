@@ -1,7 +1,5 @@
 # How APIM supports monetization
 
-## Azure API Management Service
-
 The [Azure API Management Service (APIM)](https://docs.microsoft.com/en-us/azure/api-management/) is an API management platform. Users of APIM can publish APIs, which consumers can then subscribe to. 
 
 Microsoft's Azure API Management (APIM) platform has a range of built-in capabilities that will enable you to de-risk implementation, accelerate project timescales and scale your APIs with confidence.
@@ -14,17 +12,17 @@ Use APIM to make your API public and provide consumers a frictionless experience
 
 The remainder of this document describes these features in more detail:
 
-### API Discovery
+## API Discovery
 
 Use the APIM developer portal to launch your API and onboard API consumers.  Place emphasis on developing good quality content for the developer portal that will enable API consumers to explore and use your APIs with as little friction as possible.  Test the content with real API developers to check that the information provided is easy to fine, accurate, complete and intuitive.
 
 For details about how to add content and control the branding of the developer portal, see the [Overview of the developer portal](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-developer-portal)
 
-### API Packaging
+## API Packaging
 
 APIM uses the concept of products and policies to manage how your APIs are packaged up and presented to users.
 
-#### Products
+### Products
 
 The APIs are published [via products](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-add-products). A product allows you to define which APIs a subscriber can access, and specific throttling [policies](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-policies) (to e.g. limit a specific subscription to a certain quota of calls per month).
 
@@ -34,7 +32,7 @@ Configure the APIM products to package your underlying API to mirror your revenu
 
 In the sample projects, APIM products are used as the top level means of codifying the monetization strategy.  The APIM products are set up to mirror the tiers in the revenue model and are used to index the specific pricing model that should be applied to each tier.  This enables a flexible, configuration driven approach to setting up the monetization strategy.
 
-#### Policies
+### Policies
 
 Apply APIM policies to control the quality of service for each product.  The sample projects use two specific policy features to control quality of service in line with the revenue model:
 
@@ -43,7 +41,7 @@ Apply APIM policies to control the quality of service for each product.  The sam
 
 For more details about policies, please refer to the [Policies in Azure API Management](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-policies) documentation.
 
-### API Consumption
+## API Consumption
 
 Use API subscriptions to enable API consumers to gain access to your APIs (via the products).
 
@@ -51,7 +49,7 @@ APIM subscriptions are established when an API consumer chooses to sign up to us
 
 For more information about subscriptions, please refer to the [Subscriptions in Azure API Management](https://docs.microsoft.com/en-us/azure/api-management/api-management-subscriptions) documentation.
 
-### API usage monitoring
+## API usage monitoring
 
 Use APIM's built-in analytics to gain insights about the usage and performance of your APIs.  This provides reports by API, geography, API operations, product, request, subscription, time, or user.
 
@@ -59,15 +57,15 @@ Review these reports regularly to understand how your monetization strategy is b
 
 See [Get API analytics in Azure API Management](https://docs.microsoft.com/en-us/azure/api-management/howto-use-analytics) for more details.
 
-### Security
+## Security
 
 Use APIM's products, API policies and subscriptions to control the level of access that users should gain to each product.  In the sample projects, to protect against misuse and abuse, access to the API is only granted via a subscription if the user has successfully authenticated with the payment provider, even if the specific API product is being offered for free.
 
-### Integration
+## Integration
 
 Create a seamless monetization experience for end users through both front end and back end integration between APIM and your chosen payment provider.  Use APIM delegation for front end integration and the REST API for back end integration.
 
-#### Delegation
+### Delegation
 
 The sample projects use [APIM delegation](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-setup-delegation) to "hand off" authentication to the payment provider.  This means that users can use their payment provider credentials to access APIM to create an integrated experience by allowing the user to adopt a single identity across both APIM and their chosen payment provider.
 
@@ -87,7 +85,7 @@ For the product delegation, it implements the following workflow:
 1. Delegation endpoint performs product subscription steps required for chosen payment provider (i.e. Stripe or Billing App) to authorise payment
 1. On success, the user is redirected back to the API Management product page they started from.  The product will be active and the API keys will be available
 
-#### REST API
+### REST API
 
 Use the REST API for APIM to automate the operation of your monetization strategy.
 
@@ -98,7 +96,7 @@ The sample projects use the API to programmatically:
 
 See [Azure API Management](https://docs.microsoft.com/en-us/rest/api/apimanagement/) for an overview of the REST API operations that are available.
 
-### DevOps
+## DevOps
 
 Use ARM to version control and automated deployment changes to APIM.  This approach should include the configuration of the APIM features that implement your monetization strategy such as products, policies and the developer portal.
 
@@ -106,4 +104,4 @@ In the sample projects, the ARM scripts are augmented by a JSON file which defin
 
 ## Initialisation and deployment
 
-This repository provides a sample project that puts the APIM features above into practice, integrating APIM with two popular payment platforms.  The steps required to deploy and initialise the demo project are provided in the [README](../README.md).
+APIM can be deployed either through the [Azure portal](https://portal.azure.com/) user interface or through a "infrastructure as code" approach using [ARM templates(https://azure.microsoft.com/en-gb/services/arm-templates/)].  This repository uses the ARM templates to deploy APIM - see [Deploy demo with Stripe](./documentation/stripe-deploy.md) or [Deploy demo with Adyen](./documentation/adyen-deploy.md) to run this process.
