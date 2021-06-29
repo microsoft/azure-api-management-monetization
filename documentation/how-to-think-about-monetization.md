@@ -68,7 +68,7 @@ Calculate the total cost of ownership for your API. This will include:
 
 Research the market to identify competitors. Analyse their monetization strategies. Understand the specific features (functional and non-functional) that they are offering with their API.
 
-### Step 4 - design the revenue model
+### Step 4 - design the revenue model[#revenue_model]
 
 Design a revenue model based on the outcome of the steps above. This is achieved by working across two dimensions:
 
@@ -81,7 +81,9 @@ The objective is to maximise the lifetime value (LTV) that you generate from eac
 - Keep the revenue model as simple as possible by balancing the need to provide choice with the risk of overwhelming customers with a confusing array of options. Keep the number of dimensions used to differentiate across the revenue model tiers as few as possible.
 - Be transparent by providing clear documentation about the different options and giving your customers tools to help choose the revenue model that best suits their needs.
 
-For example, to support the customer stages above, we would need six types of subscription:
+Identify the range of pricing models that will be required.  A pricing model describes a specific set of rules that the API Provider can use to turn consumption by the the API Consumer into revenue.
+
+For example, to support the seven customer lifecycle stages in the example above, we could leverage six different pricing models:
 
 - `Free` - enables the API Consumer to trial the API in an obligation and cost free way, to determine whether it fulfils a use case. This removes all barriers to entry.
 - `Freemium` - allows the API Consumer to use the API for free, but to transition into a paid for service as demand increases.
@@ -90,23 +92,23 @@ For example, to support the customer stages above, we would need six types of su
 - `Tier + Overage` - the API Consumer pays for a set amount of calls per month, and if they exceed this limit they pay a set amount per additional call.
 - `Unit` - the API Consumer pays for a set amount of call per month. If they exceed this limit they have to pay for another unit of calls.
 
-These are modelled in the sample project and are applied to the customer stages identified above as follows:
+The revenue model describes how we can create set of API products, which implement a specific pricing model, to target at a specific stage in the API Consumer lifecycle.
 
-| Customer Lifecycle Stage | Revenue model (APIM Product) | Subscription type  | Quality of Service (APIM Product Policies)                                                                  |
-|--------------------------|------------------------------|--------------------|-------------------------------------------------------------------------------------------------------------|
-| Investigation            | Free                         | Free               | Quota set to limit the Consumer to 100 calls / month                                                        |
-| Implementation           | Developer                    | Freemium           | No quota set - Consumer can continue to make & pay for calls, rate limit of 100 calls / minute              |
-| Preview                  | PAYG                         | Metered            | No quota set - Consumer can continue to make & pay for calls, rate limit of 200 calls / minute              |
-| Initial production usage | Basic                        | Tier               | Quota set to limit the Consumer to 50,000 calls / month, rate limit of 100 calls / minute                   |
-| Initial growth           | Standard                     | Tier + Overage     | No quota set - Consumer can continue to make & pay for additional calls, rate limit of 100 calls / minute   |
-| Scale                    | Pro                          | Tier + Overage     | No quota set - Consumer can continue to make & pay for additional calls, rate limit of 1,200 calls / minute |
-| Global growth            | Enterprise                   | Unit               | No quota set - Consumer can continue to make & pay for additional calls, rate limit of 3,500 calls / minute |
+To support the seven consumer lifecycle stages in the example above, the revenue model could be implemented as follows:
 
-An example of `Tier` pricing is the Basic product, in which a consumer pays $14.95 / month and can make up to 50,000 calls.
+| APIM Product | Customer lifecycle stage | Pricing model  | Pricing model configuration                                                                                                                                                | Quality of service (APIM Product Policies)                                                                  |
+|--------------|--------------------------|----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
+| Free         | Investigation            | Free           | Not implemented.                                                                                                                                                           | Quota set to limit the Consumer to 100 calls / month                                                        |
+| Developer    | Implementation           | Freemium       | `Metered`, graduated tiers, where the first tier flat amount is $0, next tiers per unit amount charge set to charge $0.20 / 100 calls                                      | No quota set - Consumer can continue to make & pay for calls, rate limit of 100 calls / minute              |
+| PAYG         | Preview                  | Metered        | `Metered` price set to charge Consumer $0.15 / 100 calls                                                                                                                   | No quota set - Consumer can continue to make & pay for calls, rate limit of 200 calls / minute              |
+| Basic        | Initial production usage | Tier           | `Licensed` price set to charge Consumer $14.95 / month                                                                                                                     | Quota set to limit the Consumer to 50,000 calls / month, rate limit of 100 calls / minute                   |
+| Standard     | Initial growth           | Tier + Overage | `Metered`, graduated tiers, where the first tier flat amount is $89.95 / month for first 100,000 calls, next tiers per unit amount charge set to charge $0.10 / 100 calls  | No quota set - Consumer can continue to make & pay for additional calls, rate limit of 100 calls / minute   |
+| Pro          | Scale                    | Tier + Overage | `Metered`, graduated tiers, where the first tier flat amount is $449.95 / month for first 500,000 calls, next tiers per unit amount charge set to charge $0.06 / 100 calls | No quota set - Consumer can continue to make & pay for additional calls, rate limit of 1,200 calls / minute |
+| Enterprise   | Global growth            | Unit           | `Metered`, graduated tiers, where every tier flat amount is $749.95 / month for 1,500,000 calls                                                                            | No quota set - Consumer can continue to make & pay for additional calls, rate limit of 3,500 calls / minute |
 
-An example of `Metered` pricing is the PAYG product, in which consumers are charged a flat rate of $0.15 / 100 calls. 
-
-An example of `Tier + Overage` pricing is the Standard product, in which consumers are charged $89.95 / month for 100,000 calls. And are charged an additional $0.10 / 100 additional calls.
+How to interpret the revenue model in the table above:
+- The "Basic" product is designed to support API consumers during the "initial produciton phase" of the lifecycle.  It is implemented by applying the `Tier` pricing model where a consumer pays $14.95 / month and can make up to 50,000 calls.  They will be rate limited to 100 calls / minute.
+- The "Pro" product is geared to support API consumers are in the "scale" phase of the lifecycle.  It is implemented by applying the `Tier + Overage` pricing model where consumers are $449.95 / month for first 500,000 calls. And are charged an additional $0.06 / 100 additional calls.  They are rate limited to 1,200 calls per minute.
 
 ### Step 5 - calibrate
 

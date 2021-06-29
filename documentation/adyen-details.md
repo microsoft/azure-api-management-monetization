@@ -1,31 +1,10 @@
 # How to implement monetization with Azure API Management and Adyen
 
-In this example we have created an API monetization model which consists of a pricing model and a revenue model, and demonstrates how these can be implemented by integrating Azure API Management (APIM) with Adyen.
+In this demo project we implement the example revenue model defined in [How to think about monetization](./documentation/how-to-think-about-monetization.md#revenue_model) to show how this can be implemented by integrating Azure API Management (APIM) with Adyen.
 
-The pricing model describes the different strategies the API Provider can use to provide access to the API Consumer:
+APIM and associated Billing App are configured to implement Products that mirror those defined in the revenue model (Free, Developer, PAYG, Basic, Standard, Pro, Enterprise). This allows API Consumers to browse, select a product and subscribe to it, all via the Development Portal.
 
-- `Free` - enables the API Consumer to trial the API in an obligation and cost free way, to determine whether it fulfils a use case. This removes all barriers to entry.
-- `Freemium` - allows the API Consumer to use the API for free, but to transition into a paid for service as demand increases.
-- `Metered` - the API Consumer can make as many calls as they want per month, and will pay a fixed amount per call.
-- `Tier` - the API Consumer pays for a set amount of calls per month, they cannot exceed this limit.
-- `Tier + Overage` - the API Consumer pays for a set amount of calls per month, and if they exceed this limit they pay an overage amount per additional call. If they regularly incur overage, it may be more economic to upgrade to the next tier.
-- `Unit` - the API Consumer pays for a set amount of call per month. If they exceed this limit they have to pay for another unit of calls.
-
-The revenue model describes how we can create products, which implement a specific monetization model, targeted at a specific API Consumer scenario:
-
-- `Free` - this implements the `Free` pricing model and enables the API Consumer to **investigate** your product.
-- `Developer` - this implements the `Freemium` pricing model and enables the API Consumer to **implement** your product.
-- `PAYG` - this implements the `Metered` pricing model and enables the API Consumer to **preview** their offering and understand initial demand.
-- `Basic` - this implements the `Tier` pricing model and enables the API Consumer's **initial production usage**.
-- `Standard` - this implements the `Tier + Overage` pricing model and supports the API Consumer's **initial growth**.
-- `Pro`  - this implements the `Tier + Overage` pricing model and supports the API Consumer's **scale** requirements.
-- `Enterprise` - this implements the `Unit` pricing model and supports the API Consumer's **global growth** requirements.
-
-In order to share these models between APIM and Adyen, they have been defined in the monetization models configuration file [payment/monetizationModels.json](../payment/monetizationModels.json).
-
-## Azure API Management Products 
-
-APIM is configured to create Products that mirror the revenue model (Free, Developer, PAYG, Basic, Standard, Pro, Enterprise). This allows API Consumers to browse, select a product and subscribe to it, all via the Development Portal.
+To deliver a consistent end-to-end API Consumer experience, the the APIM Product Policies and the configuration of the Billing App needs to be synchronized.  This is achieved through use of a shared configuration file [payment/monetizationModels.json](../payment/monetizationModels.json).
 
 ## Adyen 
 
