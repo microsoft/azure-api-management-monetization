@@ -1,6 +1,6 @@
 # How to implement monetization with Azure API Management and Adyen
 
-In this demo project we implement the example revenue model defined in [How to think about monetization](./documentation/how-to-think-about-monetization.md#design-the-revenue-model) to show how this can be implemented by integrating Azure API Management (APIM) with Adyen.
+In this demo project we implement the example revenue model that is defined in [How to think about monetization](./how-to-think-about-monetization.md#design-the-revenue-model) to show how this can be implemented by integrating Azure API Management (APIM) with Adyen.
 
 APIM and associated Billing App are configured to implement Products that mirror those defined in the revenue model (Free, Developer, PAYG, Basic, Standard, Pro, Enterprise). This allows API Consumers to browse, select a product and subscribe to it, all via the Development Portal.
 
@@ -67,7 +67,7 @@ We will then be able to use the saved card details for future transactions relat
 
 ### APIM Subscription created *(Step 9)*
 
-Once the consumer's payment details have been successfully tokenized, we create their APIM subscription so that they are now able to use their API keys to access the APIs provided under the product they signed up for. This is done as part of the same API call, so there is no need for a callback / webhook as is necessary with the [Stripe](Stripe.md) implementation.
+Once the consumer's payment details have been successfully tokenized, we create their APIM subscription so that they are now able to use their API keys to access the APIs provided under the product they signed up for. This is done as part of the same API call, so there is no need for a callback / webhook as is necessary with the [Stripe](./stripe-deploy.md) implementation.
 
 ### Billing *(Step 10)*
 

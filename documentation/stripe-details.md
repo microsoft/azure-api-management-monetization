@@ -1,6 +1,6 @@
 # How to implement monetization with Azure API Management and Stripe
 
-In this demo project we implement the example revenue model defined in [How to think about monetization](./documentation/how-to-think-about-monetization.md#design-the-revenue-model) to show how this can be implemented by integrating Azure API Management (APIM) with Stripe.
+In this demo project we implement the example revenue model that is defined in [How to think about monetization](./how-to-think-about-monetization.md#design-the-revenue-model) to show how this can be implemented by integrating Azure API Management (APIM) with Stripe.
 
 APIM and Stripe are configured to create Products that mirror those defined in the revenue model (Free, Developer, PAYG, Basic, Standard, Pro, Enterprise). This allows API Consumers to browse, select a product and subscribe to it, all via the Development Portal.
 
