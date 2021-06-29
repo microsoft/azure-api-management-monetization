@@ -92,9 +92,11 @@ For example, to support the seven customer lifecycle stages in the example above
 - `Tier + Overage` - the API Consumer pays for a set amount of calls per month, and if they exceed this limit they pay a set amount per additional call usually at a higher rate.
 - `Unit` - the API Consumer pays for a set amount of call per month. If they exceed this limit they have to pay for another unit of calls.
 
-The revenue model describes how we can create set of API products, each of which implements a specific pricing model, to target at a specific stage in the API Consumer lifecycle.
+The revenue model defines the set of API products, each of which implements a specific pricing model to target at a specific stage in the API Consumer lifecycle.
 
-To support the seven consumer lifecycle stages in the example above, the revenue model could be implemented as follows:
+In general, you should not expect the pricing models to change, but you should expect to adapt how these pricing models are configured and applied to create your revenue model, for example if you saw a competitor enter the market at a lower price point you may want to adjust your own prices accordingly.
+
+Bringing this to life, and building on the examples above, the pricing models could be applied to create an overall **revenue model** as follows:
 
 | APIM Product | Customer lifecycle stage | Pricing model    | Pricing model configuration                                                                                                                                     | Stripe configuration | Quality of service (APIM Product Policies)                                                                  |
 |--------------|--------------------------|------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------|-------------------------------------------------------------------------------------------------------------|
@@ -107,8 +109,8 @@ To support the seven consumer lifecycle stages in the example above, the revenue
 | Enterprise   | Global growth            | `Unit`           | Graduated tiers, where every tier flat amount is $749.95 / month for 1,500,000 calls                                                                            | Metered              | No quota set - Consumer can continue to make & pay for additional calls, rate limit of 3,500 calls / minute |
 
 How to interpret the revenue model based on the table above:
-- The "Basic" product is designed to support API consumers during the "initial produciton phase" of the lifecycle.  It is implemented by applying the `Tier` pricing model where a consumer pays $14.95 / month and can make up to 50,000 calls.  They will be rate limited to 100 calls / minute.
-- The "Pro" product is geared to support API consumers are in the "scale" phase of the lifecycle.  It is implemented by applying the `Tier + Overage` pricing model where consumers are $449.95 / month for first 500,000 calls. And are charged an additional $0.06 / 100 additional calls.  They are rate limited to 1,200 calls per minute.
+- The "Basic" product is designed to support API consumers during the "initial production phase" of the lifecycle.  It is implemented by applying the `Tier` pricing model where a consumer pays $14.95 / month and can make up to a maximum of 50,000 calls per month.  They will be rate limited to 100 calls / minute.
+- The "Pro" product is geared to support API consumers are in the "scale" phase of the lifecycle.  It is implemented by applying the `Tier + Overage` pricing model where consumers are $449.95 / month for first 500,000 calls. And are charged an additional $0.06 / 100 additional calls if they exceed that.  They are rate limited to 1,200 calls per minute.
 
 ### Step 5 - calibrate
 
