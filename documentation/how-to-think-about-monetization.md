@@ -70,20 +70,20 @@ Research the market to identify competitors. Analyse their monetization strategi
 
 ### Step 4 - design the revenue model
 
-Design a revenue model based on the outcome of the steps above. This is achieved by working across two dimensions:
+In this step you design a revenue model based on the output from the previous steps. The objective is to define a set of tiers in your revenue model that will support an API consumer as they move through the lifecycle.  This is achieved by working across two dimensions:
 
-- **Quality of service** - this can be controlled by setting caps and rate limits.
-- **Price**.
+- **Quality of service** - this can be controlled by setting caps on usage of the API and rate limits which throttle the usage.
+- **Price** - defining the unit price that will be paid for each API call.
 
-The objective is to maximise the lifetime value (LTV) that you generate from each customer by designing a revenue model that supports your customer at each stage of the customer journey.
+The objective is to maximise the lifetime value (LTV) that you generate from each customer by designing a revenue model that supports your customer at each stage of the customer journey:
 
-- Make it as easy as possible for your customers to scale and grow, by making it attractive to move up to the next tier in the revenue model. For example, by rewarding customers who purchase a higher volume of API calls with a lower unit price.
+- Make it as easy as possible for your customers to scale up by making it attractive to move up to the next tier in the revenue model. For example, by rewarding customers who purchase a higher volume of API calls with a lower unit price.
 - Keep the revenue model as simple as possible by balancing the need to provide choice with the risk of overwhelming customers with a confusing array of options. Keep the number of dimensions used to differentiate across the revenue model tiers as few as possible.
 - Be transparent by providing clear documentation about the different options and giving your customers tools to help choose the revenue model that best suits their needs.
 
-Identify the range of pricing models that will be required.  A pricing model describes a specific set of rules that the API Provider can use to turn consumption by the the API Consumer into revenue.
+First, identify the range of pricing models that will be required.  A pricing model describes a specific set of rules that the API Provider can use to turn consumption by the the API Consumer into revenue.
 
-For example, to support the seven customer lifecycle stages in the example above, we could leverage six different pricing models:
+For example, to support the seven customer lifecycle stages in the example above, we could define six different pricing models:
 
 - `Free` - enables the API Consumer to trial the API in an obligation and cost free way, to determine whether it fulfils a use case. This removes all barriers to entry.
 - `Freemium` - allows the API Consumer to use the API for free, but to transition into a paid for service as demand increases.
@@ -92,7 +92,7 @@ For example, to support the seven customer lifecycle stages in the example above
 - `Tier + Overage` - the API Consumer pays for a set amount of calls per month, and if they exceed this limit they pay a set amount per additional call.
 - `Unit` - the API Consumer pays for a set amount of call per month. If they exceed this limit they have to pay for another unit of calls.
 
-The revenue model describes how we can create set of API products, which implement a specific pricing model, to target at a specific stage in the API Consumer lifecycle.
+The revenue model describes how we can create set of API products, each of which implements a specific pricing model, to target at a specific stage in the API Consumer lifecycle.
 
 To support the seven consumer lifecycle stages in the example above, the revenue model could be implemented as follows:
 
@@ -106,7 +106,7 @@ To support the seven consumer lifecycle stages in the example above, the revenue
 | Pro          | Scale                    | Tier + Overage | `Metered`, graduated tiers, where the first tier flat amount is $449.95 / month for first 500,000 calls, next tiers per unit amount charge set to charge $0.06 / 100 calls | No quota set - Consumer can continue to make & pay for additional calls, rate limit of 1,200 calls / minute |
 | Enterprise   | Global growth            | Unit           | `Metered`, graduated tiers, where every tier flat amount is $749.95 / month for 1,500,000 calls                                                                            | No quota set - Consumer can continue to make & pay for additional calls, rate limit of 3,500 calls / minute |
 
-How to interpret the revenue model in the table above:
+How to interpret the revenue model based on the table above:
 - The "Basic" product is designed to support API consumers during the "initial produciton phase" of the lifecycle.  It is implemented by applying the `Tier` pricing model where a consumer pays $14.95 / month and can make up to 50,000 calls.  They will be rate limited to 100 calls / minute.
 - The "Pro" product is geared to support API consumers are in the "scale" phase of the lifecycle.  It is implemented by applying the `Tier + Overage` pricing model where consumers are $449.95 / month for first 500,000 calls. And are charged an additional $0.06 / 100 additional calls.  They are rate limited to 1,200 calls per minute.
 
@@ -123,7 +123,7 @@ Calibrate the pricing across the revenue model to:
 Choose an appropriate solution to collect payment for usage of your APIs.  Providers tend to fall into two groups:
 
 - Payment platforms (e.g. Stripe) - calculate the payment based on the raw API usage metrics by applying the specific revenue model that the customer has chosen.  Therefore, the payment platform needs to be configured to reflect your monetization strategy.
-- Payment providers (e.g. Adyen) - are only concerned with the facilitating the payment transaction.  Therefore, you will need to apply your monetization strategy (i.e. translate API usage metrics into a payment) prior to calling this service.
+- Payment providers (e.g. Adyen) - are only concerned with the facilitating the payment transaction.  Therefore, you will need to apply your pricing model (i.e. translate API usage metrics into a payment) prior to calling this service.
 
 Use Microsoft's Azure API Management (APIM) to accelerate and de-risk the implementation by using built-in capabilities provided in APIM.  See [How APIM supports monetization](how-APIM-supports-monetization.md) for more details about the specific features in APIM that can be leveraged to support implementation.
 
