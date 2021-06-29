@@ -86,7 +86,7 @@ See [Azure API Management](https://docs.microsoft.com/en-us/rest/api/apimanageme
 
 Use ARM to version control and automated deployment changes to APIM.  This approach should include the configuration of the APIM features that implement your monetization strategy such as products, policies and the developer portal.
 
-In the sample projects, the ARM scripts are augmented by a JSON file which defines the pricing model for each of the APIM products.  This enables the configuration between APIM and the chosen payment provider to be synchronised.  This approach means that the entire solution is managed under a single source control repository, such that all changes associated with the ongoing evolution of the monetisation strategy can be coordinated as a single release and carried out in accordance with governance & auditing requirements.
+In the sample projects, the ARM scripts are augmented by a JSON file which defines the pricing model for each of the APIM products.  This enables the configuration between APIM and the chosen payment provider to be synchronised.  This approach means that the entire solution is managed under a single source control repository, such that all changes associated with the ongoing evolution of the monetization strategy can be coordinated as a single release and carried out in accordance with governance & auditing requirements.
 
 ## Initialisation and deployment
 

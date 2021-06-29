@@ -120,10 +120,10 @@ Calibrate the pricing across the revenue model to:
 
 Choose an appropriate solution to collect payment for usage of your APIs.  Providers tend to fall into two groups:
 
-- Payment platforms (e.g. Stripe) - calculate the payment based on the raw API usage metrics by applying the specific revenue model that the customer has chosen.  Therefore, the payment platform needs to be configured to reflect your monetisation strategy.
-- Payment providers (e.g. Adyen) - are only concerned with the facilitating the payment transaction.  Therefore, you will need to apply your monetisation strategy (i.e. translate API usage metrics into a payment) prior to calling this service.
+- Payment platforms (e.g. Stripe) - calculate the payment based on the raw API usage metrics by applying the specific revenue model that the customer has chosen.  Therefore, the payment platform needs to be configured to reflect your monetization strategy.
+- Payment providers (e.g. Adyen) - are only concerned with the facilitating the payment transaction.  Therefore, you will need to apply your monetization strategy (i.e. translate API usage metrics into a payment) prior to calling this service.
 
-Use Microsoft's Azure API Management (APIM) to accelerate and de-risk the implementation by using built-in capabilities provided in APIM.  See [How APIM supports monetization](how-APIM-supports-monetisation.md) for more details about the specific features in APIM that can be leveraged to support implementation.
+Use Microsoft's Azure API Management (APIM) to accelerate and de-risk the implementation by using built-in capabilities provided in APIM.  See [How APIM supports monetization](how-APIM-supports-monetization.md) for more details about the specific features in APIM that can be leveraged to support implementation.
 
 Use the same approach as the sample project to implement a solution that builds flexibility into how you codify your monetization strategy in the underlying systems.  This will enable you to respond dynamically and to make minimise the risk and cost of making changes.
 
