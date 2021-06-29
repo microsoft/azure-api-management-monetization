@@ -4,6 +4,8 @@
 
 If you want to make modifications to the infrastructure templates, you will need to run a build script in order to generate a new ARM template output for deployment. Run the `build.ps1` PowerShell script at the root of the repo.
 
+This build script will generate deployment scripts for all Azure resources required to support the demo project - see the [deployment details](./deployment-details.md) for more details.
+
 The build script executes the following steps:
 
 1. Installs the Bicep CLI into the `build` folder

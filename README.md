@@ -10,16 +10,16 @@ To use this demo, you will need to deploy the solution into your own Azure subsc
 
 ### Table of contents
 
-| Document                                                                                               | Purpose 
-|--------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
-| [How to think about monetization](./documentation/how-to-think-about-monetization.md)                  | Makes recommendations about how to design a successful monetization strategy for your API.             |
-| [How APIM supports monetization](./documentation/how-APIM-supports-monetization.md)                    | Provides an overview of the APIM features that can be used to accelerate and de-risk API monetization. |
-| [Deploy demo with Adyen](./documentation/adyen-deploy.md)                                              | End to end deployment steps to implement the demo project with Adyen as payment provider.              |
-| [How to implement monetization with Azure API Management and Adyen](./documentation/adyen-deploy.md)   | Describes how the Adyen integration has been implemented and the user flow through the solution.       |
-| [Deploy demo with Stripe](./documentation/stripe-deploy.md)                                            | End to end deployment steps to implement the demo project with Stripe as payment provider.             |
-| [How to implement monetization with Azure API Management and Stripe](./documentation/stripe-deploy.md) | Describes how the Stripe integration has been implemented and the user flow through the solution.      |
-| [Deployment details](./documentation/deployment-details.md)                                            | Details the resources that are deployed and the approach taken to script the deployment.               |
-| [Advanced steps](./documentation/advanced-steps.md)                                                    | Details of advanced steps to modify the infrastructure templates and run the billing app locally.      |
+| Document                                                                                                | Purpose 
+|---------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
+| [How to think about monetization](./documentation/how-to-think-about-monetization.md)                   | Makes recommendations about how to design a successful monetization strategy for your API.             |
+| [How APIM supports monetization](./documentation/how-APIM-supports-monetization.md)                     | Provides an overview of the APIM features that can be used to accelerate and de-risk API monetization. |
+| [How to implement monetization with Azure API Management and Stripe](./documentation/stripe-details.md) | Describes how the Stripe integration has been implemented and the user flow through the solution.      |
+| [Deploy demo with Stripe](./documentation/stripe-deploy.md)                                             | End to end deployment steps to implement the demo project with Stripe as payment provider.             |
+| [How to implement monetization with Azure API Management and Adyen](./documentation/adyen-details.md)   | Describes how the Adyen integration has been implemented and the user flow through the solution.       |
+| [Deploy demo with Adyen](./documentation/adyen-deploy.md)                                               | End to end deployment steps to implement the demo project with Adyen as payment provider.              |
+| [Deployment details](./documentation/deployment-details.md)                                             | Details the resources that are deployed and the approach taken to script the deployment.               |
+| [Advanced steps](./documentation/advanced-steps.md)                                                     | Details of advanced steps to modify the infrastructure templates and run the billing app locally.      |
 
 ## Steps to follow
 
