@@ -26,3 +26,7 @@ If you are making changes to the billing portal app and want to run the app loca
 - If you are using Adyen, you will need to update the allowed origins to include `<public-forwarded-url>`
 - Run `npm run dev` from the `/app` folder to start the app
 - If running from VS Code, to enable debugging, open the command palette, select 'Debug: Toggle Auto Attach' and set to 'Smart'
+
+## Re-building the docker image 
+
+If you make code changes to the custom billing portal app, you will need to re-build the docker image from `app/Dockerfile` and publish it to a publicly accessible container registry. When deploying, set the value of the `appServiceContainerImage` parameter to the URL for your published container image.
