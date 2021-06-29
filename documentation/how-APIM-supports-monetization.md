@@ -84,8 +84,8 @@ For the product delegation, it implements the following workflow:
 
 1. Developer selects a product in the API Management developer portal and clicks on the Subscribe button
 1. Browser is redirected to the delegation endpoint - in this case either Stripe or the Billing App for Adyen
-1. Delegation endpoint performs required product subscription steps required for chosen payment provider (i.e. Stripe or Adyen) to authorise payment
-1. On success, the user is redirected back to the API Management developer product page they started from at which point the product will be active and the API keys will be available
+1. Delegation endpoint performs product subscription steps required for chosen payment provider (i.e. Stripe or Billing App) to authorise payment
+1. On success, the user is redirected back to the API Management product page they started from.  The product will be active and the API keys will be available
 
 #### REST API
 
