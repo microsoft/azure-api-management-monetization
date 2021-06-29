@@ -68,7 +68,7 @@ Calculate the total cost of ownership for your API. This will include:
 
 Research the market to identify competitors. Analyse their monetization strategies. Understand the specific features (functional and non-functional) that they are offering with their API.
 
-### Step 4 - design the revenue model[#revenue_model]
+### Step 4 - design the revenue model
 
 Design a revenue model based on the outcome of the steps above. This is achieved by working across two dimensions:
 
