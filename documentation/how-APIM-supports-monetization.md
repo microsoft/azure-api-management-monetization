@@ -67,23 +67,23 @@ Create a seamless monetization experience for end users through both front end a
 
 ### Delegation
 
-The sample projects use [APIM delegation](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-setup-delegation) to "hand off" authentication to the payment provider.  This means that users can use their payment provider credentials to access APIM to create an integrated experience by allowing the user to adopt a single identity across both APIM and their chosen payment provider.
+The sample projects use [APIM delegation](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-setup-delegation) to allow custom integrations to be made with the third-party payment providers.
 
-The demo uses delegation at the both the developer portal and product level.
+The demo uses delegation for both the sign up/sign in and product subscription experiences.
 
-For the developer portal, it implements the following workflow:
+For sign up/sign in, it implements the following workflow:
 
 1. Developer clicks on the sign in or sign up link at the API Management developer portal
-1. Browser is redirected to the delegation endpoint - based on the payment provider you choose this will be with Stripe or Adyen
-1. Delegation endpoint (i.e. Stripe or Adyen) presents a UI asking user to sign in or sign up
-1. On success, the user is redirected back to the API Management developer portal page they started from authenticated using the payment provider credentials
+2. Browser is redirected to the delegation endpoint - which is configured to be a page in the custom billing portal app.
+3. Custom app presents a UI asking user to sign in or sign up
+4. On success, the user is redirected back to the API Management developer portal page they started from, authenticated.
 
-For the product delegation, it implements the following workflow:
+For the product subscription delegation, it implements the following workflow:
 
 1. Developer selects a product in the API Management developer portal and clicks on the Subscribe button
-1. Browser is redirected to the delegation endpoint - in this case either Stripe or the Billing App for Adyen
-1. Delegation endpoint performs product subscription steps required for chosen payment provider (i.e. Stripe or Billing App) to authorise payment
-1. On success, the user is redirected back to the API Management product page they started from.  The product will be active and the API keys will be available
+1. Browser is redirected to the delegation endpoint - which is configured to be a page in the custom billing portal app.
+1. Custom app presents a UI which is dependent on the payment provider configured (Stripe or Adyen) and be taken through the relevant checkout process.
+2. On success, the user is redirected back to the API Management product page they started from.  The product will be active and the API keys will be available
 
 ### REST API
 
