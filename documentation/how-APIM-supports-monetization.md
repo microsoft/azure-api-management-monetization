@@ -1,12 +1,10 @@
 # How APIM supports monetization
 
-The [Azure API Management Service (APIM)](https://docs.microsoft.com/en-us/azure/api-management/) is an API management platform. Users of APIM can publish APIs, which consumers can then subscribe to. 
+[Azure API Management (APIM)](https://docs.microsoft.com/en-us/azure/api-management/) has a range of built-in capabilities that will enable you to de-risk implementation, accelerate project timescales and scale your APIs with confidence.
 
-Microsoft's Azure API Management (APIM) platform has a range of built-in capabilities that will enable you to de-risk implementation, accelerate project timescales and scale your APIs with confidence.
+This document **focuses on the APIM features that will enable your monetization strategy to be implemented**.  It highlights how you can use APIM to provide consumers with a frictionless experience to discover your public APIs, enter payment details, activate their subscription, consume the API, monitor usage and automatically pay for their usage of the API.
 
-This document highlights the APIM features that will enable key elements of your monetization strategy to be implemented.
-
-Use APIM to make your API public and provide consumers a frictionless experience to discover, enter payment details, activate their subscription, consume the API, monitor usage and automatically pay for their usage of the API.  The diagram below introduces the key features in APIM that enable this solution:
+The diagram below introduces the key features in APIM that enable this solution:
 
 ![](architecture-overview.png)
 
@@ -14,7 +12,7 @@ The remainder of this document describes these features in more detail:
 
 ## API Discovery
 
-Use the APIM developer portal to launch your API and onboard API consumers.  Place emphasis on developing good quality content for the developer portal that will enable API consumers to explore and use your APIs with as little friction as possible.  Test the content with real API developers to check that the information provided is easy to fine, accurate, complete and intuitive.
+Use APIM's built-in developer portal (available "out of the box") to launch your API and onboard API consumers.  Place emphasis on developing good quality content for the developer portal that will enable API consumers to explore and use your APIs with as little friction as possible.  Test the content with real API developers to check that the information provided is easy to fine, accurate, complete and intuitive.
 
 For details about how to add content and control the branding of the developer portal, see the [Overview of the developer portal](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-developer-portal)
 
