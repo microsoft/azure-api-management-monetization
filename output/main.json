@@ -1319,7 +1319,7 @@
                 "APIM_SERVICE_NAME": "[parameters('apimServiceName')]",
                 "APIM_SERVICE_AZURE_SUBSCRIPTION_ID": "[subscription().subscriptionId]",
                 "APIM_SERVICE_AZURE_RESOURCE_GROUP_NAME": "[resourceGroup().name]",
-                "APIM_DELEGATION_VALIDATION_KEY": "[reference(resourceId('Microsoft.ApiManagement/service/portalsettings', parameters('apimServiceName'), 'delegation'), '2021-01-01-preview').validationKey]",
+                "APIM_DELEGATION_VALIDATION_KEY": "[reference(resourceId('Microsoft.ApiManagement/service/portalsettings', parameters('apimServiceName'), 'delegation'), '2018-01-01').validationKey]",
                 "AZURE_AD_SERVICE_PRINCIPAL_APP_ID": "[parameters('servicePrincipalAppId')]",
                 "AZURE_AD_SERVICE_PRINCIPAL_PASSWORD": "[parameters('servicePrincipalPassword')]",
                 "AZURE_AD_SERVICE_PRINCIPAL_TENANT_ID": "[parameters('servicePrincipalTenantId')]",
@@ -1348,7 +1348,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.3.126.58533",
-      "templateHash": "11470252150669467726"
+      "templateHash": "11207053819091724405"
     }
   }
 }

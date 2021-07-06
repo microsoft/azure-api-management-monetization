@@ -28,7 +28,7 @@ resource apiManagementService 'Microsoft.ApiManagement/service@2020-12-01' exist
     name: 'master'
   }
 
-  resource serviceDelegation 'portalsettings@2021-01-01-preview' existing = {
+  resource serviceDelegation 'portalsettings@2018-01-01' existing = {
     name: 'delegation'
   }
 }
