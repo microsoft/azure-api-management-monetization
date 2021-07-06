@@ -41,7 +41,9 @@ The following diagram illustrates the components of the solution across APIM, th
 
 ## API Consumer flow
 
-The Consumer flow is as follows:
+This section describes the end to end user journey that the solution is seeking to support.  The API Consumer is typically a developer who has been tasked with integrating their organisation's own application with your API.  The API Consumer flow therefore aims to support getting the user from the point of discovering the API, through being to consume the API, to paying for the usage.
+
+The API Consumer flow is as follows:
 
 1. Consumer selects sign up in the APIM developer portal.
 2. Consumer is redirected to the billing portal app to register their account (via [APIM delegation](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-setup-delegation)).
