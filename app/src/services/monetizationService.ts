@@ -9,7 +9,7 @@ export class MonetizationService {
 
         const monetizationModelsResponse = await fetch(monetizationModelsUrl, { method: "GET", headers: { "Ocp-Apim-Subscription-Key": process.env.APIM_ADMIN_SUBSCRIPTION_KEY } });
 
-        const monetizationModels = (await monetizationModelsResponse.json()).result;
+        const monetizationModels = (await monetizationModelsResponse.json());
 
         const monetizationModel = monetizationModels.find((x: { id: any; }) => x.id === product.name);
 
