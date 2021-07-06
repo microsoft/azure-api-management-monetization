@@ -15,7 +15,6 @@ You will need to [create an Adyen test account](https://www.adyen.com/signup).
 
 - [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7.1) - version 7.1 or later
 - [Az CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) - version 2.21.0 or later
-- [NodeJS](https://nodejs.org/en/download/) - version 14.16.1 or later
 
 ### Service Principal
 
