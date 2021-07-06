@@ -35,6 +35,8 @@ The following table defines how the revenue model is configured in APIM and Stri
 
 ## Architecture
 
+The following diagram illustrates the components of the solution across APIM, the Billing App (both hosted on Azure) and Stripe.  It also shows the major integration flows between components, including the interactions between the API Consumer (both developer and application) and the solution.
+
 ![](./architecture-stripe.png)
 
 ## API Consumer flow

@@ -14,6 +14,8 @@ Adyen allows you to [tokenize](https://docs.adyen.com/online-payments/tokenizati
 
 ## Architecture
 
+The following diagram illustrates the components of the solution across APIM, the Billing App (both hosted on Azure) and Adyen.  It also shows the major integration flows between components, including the interactions between the API Consumer (both developer and application) and the solution.
+
 ![](./architecture-adyen.png)
 
 ## API Consumer flow

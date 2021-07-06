@@ -41,7 +41,7 @@ Follow these steps to implement the demo project:
 
 ## Architecture
 
-The following diagram illustrates the high level architecture this demo has adopted to integrate API Management with a payment provider:
+The following diagram illustrates the high level architecture this demo has adopted to integrate API Management with a payment provider, showing the components of the solution across APIM, the Billing App (both hosted on Azure) and the payment provider.  It also highlights the major integration flows between components, including the interactions between the API Consumer (both developer and application) and the solution:
 
 ![](documentation/architecture-overview.png)
 
