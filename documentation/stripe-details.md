@@ -131,3 +131,7 @@ To do this, we register a daily cron job which runs a function for querying usag
 ### Subscription suspended *(Step 11)*
 
 The webhook listener also listens for `customer.subscription.updated` and `customer.subscription.deleted` events. If the subscription is cancelled or moves into an unpaid state, we update the APIM subscription into a suspended state so that the Consumer can no longer access our APIs.
+
+## Next steps
+
+Follow [Deploy demo with Stripe](stripe-deploy.md) to deploy the solution described in this document.

@@ -137,3 +137,7 @@ The invoices are then passed unto the `takePaymentViaAdyen` function. This uses 
 ### Subscription suspended *(Step 11)*
 
 If the payment fails, we then put the APIM subscription into a suspended state.
+
+## Next steps
+
+Follow [Deploy demo with Adyen](adyen-deploy.md) to deploy the solution described in this document.
