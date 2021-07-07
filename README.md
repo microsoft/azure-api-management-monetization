@@ -37,7 +37,7 @@ Follow these steps to implement the demo project:
 
 1. Reference [Deployment details](./documentation/deployment-details.md) to get more detail about the resources that are being deployed and how this has been scripted.
 
-1. Reference [Advanced steps](./documentation/advanced-steps.md) if you want to modify the infrastructure templates used by the billing app or run the billing app locally.
+1. Reference [Advanced steps](./documentation/advanced-steps.md) if you want to modify the infrastructure templates or run the billing app locally.
 
 ## Architecture
 
