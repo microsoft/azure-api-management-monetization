@@ -16,11 +16,19 @@ You will need to [create an Adyen test account](https://www.adyen.com/signup).
 - [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7.1) - version 7.1 or later
 - [Az CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) - version 2.21.0 or later
 
+### Azure Subscription
+
+This demo project deploys a range of artifacts to Azure.  Therefore, you will need admin access to an active Azure subscription.
+
+If you do not have an Azure subscription, you can set up a free trial [here](https://azure.microsoft.com/).
+
 ### Service Principal
 
-In order to run the deployment, you will need a service principal set up in the AAD tenant that will be used by the Web App to update the status of APIM subscriptions. 
+To enable the solution to work, you need to give the Web App component a privileged credential on your Azure subscription with a scope that will enable it to execute read operations on APIM (get products, get subscriptions etc.).  This is achieved by setting up a **service principal** on Azure.
 
-The simplest way to do this is using the Az CLI.
+Before deploying the resources, this service principal should be set up in the Azure Active Directory (AAD) tenant that will be used by the Web App to update the status of APIM subscriptions. 
+
+The simplest way to do this is using the Azure command line interface (CLI).
 
 First, you need to [Sign in with Azure CLI](https://docs.microsoft.com/en-us/cli/azure/authenticate-azure-cli) by using the following command:
 ```
