@@ -11,7 +11,7 @@ The two keys you need to create are:
 | Key                | Description                                                                               | Permissions                                                             |
 |--------------------|-------------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
 | Initialization Key | Used for initializing Stripe with products, prices and webhooks                           | Products - Write, Plans - Write, Webhook Endpoints - Write              |
-| App Key            | Used by application to create checkout sessions, subscriptions and payments for consumers | Checkout Sessions - Write, Subscriptions - Write, Usage Records - Write |
+| App Key            | Used by application to create checkout sessions, subscriptions and payments for consumers | Checkout Sessions - Write, Subscriptions - Write, Usage Records - Write, Plans - Read |
 
 ## 2. Deploy the Azure resources
 
