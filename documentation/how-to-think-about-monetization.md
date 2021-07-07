@@ -112,6 +112,8 @@ How to interpret the revenue model based on the table above:
 - The "Basic" product is designed to support API consumers during the "initial production phase" of the lifecycle.  It is implemented by applying the `Tier` pricing model where a consumer pays $14.95 / month and can make up to a maximum of 50,000 calls per month.  They will be rate limited to 100 calls / minute.
 - The "Pro" product is geared to support API consumers are in the "scale" phase of the lifecycle.  It is implemented by applying the `Tier + Overage` pricing model where consumers are $449.95 / month for first 500,000 calls. And are charged an additional $0.06 / 100 additional calls if they exceed that.  They are rate limited to 1,200 calls per minute.
 
+**Note** - the models above are hypothetical and have been designed to illustrate the array of options that are available.  Customers are free to come up with their own!
+
 ### Step 5 - calibrate
 
 Calibrate the pricing across the revenue model to:
