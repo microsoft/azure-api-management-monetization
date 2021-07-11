@@ -108,9 +108,9 @@ Bringing this to life, and building on the examples above, the pricing models co
 | Scale                    | `Tier + Overage` | Graduated tiers, where the first tier flat amount is $449.95 / month for first 500,000 calls, next tiers per unit amount charge set to charge $0.06 / 100 calls | No quota set - Consumer can continue to make & pay for additional calls, rate limit of 1,200 calls / minute |
 | Global growth            | `Unit`           | Graduated tiers, where every tier flat amount is $749.95 / month for 1,500,000 calls                                                                            | No quota set - Consumer can continue to make & pay for additional calls, rate limit of 3,500 calls / minute |
 
-How to interpret the revenue model based on the table above:
-- The "Basic" product is designed to support API consumers during the "initial production phase" of the lifecycle.  It is implemented by applying the `Tier` pricing model where a consumer pays $14.95 / month and can make up to a maximum of 50,000 calls per month.  They will be rate limited to 100 calls / minute.
-- The "Pro" product is geared to support API consumers are in the "scale" phase of the lifecycle.  It is implemented by applying the `Tier + Overage` pricing model where consumers are $449.95 / month for first 500,000 calls. And are charged an additional $0.06 / 100 additional calls if they exceed that.  They are rate limited to 1,200 calls per minute.
+Two examples of how to interpret the revenue model based on the table above:
+- In the 4th row, the "tier" pricing model is being applied to support API consumers during the "initial production phase" of the lifecycle.  The `Tier` pricing model is configured such that the consumer pays $14.95 / month and can make up to a maximum of 50,000 calls per month.  They will be rate limited to 100 calls / minute.
+- The 6th row is geared to support API consumers are in the "scale" phase of the lifecycle.  It is implemented by applying the `Tier + Overage` pricing model where consumers pay $449.95 / month for first 500,000 calls. And are charged an additional $0.06 / 100 additional calls if they exceed that.  They are rate limited to 1,200 calls per minute.
 
 **Note** - the models above are hypothetical and have been designed to illustrate the array of options that are available.  Customers are free to come up with their own!
 
