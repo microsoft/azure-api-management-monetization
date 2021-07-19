@@ -1,31 +1,10 @@
 # How to implement monetization with Azure API Management and Adyen
 
-In this example we have created an API monetization model which consists of a pricing model and a revenue model, and demonstrates how these can be implemented by integrating Azure API Management (APIM) with Adyen.
+In this demo project we implement the example revenue model that is defined in [How to think about monetization](./how-to-think-about-monetization.md#step-4---design-the-revenue-model) to show how this can be implemented by integrating Azure API Management (APIM) with Adyen.
 
-The pricing model describes the different strategies the API Provider can use to provide access to the API Consumer:
+APIM and associated Billing App are configured to implement Products that mirror those defined in the revenue model (Free, Developer, PAYG, Basic, Standard, Pro, Enterprise). This allows API Consumers to browse, select a product and subscribe to it, all via the Development Portal.
 
-- `Free` - enables the API Consumer to trial the API in an obligation and cost free way, to determine whether it fulfils a use case. This removes all barriers to entry.
-- `Freemium` - allows the API Consumer to use the API for free, but to transition into a paid for service as demand increases.
-- `Metered` - the API Consumer can make as many calls as they want per month, and will pay a fixed amount per call.
-- `Tier` - the API Consumer pays for a set amount of calls per month, they cannot exceed this limit.
-- `Tier + Overage` - the API Consumer pays for a set amount of calls per month, and if they exceed this limit they pay an overage amount per additional call. If they regularly incur overage, it may be more economic to upgrade to the next tier.
-- `Unit` - the API Consumer pays for a set amount of call per month. If they exceed this limit they have to pay for another unit of calls.
-
-The revenue model describes how we can create products, which implement a specific monetization model, targeted at a specific API Consumer scenario:
-
-- `Free` - this implements the `Free` pricing model and enables the API Consumer to **investigate** your product.
-- `Developer` - this implements the `Freemium` pricing model and enables the API Consumer to **implement** your product.
-- `PAYG` - this implements the `Metered` pricing model and enables the API Consumer to **preview** their offering and understand initial demand.
-- `Basic` - this implements the `Tier` pricing model and enables the API Consumer's **initial production usage**.
-- `Standard` - this implements the `Tier + Overage` pricing model and supports the API Consumer's **initial growth**.
-- `Pro`  - this implements the `Tier + Overage` pricing model and supports the API Consumer's **scale** requirements.
-- `Enterprise` - this implements the `Unit` pricing model and supports the API Consumer's **global growth** requirements.
-
-In order to share these models between APIM and Adyen, they have been defined in the monetization models configuration file [payment/monetizationModels.json](../payment/monetizationModels.json).
-
-## Azure API Management Products 
-
-APIM is configured to create Products that mirror the revenue model (Free, Developer, PAYG, Basic, Standard, Pro, Enterprise). This allows API Consumers to browse, select a product and subscribe to it, all via the Development Portal.
+To deliver a consistent end-to-end API Consumer experience, the the APIM Product Policies and the configuration of the Billing App needs to be synchronized.  This is achieved through use of a shared configuration file [payment/monetizationModels.json](../payment/monetizationModels.json).
 
 ## Adyen 
 
@@ -35,11 +14,15 @@ Adyen allows you to [tokenize](https://docs.adyen.com/online-payments/tokenizati
 
 ## Architecture
 
+The following diagram illustrates the components of the solution across APIM, the Billing App (both hosted on Azure) and Adyen.  It also shows the major integration flows between components, including the interactions between the API Consumer (both developer and application) and the solution.
+
 ![](./architecture-adyen.png)
 
 ## API Consumer flow
 
-The Consumer flow is as follows:
+This section describes the end to end user journey that the solution is seeking to support.  The API Consumer is typically a developer who has been tasked with integrating their organisation's own application with your API.  The API Consumer flow therefore aims to support getting the user from the point of discovering the API, through being to consume the API, to paying for the usage.
+
+The API Consumer flow is as follows:
 
 1. Consumer selects sign up in the APIM developer portal.
 2. Consumer is redirected to the billing portal app to register their account (via [APIM delegation](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-setup-delegation)).
@@ -88,7 +71,7 @@ We will then be able to use the saved card details for future transactions relat
 
 ### APIM Subscription created *(Step 9)*
 
-Once the consumer's payment details have been successfully tokenized, we create their APIM subscription so that they are now able to use their API keys to access the APIs provided under the product they signed up for. This is done as part of the same API call, so there is no need for a callback / webhook as is necessary with the [Stripe](Stripe.md) implementation.
+Once the consumer's payment details have been successfully tokenized, we create their APIM subscription so that they are now able to use their API keys to access the APIs provided under the product they signed up for. This is done as part of the same API call, so there is no need for a callback / webhook as is necessary with the [Stripe](./stripe-deploy.md) implementation.
 
 ### Billing *(Step 10)*
 
@@ -154,3 +137,7 @@ The invoices are then passed unto the `takePaymentViaAdyen` function. This uses 
 ### Subscription suspended *(Step 11)*
 
 If the payment fails, we then put the APIM subscription into a suspended state.
+
+## Next steps
+
+Follow [Deploy demo with Adyen](adyen-deploy.md) to deploy the solution described in this document.

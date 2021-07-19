@@ -1,76 +1,49 @@
 # Azure API Management - Monetization
 
+## Purpose and scope
+
 This is a **demo project** providing two working examples of how to integrate Azure API Management (APIM) with payment providers - one based on integration with [Stripe](https://stripe.com/), the other with [Adyen](https://www.adyen.com/).
 
-The objective is to show how you can enable consumers to discover an API that you wish to make public, enter their payment details in order to activate their subscription and trigger automated payment based on their usage of the API.
+The objective is to show how you can enable consumers to discover an API that you wish to make public, enter their payment details, activate their subscription and trigger automated payment based on their usage of the API.
 
 To use this demo, you will need to deploy the solution into your own Azure subscription and to set up your own Stripe / Adyen account.  This is **not** a managed service - you will be responsible for managing the resources that are deployed on Azure, adapting the solution to meet your specific use case and keeping the solution up to date.
 
-Read the following documents to get further background and context:
+### Table of contents
 
-| Document                                                                                              | Purpose 
-|-------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
-| [how to think about monetization](./documentation/how-to-think-about-monetization.md)                   | Makes recommendations about how to design a successful monetization strategy for your API.             |
-| [how APIM supports monetisation](./documentation/how-APIM-supports-monetisation.md)                     | Provides an overview of the APIM features that can be used to accelerate and de-risk API monetization. |
+| Document                                                                                                | Purpose 
+|---------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
+| [How to think about monetization](./documentation/how-to-think-about-monetization.md)                   | Makes recommendations about how to design a successful monetization strategy for your API.             |
+| [How APIM supports monetization](./documentation/how-APIM-supports-monetization.md)                     | Provides an overview of the APIM features that can be used to accelerate and de-risk API monetization. |
+| [How to implement monetization with Azure API Management and Stripe](./documentation/stripe-details.md) | Describes how the Stripe integration has been implemented and the user flow through the solution.      |
+| [Deploy demo with Stripe](./documentation/stripe-deploy.md)                                             | End to end deployment steps to implement the demo project with Stripe as payment provider.             |
+| [How to implement monetization with Azure API Management and Adyen](./documentation/adyen-details.md)   | Describes how the Adyen integration has been implemented and the user flow through the solution.       |
+| [Deploy demo with Adyen](./documentation/adyen-deploy.md)                                               | End to end deployment steps to implement the demo project with Adyen as payment provider.              |
+| [Deployment details](./documentation/deployment-details.md)                                             | Details the resources that are deployed and the approach taken to script the deployment.               |
+| [Advanced steps](./documentation/advanced-steps.md)                                                     | Details of advanced steps to modify the infrastructure templates and run the billing app locally.      |
 
-Follow the remainder of this README to put in place the pre-requisites and deploy the solution with your chosen payment provider.
+## Steps to follow
+
+Follow these steps to implement the demo project:
+
+1. Read [How to think about monetization](./documentation/how-to-think-about-monetization.md) to get background about designing a successful monetization strategy.
+
+1. Read [How APIM supports monetization](./documentation/how-APIM-supports-monetization.md) to understand how APIM supports implementation of a monetization strategy.
+
+1. Choose the payment provider you want to implement - either [Stripe](https://stripe.com/) or [Adyen](https://www.adyen.com/).
+
+1. Read the overview: either [How to implement monetization with Azure API Management and Stripe](./documentation/stripe-details.md) or [How to implement monetization with Azure API Management and Adyen](./documentation/adyen-details.md) to understand more about Stripe / Adyen, how they integrate with APIM, the architecture adopted and the consumer flow through the solution.
+
+1. Follow the deployment instructions in either [Deploy demo with Stripe](./documentation/stripe-deploy.md) or [Deploy demo with Adyen](./documentation/adyen-deploy.md) to set up the pre-requisites, deploy the resources onto Azure and complete remaining steps post deployment to implement the demo project.
+
+1. Reference [Deployment details](./documentation/deployment-details.md) to get more detail about the resources that are being deployed and how this has been scripted.
+
+1. Reference [Advanced steps](./documentation/advanced-steps.md) if you want to modify the infrastructure templates or run the billing app locally.
 
 ## Architecture
 
-The following diagram illustrates the architecture for integrating API Management with a payment provider:
+The following diagram illustrates the high level architecture this demo has adopted to integrate API Management with a payment provider, showing the components of the solution across APIM, the Billing App (both hosted on Azure) and the payment provider.  It also highlights the major integration flows between components, including the interactions between the API Consumer (both developer and application) and the solution:
 
 ![](documentation/architecture-overview.png)
-
-
-## Prerequisites for deploying demo
-
-### Required tools
-
-- [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7.1) - version 7.1 or later
-- [Az CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) - version 2.21.0 or later
-- [NodeJS](https://nodejs.org/en/download/) - version 14.16.1 or later
-
-### Service Principal
-
-In order to run the deployment, you will need a service principal set up in the AAD tenant that will be used by the Web App to update the status of APIM subscriptions. 
-
-The simplest way to do this is using the Az CLI.
-
-First, you need to [Sign in with Azure CLI](https://docs.microsoft.com/en-us/cli/azure/authenticate-azure-cli) by using the following command:
-```
-az login
-```
-Then you can [Create an Azure service principal with the Azure CLI](https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli) through the following command:
-
-```
-az ad sp create-for-rbac -n "<name-for-your-service-principal>" --skip-assignment
-```
-
-Take note of the appId (aka client ID) and password (aka client secret), as you will need to pass these values as deployment parameters.
-
-For deployment, you will also need the object ID of the service principal you just created. To retrieve this use:
-
-```
-az ad sp show --id "http://<name-for-your-service-principal>"
-```
-
-The correct role assignments for the service principal will be assigned as part of the deployment.
-
-## Deploying the demo
-
-You can deploy the demo using either [Stripe](https://stripe.com/) or [Adyen](https://www.adyen.com/) as the payment provider. Follow the appropiate link below for the deployment steps for your selected provider.
-
-- [Deploy with Stripe](./documentation/stripe-deploy.md)
-
-- [Deploy with Adyen](./documentation/adyen-deploy.md)
-
-## Further reading / next steps
-
-- For more details about the resources that are deployed, see [Deployment Details](./documentation/deployment-details.md)
-- More information on how the solution works:
-  - [How to implement monetization with Azure API Management and Stripe](./documentation/stripe-details.md)
-  - [How to implement monetization with Azure API Management and Adyen](./documentation/adyen-details.md)
-- If you want to customize the demo, see [Advanced steps](./documentation/advanced-steps.md)
 
 ## Contributing
 

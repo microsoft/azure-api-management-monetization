@@ -2,6 +2,8 @@
 
 ## 1. Pre-requisites
 
+### Set up Stripe account
+
 You will need to [create a Stripe account](https://dashboard.stripe.com/register).
 
 Once created, you will need to create two API keys. You can do this from the "Developers" tab in the Stripe dashboard. You can set up these keys with specific permissions on different APIs.
@@ -12,6 +14,45 @@ The two keys you need to create are:
 |--------------------|-------------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
 | Initialization Key | Used for initializing Stripe with products, prices and webhooks                           | Products - Write, Plans - Write, Webhook Endpoints - Write              |
 | App Key            | Used by application to create checkout sessions, subscriptions and payments for consumers | Checkout Sessions - Write, Subscriptions - Write, Usage Records - Write, Plans - Read, Products - Read |
+
+### Required tools
+
+- [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7.1) - version 7.1 or later
+- [Az CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) - version 2.21.0 or later
+
+### Azure Subscription
+
+This demo project deploys a range of artifacts to Azure.  Therefore, you will need admin access to an active Azure subscription.
+
+If you do not have an Azure subscription, you can set up a free trial [here](https://azure.microsoft.com/).
+
+### Service Principal
+
+To enable the solution to work, you need to give the Web App component a privileged credential on your Azure subscription with a scope that will enable it to execute read operations on APIM (get products, get subscriptions etc.).  This is achieved by setting up a **service principal** on Azure.
+
+Before deploying the resources, the service principal should be set up in the Azure Active Directory (AAD) tenant that will be used by the Web App to update the status of APIM subscriptions. 
+
+The simplest way to do this is using the Azure command line interface (CLI).
+
+First, you need to [Sign in with Azure CLI](https://docs.microsoft.com/en-us/cli/azure/authenticate-azure-cli) by using the following command:
+```
+az login
+```
+Then you can [Create an Azure service principal with the Azure CLI](https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli) through the following command:
+
+```
+az ad sp create-for-rbac -n "<name-for-your-service-principal>" --skip-assignment
+```
+
+Take note of the appId (aka client ID) and password (aka client secret), as you will need to pass these values as deployment parameters.
+
+For deployment, you will also need the object ID of the service principal you just created. To retrieve this use:
+
+```
+az ad sp show --id "http://<name-for-your-service-principal>"
+```
+
+The correct role assignments for the service principal will be assigned as part of the deployment.
 
 ## 2. Deploy the Azure resources
 
