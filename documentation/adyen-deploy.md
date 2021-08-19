@@ -1,4 +1,4 @@
-# Deploy API Management monetization with Adyen
+# Deploy demo with Adyen
 
 In this tutorial, you'll deploy the demo Adyen account and learn how to:
 
