@@ -1,86 +1,105 @@
 # Deploy demo with Adyen
 
-## 1. Pre-requisites
+In this tutorial, you'll deploy the demo Adyen account and learn how to:
 
-### Set up Adyen test account
+> [!div class="checklist"]
+> * Set up an Adyen account, the required PowerShell and `az cli` tools, an Azure subscription, and a service principal on Azure. 
+> * Deploy the Azure resources using either Azure portal or PowerShell.
+> * Make your deployment visible to consumers by publishing the Azure developer portal.
 
-You will need to [create an Adyen test account](https://www.adyen.com/signup).
+## Pre-requisites
 
-- Set up a merchant "ECommerce" account.
-- Go to the Account tab at the top of the Adyen test homepage, and select the Web Service username.
-- Add the origin that you will be using to the list of allowed origins.
-- Retrieve the API key and client key.
+To prepare for this demo, you'll need to:
 
-### Required tools
+> [!div class="checklist"]
+> * Create an Adyen test account. 
+> * Install and set up the required PowerShell and Azure CLI tools.
+> * Set up an Azure subscription.
+> * Set up a service principal in Azure.
 
-- [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7.1) - version 7.1 or later
-- [Az CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) - version 2.21.0 or later
+### [Create an Adyen test account](https://www.adyen.com/signup)
 
-### Azure Subscription
+1. Once you've created an Adyen account, set up a merchant **Ecommerce** account.
+1. On the **Account** tab at the top of the Adyen test homepage, select the **Web Service** username.
+1. Add the origin you will be using to the list of allowed origins.
+1. Retrieve the API key and client key.
 
-This demo project deploys a range of artifacts to Azure.  Therefore, you will need admin access to an active Azure subscription.
+### Install and set up the required tools
 
-If you do not have an Azure subscription, you can set up a free trial [here](https://azure.microsoft.com/).
+- Version 7.1 or later of [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7.1).
+- Version 2.21.0 or later of [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli).
 
-### Service Principal
+### Set up an Azure subscription with admin access
 
-To enable the solution to work, you need to give the Web App component a privileged credential on your Azure subscription with a scope that will enable it to execute read operations on APIM (get products, get subscriptions etc.).  This is achieved by setting up a **service principal** on Azure.
+For this sample project, you will need admin access in order to deploy all the included artifacts to Azure. If you do not have an Azure subscription, set up a [free trial](https://azure.microsoft.com/).
 
-Before deploying the resources, this service principal should be set up in the Azure Active Directory (AAD) tenant that will be used by the Web App to update the status of APIM subscriptions. 
+### Set up a service principal on Azure
 
-The simplest way to do this is using the Azure command line interface (CLI).
+For the solution to work, the Web App component needs a privileged credential on your Azure subscription with the scope to execute `read` operations on API Management (get products, subscriptions, etc.).
 
-First, you need to [Sign in with Azure CLI](https://docs.microsoft.com/en-us/cli/azure/authenticate-azure-cli) by using the following command:
-```
-az login
-```
-Then you can [Create an Azure service principal with the Azure CLI](https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli) through the following command:
+Before deploying the resources, set up the service principal in the Azure Active Directory (AAD) tenant used by the Web App to update the status of API Management subscriptions.
 
-```
-az ad sp create-for-rbac -n "<name-for-your-service-principal>" --skip-assignment
-```
+The simplest method is using the Azure CLI.
 
-Take note of the appId (aka client ID) and password (aka client secret), as you will need to pass these values as deployment parameters.
+1. [Sign in with Azure CLI](../cli/azure/authenticate-azure-cli.md#sign-in-interactively):
 
-For deployment, you will also need the object ID of the service principal you just created. To retrieve this use:
+    ```azurecli-interactive
+    az login
+    ```
+2. [Create an Azure service principal with the Azure CLI](../cli/azure/create-an-azure-service-principal-azure-cli.md#password-based-authentication):
 
-```
-az ad sp show --id "http://<name-for-your-service-principal>"
-```
+    ```azurecli-interactive
+    az ad sp create-for-rbac --name ServicePrincipalName --skip-assignment
+    ```
+
+3. Take note of the `appId` (client ID) and `password` (client secret), as you will need to pass these values as deployment parameters.
+
+4. Retrieve the object ID of your new service principal for deployment:
+
+    ```azurecli-interactive
+    az ad sp show --id "http://<name-for-your-service-principal>"
+    ```
 
 The correct role assignments for the service principal will be assigned as part of the deployment.
 
-## 2. Deploy the Azure resources
+## Deploy the Azure monetization resources
 
-Select one of 2 options below for deploying the Azure resources. For both options, when filling in parameters, ignore the `stripe*` parameters (leave them blank).
+You can deploy the monetization resource via either Azure portal or PowerShell script. 
 
-### Option 1
+>[!NOTE]
+> For both options, when filling in parameters, leave the `stripe*` parameters blank.
 
-Click the button below to deploy the example to Azure. You will be able to fill in the required parameters in the Azure Portal.
+### Azure portal
+
+Click the button below to deploy the example to Azure and fill in the required parameters in the Azure portal.
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%microsoft%2Fazure-api-management-monetization%2Fmain%2Ftemplates%2main.json)
 
-### Option 2
+### PowerShell script
 
-Alternatively, you can also deploy by running the `deploy.ps1` PowerShell script at the root of the repo.
+You can deploy by running the `deploy.ps1` PowerShell script at the root of the repo.
 
-You must have the Azure CLI installed and be logged in (`az login`).
+1. Provide a parameters file for the `main.json` ARM template. 
+    * Find a template for the parameters file provider in `output/main.parameters.template.json`. 
+    * Rename this JSON file to `output/main.parameters.json` and update the values as necessary.
 
-You will need to provide a parameters file for the `main.json` ARM template. There is a template for the parameters file provider in `output/main.parameters.template.json` - you can rename this to `output/main.parameters.json` and update the values as necessary.
+2. Execute the `deploy.ps1` script:
 
-Then execute the `deploy.ps` script, e.g.:
-
-```powershell
-deploy.ps1 `
+    ```powershell
+    deploy.ps1 `
     -TenantId "<azure-ad-tenant-id>" `
     -SubscriptionId "<azure-subscription-id>" `
     -ResourceGroupName "apimmonetization" `
     -ResourceGroupLocation "uksouth" `
     -ArtifactStorageAccountName "<name-of-artifact-storage-account>"
-```
+    ```
 
-## 3. Additional Steps
+## Publish the API Management developer portal
 
-### Publishing the APIM Developer Portal
+This example project uses the hosted [API Management developer portal](api-management-howto-developer-portal-customize.md). 
 
-The example makes use of the hosted [APIM Developer Portal](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-developer-portal-customize), but there is a manual step required to publish this to make this visible to customers. Follow the steps in the [Publish the portal](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-developer-portal-customize#publish) section to do this.
+You are required to complete a manual step to publish and make the resources visible to customers. See the [Publish the portal](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-developer-portal-customize#publish) for instructions.
+
+## Next Steps
+* Learn more about [deploying API Management monetization with Adyen](adyen-details.md).
+* Learn about the [Stripe deployment](stripe-details.md) option.
