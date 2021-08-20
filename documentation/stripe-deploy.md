@@ -1,121 +1,144 @@
 # Deploy demo with Stripe
 
-## 1. Pre-requisites
+In this tutorial, you'll deploy the demo Stripe account and learn how to:
 
-### Set up Stripe account
+> [!div class="checklist"]
+> * Set up a Stripe account, the required PowerShell and `az cli` tools, an Azure subscription, and a service principal on Azure. 
+> * Deploy the Azure resources using either Azure portal or PowerShell.
+> * Make your deployment visible to consumers by publishing the Azure developer portal.
+> * Initialize the Stripe products and prices.
 
-You will need to [create a Stripe account](https://dashboard.stripe.com/register).
+## Pre-requisites
 
-Once created, you will need to create two API keys. You can do this from the "Developers" tab in the Stripe dashboard. You can set up these keys with specific permissions on different APIs.
+To prepare for this demo, you'll need to:
 
-The two keys you need to create are:
+> [!div class="checklist"]
+> * Create a Stripe test account. 
+> * Install and set up the required PowerShell and Azure CLI tools.
+> * Set up an Azure subscription.
+> * Set up a service principal in Azure.
 
-| Key                | Description                                                                               | Permissions                                                             |
-|--------------------|-------------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
-| Initialization Key | Used for initializing Stripe with products, prices and webhooks                           | Products - Write, Plans - Write, Webhook Endpoints - Write              |
-| App Key            | Used by application to create checkout sessions, subscriptions and payments for consumers | Checkout Sessions - Write, Subscriptions - Write, Usage Records - Write, Plans - Read, Products - Read |
+### [Create a Stripe account](https://dashboard.stripe.com/register)
 
-### Required tools
+1. Once you've created a Stripe account, navigate to the **Developers** tab in the Stripe dashboard.
+1. Create the following two API keys with specific permissions on different APIs.
 
-- [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7.1) - version 7.1 or later
-- [Az CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) - version 2.21.0 or later
+    | Key                | Description                                                                               | Permissions                                                             |
+    |--------------------|-------------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
+    | **Initialization key** | Use to initialize Stripe with products, prices, and webhooks                           | <ul><li>Products: `write`</li><li>Plans: `write`</li><li>Webhook endpoints: `write`</li></ul>              |
+    | **App key**            | Used by application to create checkout sessions, subscriptions, and payments for consumers | <ul><li>Checkout sessions: `write`</li><li>Subscriptions: `write`</li><li>Usage records: `write`</li><li>Plans: `read`</li><li>Products: `read`</li></ul> |
 
-### Azure Subscription
+### Install and set up the required tools
 
-This demo project deploys a range of artifacts to Azure.  Therefore, you will need admin access to an active Azure subscription.
+- Version 7.1 or later of [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7.1).
+- Version 2.21.0 or later of [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli).
 
-If you do not have an Azure subscription, you can set up a free trial [here](https://azure.microsoft.com/).
+### Set up an Azure subscription with admin access
 
-### Service Principal
+For this sample project, you will need admin access in order to deploy all the included artifacts to Azure. If you do not have an Azure subscription, set up a [free trial](https://azure.microsoft.com/).
 
-To enable the solution to work, you need to give the Web App component a privileged credential on your Azure subscription with a scope that will enable it to execute read operations on APIM (get products, get subscriptions etc.).  This is achieved by setting up a **service principal** on Azure.
+### Set up a service principal on Azure
 
-Before deploying the resources, the service principal should be set up in the Azure Active Directory (AAD) tenant that will be used by the Web App to update the status of APIM subscriptions. 
+For the solution to work, the Web App component needs a privileged credential on your Azure subscription with the scope to execute `read` operations on API Management (get products, subscriptions, etc.).
 
-The simplest way to do this is using the Azure command line interface (CLI).
+Before deploying the resources, set up the service principal in the Azure Active Directory (AAD) tenant used by the Web App to update the status of API Management subscriptions.
 
-First, you need to [Sign in with Azure CLI](https://docs.microsoft.com/en-us/cli/azure/authenticate-azure-cli) by using the following command:
-```
-az login
-```
-Then you can [Create an Azure service principal with the Azure CLI](https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli) through the following command:
+The simplest method is using the Azure CLI.
 
-```
-az ad sp create-for-rbac -n "<name-for-your-service-principal>" --skip-assignment
-```
+1. [Sign in with Azure CLI](../cli/azure/authenticate-azure-cli.md#sign-in-interactively):
 
-Take note of the appId (aka client ID) and password (aka client secret), as you will need to pass these values as deployment parameters.
+    ```azurecli-interactive
+    az login
+    ```
+2. [Create an Azure service principal with the Azure CLI](../cli/azure/create-an-azure-service-principal-azure-cli.md#password-based-authentication):
 
-For deployment, you will also need the object ID of the service principal you just created. To retrieve this use:
+    ```azurecli-interactive
+    az ad sp create-for-rbac --name ServicePrincipalName --skip-assignment
+    ```
 
-```
-az ad sp show --id "http://<name-for-your-service-principal>"
-```
+3. Take note of the `appId` (client ID) and `password` (client secret), as you will need to pass these values as deployment parameters.
+
+4. Retrieve the object ID of your new service principal for deployment:
+
+    ```azurecli-interactive
+    az ad sp show --id "http://<name-for-your-service-principal>"
+    ```
 
 The correct role assignments for the service principal will be assigned as part of the deployment.
 
-## 2. Deploy the Azure resources
+## Deploy the Azure monetization resources
 
-Select one of 2 options below for deploying the Azure resources. For both options, when filling in parameters, ignore the `adyen*` parameters (leave them blank).
+You can deploy the monetization resource via either Azure portal or PowerShell script. 
 
-### Option 1
+>[!NOTE]
+> For both options, when filling in parameters, leave the `adyen*` parameters blank.
 
-Click the button below to deploy the example to Azure. You will be able to fill in the required parameters in the Azure Portal.
+### Azure portal
+
+Click the button below to deploy the example to Azure and fill in the required parameters in the Azure portal.
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%microsoft%2Fazure-api-management-monetization%2Fmain%2Ftemplates%2main.json)
 
-### Option 2
+### PowerShell script
 
-Alternatively, you can also deploy by running the `deploy.ps1` PowerShell script at the root of the repo.
+You can deploy by running the `deploy.ps1` PowerShell script at the root of the repo.
 
-You must have the Azure CLI installed and be logged in (`az login`).
+1. Provide a parameters file for the `main.json` ARM template. 
+    * Find a template for the parameters file provider in `output/main.parameters.template.json`. 
+    * Rename this JSON file to `output/main.parameters.json` and update the values as necessary.
 
-You will need to provide a parameters file for the `main.json` ARM template. There is a template for the parameters file provider in `output/main.parameters.template.json` - you can rename this to `output/main.parameters.json` and update the values as necessary.
+2. Execute the `deploy.ps1` script:
 
-Then execute the `deploy.ps` script, e.g.:
-
-```powershell
-deploy.ps1 `
+    ```powershell
+    deploy.ps1 `
     -TenantId "<azure-ad-tenant-id>" `
     -SubscriptionId "<azure-subscription-id>" `
     -ResourceGroupName "apimmonetization" `
     -ResourceGroupLocation "uksouth" `
     -ArtifactStorageAccountName "<name-of-artifact-storage-account>"
-```
+    ```
 
-## 3. Additional Steps
+## Publish the API Management developer portal
 
-### Publishing the APIM Developer Portal
+This example project uses the hosted [API Management developer portal](api-management-howto-developer-portal-customize.md). 
 
-The example makes use of the hosted [APIM Developer Portal](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-developer-portal-customize), but there is a manual step required to publish this to make this visible to customers. Follow the steps in the [Publish the portal](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-developer-portal-customize#publish) section to do this.
+You are required to complete a manual step to publish and make the resources visible to customers. See the [Publish the portal](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-developer-portal-customize#publish) for instructions.
 
-### Initialize Stripe products and prices
+## Initialize Stripe products and prices
 
-Once the billing portal and APIM service have been deployed, and the products defined within APIM, the same products need to be initialised in Stripe, using [this PowerShell script](../payment/stripeInitialisation.ps1). To run the script, first ensure the Az CLI in installed and you are logged in (`az login`), then run using the following parameters:
+Once you've deployed the billing portal, the API Management service, and the products defined within API Management, you'll need to initialize the products in Stripe. Use [the Stripe initialization PowerShell script](../payment/stripeInitialisation.ps1). 
 
-```powershell
-./payment/stripeInitialisation.ps1 `
-    -StripeApiKey "<the 'Initialization Key' API key (see pre-requisites)>" `
-    -ApimGatewayUrl "<the gateway URL of the APIM service - can find in Azure Portal>" `
-    -ApimSubscriptionKey "<the default admin subscription key for the APIM service - can find in Azure Portal>" `
-    -StripeWebhookUrl "<the URL of the billing portal App Service>/webhook/stripe" `
-    -AppServiceResourceGroup "<the name of the resource group containing the billing portal App Service>" `
-    -AppServiceName "<the name of the billing portal App Service>"
-```
+1. Run the script using the following parameters:
 
-The script performs the following functions:
+    ```powershell
+    ./payment/stripeInitialisation.ps1 `
+        -StripeApiKey "<the 'Initialization Key' API key (see pre-requisites)>" `
+        -ApimGatewayUrl "<the gateway URL of the APIM service - can find in Azure Portal>" `
+        -ApimSubscriptionKey "<the default admin subscription key for the APIM service - can find in Azure Portal>" `
+        -StripeWebhookUrl "<the URL of the billing portal App Service>/webhook/stripe" `
+        -AppServiceResourceGroup "<the name of the resource group containing the billing portal App Service>" `
+        -AppServiceName "<the name of the billing portal App Service>"
+    ```   
 
-It first makes two API calls:
+1. The script makes two API calls:
 
-- To retrieve the APIM products.
-- To retrieve the monetization model definitions.
+    * To retrieve the API Management products.
+    * To retrieve the monetization model definitions.
 
-For each of the monetization models defined, the script:
+1. For each of the monetization models defined, the script:
 
-1. Finds the corresponding APIM product.
-2. Uses the Stripe CLI to create a Stripe product.
-3. For that Stripe product, creates the corresponding price for the model.
-   
-Additionally, the script:
-- Creates a webhook in stripe which can be used to listen for Stripe subscription created events (which we can listen for and create APIM subscriptions when a Consumer completed checkout) and failed / cancelled Stripe subscription events (which we can use to deactivate APIM subscriptions when Consumers cease to pay for them).
-- Adds the secret for connecting to the webhook to the settings of the billing portal app, so that the app can attach listeners and handle these events.
+    * Finds the corresponding APIM product.
+    * Uses the Stripe CLI to create a Stripe product.
+    * For that Stripe product, creates the corresponding price for the model.
+
+1. The script:
+
+    * Creates a webhook in Stripe to listen for:
+        * Stripe subscription created events (to create API Management subscriptions when a consumer completes checkout).
+        * Failed/cancelled Stripe subscription events (to deactivate API Management subscriptions when consumers cease payment).
+    * Adds the secret for webhook connection to the billing portal app settings, so that the app can attach listeners and handle these events.
+
+## Next Steps
+
+* Learn more about [deploying API Management monetization with Stripe](stripe-details.md).
+* Learn about the [Adyen deployment](adyen-details.md) option.

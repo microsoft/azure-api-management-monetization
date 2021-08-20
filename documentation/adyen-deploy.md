@@ -9,7 +9,7 @@ In this tutorial, you'll deploy the demo Adyen account and learn how to:
 
 ## Pre-requisites
 
-For this sample project, you'll need to:
+To prepare for this demo, you'll need to:
 
 > [!div class="checklist"]
 > * Create an Adyen test account. 
@@ -19,7 +19,7 @@ For this sample project, you'll need to:
 
 ### [Create an Adyen test account](https://www.adyen.com/signup)
 
-1. Set up a merchant **Ecommerce** account.
+1. Once you've created an Adyen account, set up a merchant **Ecommerce** account.
 1. On the **Account** tab at the top of the Adyen test homepage, select the **Web Service** username.
 1. Add the origin you will be using to the list of allowed origins.
 1. Retrieve the API key and client key.
@@ -35,11 +35,11 @@ For this sample project, you will need admin access in order to deploy all the i
 
 ### Set up a service principal on Azure
 
-For the solution to work, the Web App component needs a privileged credential on your Azure subscription with the scope to execute `read` operations on API Management (get products, subscriptions, etc.). 
+For the solution to work, the Web App component needs a privileged credential on your Azure subscription with the scope to execute `read` operations on API Management (get products, subscriptions, etc.).
 
-Before deploying the resources, set up the service principal in the Azure Active Directory (AAD) tenant used by the Web App to update the status of API Management subscriptions. 
+Before deploying the resources, set up the service principal in the Azure Active Directory (AAD) tenant used by the Web App to update the status of API Management subscriptions.
 
-The simplest method is using the Azure command-line interface (CLI).
+The simplest method is using the Azure CLI.
 
 1. [Sign in with Azure CLI](../cli/azure/authenticate-azure-cli.md#sign-in-interactively):
 
@@ -49,7 +49,7 @@ The simplest method is using the Azure command-line interface (CLI).
 2. [Create an Azure service principal with the Azure CLI](../cli/azure/create-an-azure-service-principal-azure-cli.md#password-based-authentication):
 
     ```azurecli-interactive
-    az ad sp create-for-rbac --name ServicePrincipalName
+    az ad sp create-for-rbac --name ServicePrincipalName --skip-assignment
     ```
 
 3. Take note of the `appId` (client ID) and `password` (client secret), as you will need to pass these values as deployment parameters.
@@ -94,7 +94,7 @@ You can deploy by running the `deploy.ps1` PowerShell script at the root of the 
     -ArtifactStorageAccountName "<name-of-artifact-storage-account>"
     ```
 
-## Publishing the API Management developer portal
+## Publish the API Management developer portal
 
 This example project uses the hosted [API Management developer portal](api-management-howto-developer-portal-customize.md). 
 
