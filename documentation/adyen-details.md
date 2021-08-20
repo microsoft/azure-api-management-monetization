@@ -21,7 +21,7 @@ The following diagram illustrates:
 * The components of the solution across API Management, the billing app, and Adyen. 
 * The major integration flows between components, including the interactions between the API consumer (both developer and application) and the solution.
 
-:::image type="content" source="./media/adyen-details/architecture-adyen.png" alt-text="Adyen architecture overview":::
+![Adyen architecture overview](architecture-adyen.png)
 
 ## API consumer flow
 
