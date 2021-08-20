@@ -37,7 +37,8 @@ The following diagram illustrates:
 * The components of the solution across API Management, the billing app, and Stripe. 
 * The major integration flows between components, including the interactions between the API consumer (both developer and application) and the solution.
 
-:::image type="content" source="./media/adyen-details/architecture-stripe.png" alt-text="Stripe architecture overview":::
+![Stripe architecture overview](architecture-stripe.png)
+
 
 ## API consumer flow
 
