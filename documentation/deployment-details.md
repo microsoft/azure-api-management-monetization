@@ -169,4 +169,4 @@ You can also add configuration to the app as part of the payment provider initia
 
 ## Next Steps
 * Learn more about configuring and initializing both [Stripe](stripe-details.md) and [Adyen](adyen-details.md) in more detail.
-* Understand how [API Management supports monetization](monetization-support.md).
+* Understand how [API Management supports monetization](https://docs.microsoft.com/azure/api-management/monetization-support).
