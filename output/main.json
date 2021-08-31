@@ -1203,7 +1203,8 @@
         }
       },
       "dependsOn": [
-        "[resourceId('Microsoft.Resources/deployments', 'apimInstanceDeploy')]"
+        "[resourceId('Microsoft.Resources/deployments', 'apimInstanceDeploy')]",
+        "[resourceId('Microsoft.Resources/deployments', 'apimInstanceNamedValuesDeploy')]"
       ]
     },
     {
@@ -1348,7 +1349,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.3.126.58533",
-      "templateHash": "11207053819091724405"
+      "templateHash": "13844113605079370991"
     }
   }
 }
