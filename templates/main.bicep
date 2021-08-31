@@ -203,6 +203,7 @@ module apimGlobalServicePolicy './apimmonetization-globalServicePolicy.bicep' = 
   }
   dependsOn: [
     apimInstance
+    apimInstanceNamedValues
   ]
 }
 
