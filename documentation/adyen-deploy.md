@@ -19,10 +19,20 @@ To prepare for this demo, you'll need to:
 
 ### [Create an Adyen test account](https://www.adyen.com/signup)
 
-1. Once you've created an Adyen account, set up a merchant **Ecommerce** account.
-1. On the **Account** tab at the top of the Adyen test homepage, select the **Web Service** username.
-1. Add the origin you will be using to the list of allowed origins.
-1. Retrieve the API key and client key.
+From within an Adyen test account:
+1. Expand the **Accounts** tab on the pages panel on the left side of the Adyen test account homepage, select the **Merchant accounts** option.
+1. If you do not have one already, create a **merchant account** for an **ecommerce sales channel**.
+
+Three values should be copied from the Adyen test account that are required as input parameters during the deployment process:
+1. Copy the **Merchant account name** which is the displayed in the top left corner of the Adyen test account homepage.
+1. Expand the **Developers** tab on the pages panel on the left side of the Adyen test account homepage, select the **API Credentials** option.
+1. Select the **ws** (Web Service) API.
+1. Generate and copy an **API key** and copy the **Client key**.
+
+After the deployment of the Azure resources (see below) has completed, you should return to the Adyen test account homepage to:
+1. Expand the **Developers** tab on the pages panel on the left side of the Adyen test account homepage, select the **API Credentials** option.
+1. Select the **ws** (Web Service) API.
+1. Add a new origin to the list of allowed origins which is the URL of the App Service that has been deployed.
 
 ### Install and set up the required tools
 
@@ -49,15 +59,15 @@ The simplest method is using the Azure CLI.
 2. [Create an Azure service principal with the Azure CLI](../cli/azure/create-an-azure-service-principal-azure-cli.md#password-based-authentication):
 
     ```azurecli-interactive
-    az ad sp create-for-rbac --name ServicePrincipalName --skip-assignment
+    az ad sp create-for-rbac --name <chosen-name-for-your-service-principal> --skip-assignment
     ```
 
-3. Take note of the `appId` (client ID) and `password` (client secret), as you will need to pass these values as deployment parameters.
+3. Take note of the `name` (ID), `appId` (client ID) and `password` (client secret), as you will need to pass these values as deployment parameters.
 
-4. Retrieve the object ID of your new service principal for deployment:
+4. Retrieve the **object ID** of your new service principal for deployment:
 
     ```azurecli-interactive
-    az ad sp show --id "http://<name-for-your-service-principal>"
+    az ad sp show --id "<id-of-your-service-principal>"
     ```
 
 The correct role assignments for the service principal will be assigned as part of the deployment.
