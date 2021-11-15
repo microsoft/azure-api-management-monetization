@@ -19,7 +19,7 @@ To prepare for this demo, you'll need to:
 > * Set up a service principal in Azure.
 
 ### [Create a Stripe account](https://dashboard.stripe.com/register)
-
+    
 1. Once you've [created a Stripe account](https://dashboard.stripe.com/register), navigate to the **Developers** tab in the Stripe dashboard.
 1. Use the **API keys** menu to create the following two API keys with specific permissions on different APIs.
 
@@ -114,7 +114,7 @@ Once you've deployed the billing portal, the API Management service, and the pro
     ./payment/stripeInitialisation.ps1 `
         -StripeApiKey "<the 'Initialization Key' API key (see pre-requisites)>" `
         -ApimGatewayUrl "<the gateway URL of the APIM service - can find in Azure Portal>" `
-        -ApimSubscriptionKey "<the default admin subscription key for the APIM service - can find in Azure Portal>" `
+        -ApimSubscriptionKey "<the primary key for the Built-in all-access subscription in APIM - can find in Azure Portal>" `
         -StripeWebhookUrl "<the URL of the billing portal App Service>/webhook/stripe" `
         -AppServiceResourceGroup "<the name of the resource group containing the billing portal App Service>" `
         -AppServiceName "<the name of the billing portal App Service>"
