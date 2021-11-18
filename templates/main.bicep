@@ -70,7 +70,7 @@ param adyenClientKey string = ''
 param adyenMerchantAccount string = ''
 
 @description('The container image to deploy to the app service. By default is retrieved from Github')
-param appServiceContainerImage string = 'ghcr.io/microsoft/azure-api-management-monetization/app:latest'
+param appServiceContainerImage string = 'mcr.microsoft.com/azure-api-management/samples/monetization:0.1.0'
 
 @description('Port for the App Service container')
 param appServiceContainerPort int = 8000
@@ -203,6 +203,7 @@ module apimGlobalServicePolicy './apimmonetization-globalServicePolicy.bicep' = 
   }
   dependsOn: [
     apimInstance
+    apimInstanceNamedValues
   ]
 }
 

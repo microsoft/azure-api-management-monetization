@@ -13,19 +13,19 @@ In this tutorial, you'll deploy the demo Stripe account and learn how to:
 To prepare for this demo, you'll need to:
 
 > [!div class="checklist"]
-> * Create a Stripe test account. 
+> * Create a Stripe account.
 > * Install and set up the required PowerShell and Azure CLI tools.
 > * Set up an Azure subscription.
 > * Set up a service principal in Azure.
 
 ### [Create a Stripe account](https://dashboard.stripe.com/register)
+    
+1. Once you've [created a Stripe account](https://dashboard.stripe.com/register), navigate to the **Developers** tab in the Stripe dashboard.
+1. Use the **API keys** menu to create the following two API keys with specific permissions on different APIs.
 
-1. Once you've created a Stripe account, navigate to the **Developers** tab in the Stripe dashboard.
-1. Create the following two API keys with specific permissions on different APIs.
-
-    | Key                | Description                                                                               | Permissions                                                             |
-    |--------------------|-------------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
-    | **Initialization key** | Use to initialize Stripe with products, prices, and webhooks                           | <ul><li>Products: `write`</li><li>Plans: `write`</li><li>Webhook endpoints: `write`</li></ul>              |
+    | Key name               | Description                                                                                | Permissions                                                                                                                                               |
+    |------------------------|--------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+    | **Initialization key** | Use to initialize Stripe with products, prices, and webhooks                               | <ul><li>Products: `write`</li><li>Plans: `write`</li><li>Webhook endpoints: `write`</li></ul>                                                             |
     | **App key**            | Used by application to create checkout sessions, subscriptions, and payments for consumers | <ul><li>Checkout sessions: `write`</li><li>Subscriptions: `write`</li><li>Usage records: `write`</li><li>Plans: `read`</li><li>Products: `read`</li></ul> |
 
 ### Install and set up the required tools
@@ -53,15 +53,15 @@ The simplest method is using the Azure CLI.
 2. [Create an Azure service principal with the Azure CLI](../cli/azure/create-an-azure-service-principal-azure-cli.md#password-based-authentication):
 
     ```azurecli-interactive
-    az ad sp create-for-rbac --name ServicePrincipalName --skip-assignment
+    az ad sp create-for-rbac --name <chosen-name-for-your-service-principal> --skip-assignment
     ```
 
-3. Take note of the `appId` (client ID) and `password` (client secret), as you will need to pass these values as deployment parameters.
+3. Take note of the `name` (ID), `appId` (client ID) and `password` (client secret), as you will need to pass these values as deployment parameters.
 
-4. Retrieve the object ID of your new service principal for deployment:
+4. Retrieve the **object ID** of your new service principal for deployment:
 
     ```azurecli-interactive
-    az ad sp show --id "http://<name-for-your-service-principal>"
+    az ad sp show --id "<id-of-your-service-principal>"
     ```
 
 The correct role assignments for the service principal will be assigned as part of the deployment.
@@ -76,8 +76,8 @@ You can deploy the monetization resource via either Azure portal or PowerShell s
 ### Azure portal
 
 Click the button below to deploy the example to Azure and fill in the required parameters in the Azure portal.
-
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%microsoft%2Fazure-api-management-monetization%2Fmain%2Ftemplates%2main.json)
+n
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fazure-api-management-monetization%2Fmain%2Foutput%2Fmain.json)
 
 ### PowerShell script
 
@@ -114,7 +114,7 @@ Once you've deployed the billing portal, the API Management service, and the pro
     ./payment/stripeInitialisation.ps1 `
         -StripeApiKey "<the 'Initialization Key' API key (see pre-requisites)>" `
         -ApimGatewayUrl "<the gateway URL of the APIM service - can find in Azure Portal>" `
-        -ApimSubscriptionKey "<the default admin subscription key for the APIM service - can find in Azure Portal>" `
+        -ApimSubscriptionKey "<the primary key for the Built-in all-access subscription in APIM - can find in Azure Portal>" `
         -StripeWebhookUrl "<the URL of the billing portal App Service>/webhook/stripe" `
         -AppServiceResourceGroup "<the name of the resource group containing the billing portal App Service>" `
         -AppServiceName "<the name of the billing portal App Service>"
