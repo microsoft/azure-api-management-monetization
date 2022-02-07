@@ -83,7 +83,7 @@ Unlike the [Stripe](./stripe-deploy.md) implementation, Adyen's subscription cre
 ### Step 10: Billing
 
 On the first of each month, a [CRON job](https://www.npmjs.com/package/node-cron) is run. The CRON job is defined in the main [index.ts file](../app/src/index.ts) for the app, and:  
-* Calls into the [calculateInvoices method on the AdyenBillingService](../app/src/services/AdyenBillingService.ts) to calculate the invoices for all API Management subscriptions. 
+* Calls into the [calculateInvoices method on the AdyenBillingService](../app/src/services/adyenBillingService.ts) to calculate the invoices for all API Management subscriptions. 
 * Charges the consumer's cards.
 
 This method contains the logic for calculating the payment amount, using:
