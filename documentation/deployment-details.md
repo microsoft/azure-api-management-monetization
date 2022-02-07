@@ -3,14 +3,14 @@
 In this article, you will learn about the technology, resources, and tools that API Management uses to deploy your monetization strategy. Using the provided demo, you will deploy a monetization strategy and define a set of products, APIs, and named values. 
 
 As part of the demo, you'll deploy the following resources:
-- An [API Management service](https://azure.microsoft.com/en-gb/services/api-management/), with the API Management resources required to support the demo project (APIs, Products, Policies, Named Values).
-- An [App Service plan](../app-service/overview.md).
-- A [Web App for containers](https://azure.microsoft.com/en-gb/services/app-service/containers/), using the billing portal app container image.
-- A [Service Principal role-based access control assignment](../role-based-access-control/overview.md).
+- An [API Management service](https://azure.microsoft.com/services/api-management/), with the API Management resources required to support the demo project (APIs, Products, Policies, Named Values).
+- An [App Service plan](https://docs.microsoft.com/azure/app-service/overview).
+- A [Web App for containers](https://azure.microsoft.com/services/app-service/containers/), using the billing portal app container image.
+- A [Service Principal role-based access control assignment](https://docs.microsoft.com/azure/role-based-access-control/overview).
 
 ## Bicep templates
 
-This project is currently using [Bicep](../azure-resource-manager/templates/bicep-overview.md) for local development and deployment. Bicep is a templating language for declaratively deploying Azure resources. Currently, the **Deploy to Azure** button does not support Bicep. 
+This project is currently using [Bicep](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/overview?tabs=bicep) for local development and deployment. Bicep is a templating language for declaratively deploying Azure resources. Currently, the **Deploy to Azure** button does not support Bicep. 
 
 * Prior to deployment, Bicep must be decompiled into an Azure Resource Manager template, which happens when the solution is built by running the [build.ps1](../build.ps1) script.
 * You can find the Azure Resource Manager template generated on build in the [/output](../output/) folder.
@@ -161,9 +161,9 @@ Named values are defined in the [templates/apimmonetization-namedValues](../temp
 
 ## Billing portal
 
-Aside from API Management, the deployment script also deploys the billing portal resource. The billing portal is a `Node.js` app. Consumers directed to the billing portal to activate their subscriptions. You can handle the integration between API Management and the billing portal with the [user registration and product subscription delegation features in API Management](./azure/api-management/api-management-howto-setup-delegation).
+Aside from API Management, the deployment script also deploys the billing portal resource. The billing portal is a `Node.js` app. Consumers directed to the billing portal to activate their subscriptions. You can handle the integration between API Management and the billing portal with the [user registration and product subscription delegation features in API Management](https://docs.microsoft.com/azure/api-management/api-management-howto-setup-delegation).
 
-As part of the main deployment, the billing portal app is deployed to [Azure Web App for Containers](https://azure.microsoft.com/en-gb/services/app-service/containers/). The container image is pulled from the [GitHub Container Registry](https://docs.github.com/en/packages/guides/about-github-container-registry) associated with this repo.
+As part of the main deployment, the billing portal app is deployed to [Azure Web App for Containers](https://azure.microsoft.com/services/app-service/containers/). The container image is pulled from the [GitHub Container Registry](https://docs.github.com/en/packages/guides/about-github-container-registry) associated with this repo.
 
 You can also add configuration to the app as part of the payment provider initialization (Adyen and Stripe).
 
