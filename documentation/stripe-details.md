@@ -4,7 +4,7 @@ You can configure the API Management and Stripe to implement products defined in
 
 To deliver a consistent end-to-end API consumer experience, you'll synchronize the API Management product policies and the Stripe configuration using a shared configuration file [payment/monetizationModels.json](../payment/monetizationModels.json).
 
-In this demo project, we'll implement the example revenue model defined in [the monetization overview](https://docs.microsoft.com/azure/api-management/monetization-overview#step-4---design-the-revenue-model) to demonstrate integrating Azure API Management with Stripe.
+In this demo project, we'll implement the example revenue model defined in [the monetization overview](./how-to-think-about-monetization.md#step-4---design-the-revenue-model) to demonstrate integrating Azure API Management with Stripe.
 
 ## Stripe 
 
@@ -19,7 +19,7 @@ In Stripe, you can define one or more associated prices against a product. Recur
 | `Licensed` | Billed automatically at the given interval. In the example, it's set to monthly. |
 | `Metered` | Calculates the monthly cost based on <ul><li>Usage records</li> <li>The set price per unit</li></ul> |
 
-The following table builds on the conceptual revenue model in [the monetization overview](https://docs.microsoft.com/azure/api-management/monetization-overview) and provides more detail about implementing using API Management and Stripe:
+The following table builds on the conceptual revenue model in [the monetization overview](how-to-think-about-monetization.md) and provides more detail about implementing using API Management and Stripe:
 
 | Products implemented in both API Management and Stripe | Pricing model    | Stripe configuration                                                                                                                                                      | Quality of service (API Management product policies)                                                                  |
 |------------------------------------------------|------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
@@ -47,7 +47,7 @@ The API consumer flow describes the end-to-end user journey supported by the sol
 ### API consumer flow
 
 1. Consumer selects **Sign up** in the API Management developer portal.
-2. Developer portal redirects consumer to the billing portal app to register their account via [API Management delegation](https://docs.microsoft.com/azure/api-management/api-management-howto-setup-delegation).
+2. Developer portal redirects consumer to the billing portal app to register their account via [API Management delegation](api-management-howto-setup-delegation.md).
 3. Upon successful registration, consumer is authenticated and returned back to the developer portal.
 4. Consumer selects a product to subscribe to in the developer portal.
 5. Developer portal redirects consumer to the billing portal app via delegation.
@@ -63,7 +63,7 @@ The API consumer flow describes the end-to-end user journey supported by the sol
 1. Find the developer portal for an API Management service at `https://{ApimServiceName}.developer.azure-api.net`.
 1. Select **Sign Up** to be redirected to the billing portal app.
 1. On the billing portal app, register for an account.
-    * Handled via [user registration delegation](https://docs.microsoft.com/azure/api-management/api-management-howto-setup-delegation#-delegating-developer-sign-in-and-sign-up).
+    * Handled via [user registration delegation](api-management-howto-setup-delegation.md#-delegating-developer-sign-in-and-sign-up).
 1. Upon successful account creation, the consumer is authenticated and redirected to the developer portal.
 
 Once the consumer creates an account, they'll only need to sign into the existing account to browse APIs and products from the developer portal.
@@ -73,7 +73,7 @@ Once the consumer creates an account, they'll only need to sign into the existin
 1. Log into the developer portal.
 1. Search for a product and select **Subscribe** to begin a new subscription. 
 1. Consumer will be redirected to the billing portal app. 
-   * This is handled via [product subscription delegation](https://docs.microsoft.com/azure/api-management/api-management-howto-setup-delegation#-delegating-product-subscription).
+   * This is handled via [product subscription delegation](api-management-howto-setup-delegation.md#-delegating-product-subscription).
 
 ### Steps 5 - 6: Billing portal
 

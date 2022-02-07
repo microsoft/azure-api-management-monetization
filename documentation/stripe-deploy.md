@@ -45,12 +45,12 @@ Before deploying the resources, set up the service principal in the Azure Active
 
 The simplest method is using the Azure CLI.
 
-1. [Sign in with Azure CLI](https://docs.microsoft.com/cli/azure/authenticate-azure-cli#sign-in-interactively):
+1. [Sign in with Azure CLI](../cli/azure/authenticate-azure-cli.md#sign-in-interactively):
 
     ```azurecli-interactive
     az login
     ```
-2. [Create an Azure service principal with the Azure CLI](https://docs.microsoft.com/cli/azure/create-an-azure-service-principal-azure-cli#password-based-authentication):
+2. [Create an Azure service principal with the Azure CLI](../cli/azure/create-an-azure-service-principal-azure-cli.md#password-based-authentication):
 
     ```azurecli-interactive
     az ad sp create-for-rbac --name <chosen-name-for-your-service-principal> --skip-assignment
@@ -100,7 +100,7 @@ You can deploy by running the `deploy.ps1` PowerShell script at the root of the 
 
 ## Publish the API Management developer portal
 
-This example project uses the hosted [API Management developer portal](https://docs.microsoft.com/azure/api-management/api-management-howto-developer-portal). 
+This example project uses the hosted [API Management developer portal](api-management-howto-developer-portal-customize.md). 
 
 You are required to complete a manual step to publish and make the resources visible to customers. See the [Publish the portal](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-developer-portal-customize#publish) for instructions.
 
