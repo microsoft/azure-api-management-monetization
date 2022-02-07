@@ -30,7 +30,7 @@ The API consumer flow describes the end-to-end user journey supported by the sol
 ### API consumer flow
 
 1. Consumer selects **Sign up** in the API Management developer portal.
-2. Developer portal redirects consumer to the billing portal app to register their account via [API Management delegation](api-management-howto-setup-delegation.md).
+2. Developer portal redirects consumer to the billing portal app to register their account via [API Management delegation](https://docs.microsoft.com/azure/api-management/api-management-howto-setup-delegation).
 3. Upon successful registration, consumer is authenticated and returned back to the developer portal.
 4. Consumer selects a product to subscribe to in the developer portal.
 5. Developer portal redirects consumer to the billing portal app via delegation.
@@ -45,7 +45,7 @@ The API consumer flow describes the end-to-end user journey supported by the sol
 1. Find the developer portal for an API Management service at `https://{ApimServiceName}.developer.azure-api.net`.
 1. Select **Sign Up** to be redirected to the billing portal app.
 1. On the billing portal app, register for an account. 
-    * This is handled via [user registration delegation](api-management-howto-setup-delegation.md#-delegating-developer-sign-in-and-sign-up).
+    * This is handled via [user registration delegation](https://docs.microsoft.com/azure/api-management/api-management-howto-setup-delegation#-delegating-developer-sign-in-and-sign-up).
 1. Upon successful account creation, the consumer is authenticated and redirected to the developer portal.
 
 Once the consumer creates an account, they'll only need to sign into the existing account to browse APIs and products from the developer portal.
@@ -55,7 +55,7 @@ Once the consumer creates an account, they'll only need to sign into the existin
 1. Log into the developer portal account.
 1. Search for a product and select **Subscribe** to begin a new subscription. 
 1. Consumer will be redirected to the billing portal app. 
-   * This is handled via [product subscription delegation](api-management-howto-setup-delegation.md#-delegating-product-subscription).
+   * This is handled via [product subscription delegation](https://docs.microsoft.com/azure/api-management/api-management-howto-setup-delegation#-delegating-product-subscription).
 
 ### Steps 5 - 6: Billing portal
 
@@ -83,7 +83,7 @@ Unlike the [Stripe](./stripe-deploy.md) implementation, Adyen's subscription cre
 ### Step 10: Billing
 
 On the first of each month, a [CRON job](https://www.npmjs.com/package/node-cron) is run. The CRON job is defined in the main [index.ts file](../app/src/index.ts) for the app, and:  
-* Calls into the [calculateInvoices method on the AdyenBillingService](../src/services/AdyenBillingService.ts) to calculate the invoices for all API Management subscriptions. 
+* Calls into the [calculateInvoices method on the AdyenBillingService](../app/src/services/adyenBillingService.ts) to calculate the invoices for all API Management subscriptions. 
 * Charges the consumer's cards.
 
 This method contains the logic for calculating the payment amount, using:
