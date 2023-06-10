@@ -1,4 +1,5 @@
 name: Publish Docker image
+
 on:
   workflow_dispatch:
     inputs:
@@ -6,23 +7,36 @@ on:
         description: Tag for the container image
         required: true
         default: 'latest'
+
 jobs:
   push_to_registry:
     name: Push Docker image to GitHub Packages
-    runs-on: ubuntu-latest    
+    runs-on: ubuntu-latest
     permissions:
       packages: write
       contents: read
+
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
+
+      - name: Validate container image tag
+        run: |
+          # Add your validation logic here
+          # You can use regular expressions or custom checks
+          if [[ ! "${{ github.event.inputs.containerImageTag }}" =~ ^[a-zA-Z0-9.-]+$ ]]; then
+            echo "Invalid container image tag"
+            exit 1
+          fi
+
       - name: Login to Registry
         uses: docker/login-action@v1
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Push to GitHub Packages
+
+      - name: Build and Push to GitHub Packages
         uses: docker/build-push-action@v2
         with:
           context: ./app
