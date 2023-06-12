@@ -115,7 +115,7 @@ Once you've deployed the billing portal, the API Management service, and the pro
         -StripeApiKey "<the 'Initialization Key' API key (see pre-requisites)>" `
         -ApimGatewayUrl "<the gateway URL of the APIM service - can find in Azure Portal>" `
         -ApimSubscriptionKey "<the primary key for the Built-in all-access subscription in APIM - can find in Azure Portal>" `
-        -StripeWebhookUrl "<the URL of the billing portal App Service>/webhook/stripe" `
+        -StripeWebhookUrl "https://<the URL of the billing portal App Service>/webhook/stripe" `
         -AppServiceResourceGroup "<the name of the resource group containing the billing portal App Service>" `
         -AppServiceName "<the name of the billing portal App Service>"
     ```   
