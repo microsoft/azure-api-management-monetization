@@ -89,55 +89,6 @@ export class ApimService {
         return await this.managementClient.subscription.update(this.resourceGroupName, this.serviceName, sid, { state }, "*");
     }
 
-    /** Get a shared access token for the user */
-    public async getSharedAccessToken(userId: string) : Promise<UserGetSharedAccessTokenResponse> {
-        await this.initialize();
-
-        const expiry = new Date();
-        expiry.setDate(expiry.getDate() + 1);
-
-        return await this.managementClient.user.getSharedAccessToken(this.resourceGroupName, this.serviceName, userId, { expiry, keyType: "primary" });
-    }
-
-    /** Create a new user */
-    public async createUser(email: string, password: string, firstName: string, lastName: string) : Promise<UserCreateOrUpdateResponse> {
-        await this.initialize();
-
-        return await this.managementClient.user.createOrUpdate(
-            this.resourceGroupName,
-            this.serviceName,
-            Guid.newGuid().toString(),
-            {
-                email,
-                firstName,
-                lastName,
-                password
-            }
-        );
-    }
-
-    /** Authenticate a user using basic authentication */
-    public static async authenticateUser(email: string, password: string): Promise<any> {
-        try {
-
-            const credentials = `Basic ${Buffer.from(`${email}:${password}`).toString('base64')}`;
-            const managementApiUrl = Utils.ensureUrlArmified(process.env.APIM_MANAGEMENT_URL)
-            const url = `${managementApiUrl}/identity?api-version=2019-12-01`
-            const response = await fetch(url, { method: "GET", headers: { Authorization: credentials } });
-            const sasToken = response.headers.get("Ocp-Apim-Sas-Token");
-            const identity = await response.json();
-
-            return {
-                authenticated: true,
-                sasToken,
-                userId: identity.id
-            };
-        }
-        catch (error) {
-            return { authenticated: false };
-        }
-    }
-
     private async initialize() {
         if (!this.initialized) {
             const authResponse = await msRestNodeAuth.loginWithServicePrincipalSecretWithAuthResponse(
@@ -147,9 +98,7 @@ export class ApimService {
             );
 
             const credentials = authResponse.credentials;
-
             const client = new ApiManagementClient(credentials, this.subscriptionId);
-
             this.managementClient = client
         }
     }

@@ -354,3 +354,4 @@ build/
 output/*.parameters.json
 .env
 /app/dist/
+/app/yarn.lock

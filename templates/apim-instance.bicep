@@ -59,12 +59,12 @@ resource apiManagementServiceDelegation 'Microsoft.ApiManagement/service/portals
       enabled: true
     }
     userRegistration: {
-      enabled: true
+      enabled: false
     }
   }
 }
 
-resource apimManagedIdentityReaderRole 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
+resource apimManagedIdentityReaderRole 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   scope: resourceGroup()
   name: guid(apiManagementService.id, readerRoleId)
   properties: {

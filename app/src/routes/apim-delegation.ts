@@ -14,33 +14,6 @@ export const register = (app: express.Application, billingService: BillingServic
 
         let isValid: boolean;
         switch (operation) {
-            case "SignUp":
-            case "SignIn":
-                const signUpSignInRequest: SignUpSignInRequest = {
-                    operation,
-                    returnUrl: req.query.returnUrl as string,
-                    salt: req.query.salt as string,
-                    sig: req.query.sig as string,
-                }
-
-                isValid = validateSignUpSignInRequest(signUpSignInRequest);
-
-                if (!isValid) {
-                    res.status(401);
-                    return;
-                }
-
-                if (operation === "SignIn"){
-                    res.render("sign-in", { title: 'Sign in', signUpSignInRequest, errorMessage });
-                } else {
-                    res.render("sign-up", { title: 'Sign up', signUpSignInRequest, errorMessage });
-                }
-                break;
-            case "SignOut":
-                const returnUrl = req.query.returnUrl as string;
-                const redirectUrl = process.env.APIM_DEVELOPER_PORTAL_URL + returnUrl;
-                res.redirect(redirectUrl);
-                break;
             case "Subscribe":
                 const subscribeRequest: SubscriptionRequest = {
                     operation,
@@ -80,6 +53,9 @@ export const register = (app: express.Application, billingService: BillingServic
                 await billingService.unsubscribe(unsubscribeRequest.subscriptionId);
 
                 res.render("unsubscribe", { unsubscribeRequest, title: "Unsubscribe" });
+            case "SignUp":
+            case "SignIn":
+            case "SignOut":
             case "ChangePassword":
             case "ChangeProfile":
             case "CloseAccount":
@@ -155,86 +131,6 @@ export const register = (app: express.Application, billingService: BillingServic
         res.render(`checkout-${process.env.PAYMENT_PROVIDER.toLowerCase()}`, { subscribeRequest, subscriptionName, userEmail, title: "Checkout" });
     });
 
-    /** Sign in user using APIM authentication service */
-    app.post("/signIn", async (req, res) => {
-        const email = req.body.email as string;
-        const password = req.body.password as string;
-
-        const signUpSignInRequest: SignUpSignInRequest = {
-            operation: req.body.operation as string,
-            returnUrl: req.body.returnUrl as string,
-            salt: req.body.salt as string,
-            sig: req.body.sig as string,
-        }
-
-        const { authenticated, userId } = await ApimService.authenticateUser(email, password);
-
-        if (!authenticated) {
-            const query = querystring.stringify({
-                errorMessage: "Invalid credentials",
-                returnUrl: signUpSignInRequest.returnUrl,
-                operation: signUpSignInRequest.operation,
-                salt: signUpSignInRequest.salt,
-                sig: signUpSignInRequest.sig
-            });
-            res.redirect('/apim-delegation?' + query);
-            return;
-        }
-
-        const { value: token } = await apimService.getSharedAccessToken(userId);
-
-        const redirectQuery = querystring.stringify({
-            token,
-            returnUrl: signUpSignInRequest.returnUrl
-        });
-
-        const redirectUrl = process.env.APIM_DEVELOPER_PORTAL_URL + "/signin-sso?" + redirectQuery;
-
-        res.redirect(redirectUrl);
-    });
-
-    /** Sign up user by creating a new user via the APIM service */
-    app.post("/signUp", async (req, res) => {
-        const email = req.body.email as string;
-        const password = req.body.password as string;
-        const firstName = req.body.firstName as string;
-        const lastName = req.body.lastName as string;
-
-        const signUpSignInRequest: SignUpSignInRequest = {
-            operation: req.body.operation as string,
-            returnUrl: req.body.returnUrl as string,
-            salt: req.body.salt as string,
-            sig: req.body.sig as string,
-        }
-
-        try {
-            await apimService.createUser(email, password, firstName, lastName);
-        }
-        catch (error) {
-            const query = querystring.stringify({
-                errorMessage: "Invalid credentials",
-                returnUrl: signUpSignInRequest.returnUrl,
-                operation: signUpSignInRequest.operation,
-                salt: signUpSignInRequest.salt,
-                sig: signUpSignInRequest.sig
-            });
-            res.redirect('/apim-delegation?' + query);
-            return;
-        }
-
-        const { userId } = await ApimService.authenticateUser(email, password);
-        const { value: token } = await apimService.getSharedAccessToken(userId);
-
-        const redirectQuery = querystring.stringify({
-            token,
-            returnUrl: signUpSignInRequest.returnUrl
-        })
-
-        const redirectUrl = process.env.APIM_DEVELOPER_PORTAL_URL + "/signin-sso?" + redirectQuery;
-
-        res.redirect(redirectUrl);
-    });
-
     app.get("/success", (req, res) => {
         res.render("success", { title: 'Payment Succeeded' });
     });
@@ -293,10 +189,6 @@ export const register = (app: express.Application, billingService: BillingServic
 
         res.render("cancel", { title: 'Payment Cancelled', checkoutUrl });
     });
-}
-
-function validateSignUpSignInRequest(signUpSignInRequest: SignUpSignInRequest): boolean {
-    return validateRequest([signUpSignInRequest.salt, signUpSignInRequest.returnUrl], signUpSignInRequest.sig)
 }
 
 function validateSubscribeRequest(subscriptionRequest: SubscriptionRequest): boolean {

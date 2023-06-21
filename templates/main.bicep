@@ -19,6 +19,20 @@ param apimSku string = 'Developer'
 @maxValue(2)
 param apimSkuCount int = 1
 
+@description('The authority URL for the Azure Active Directory B2C Tenant.')
+param aadAuthority string
+
+@description('The tenant URL for the Azure Active Directory B2C Tenant.')
+param aadTenant string
+
+@description('The client ID for the Azure Active Directory B2C Tenant.')
+param aadClientId string
+
+@secure()
+@description('The client secret for the Azure Active Directory B2C Tenant.')
+param aadClientSecret string
+
+
 @description('The App Service hosting plan name')
 param appServiceHostingPlanName string
 
@@ -99,6 +113,7 @@ var contributorRoleId = subscriptionResourceId('Microsoft.Authorization/roleDefi
 module appService 'app-service.bicep' = {
   name: 'appServiceDeploy'
   params: {
+    location: location
     hostingPlanName: appServiceHostingPlanName
     webSiteName: appServiceName
     skuName: appServiceSkuName
@@ -117,6 +132,17 @@ module apimInstance './apim-instance.bicep' = {
     skuCount: apimSkuCount
     location: location
     delegationUrl: uri('https://${appService.outputs.webSiteUrl}', 'apim-delegation')
+  }
+}
+
+module apimIdentityProvider './apim-identity-provider.bicep' = {
+  name: 'apimIdentityProvider'
+  params: {
+    apimServiceName: apimServiceName
+    aadAuthority: aadAuthority
+    aadTenant: aadTenant
+    aadClientId: aadClientId
+    aadClientSecret: aadClientSecret
   }
 }
 
@@ -228,7 +254,7 @@ module appServiceSettings 'app-service-settings.bicep' = {
   ]
 }
 
-resource servicePrincipalContributorRole 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
+resource servicePrincipalContributorRole 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid(resourceGroup().id, servicePrincipalObjectId, contributorRoleId)
   scope: resourceGroup()
   properties: {
