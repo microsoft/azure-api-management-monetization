@@ -144,6 +144,9 @@ module apimIdentityProvider './apim-identity-provider.bicep' = {
     aadClientId: aadClientId
     aadClientSecret: aadClientSecret
   }
+  dependsOn: [
+    apimInstance
+  ]
 }
 
 module apimAddressApi './apimmonetization-apis-address.bicep' = {

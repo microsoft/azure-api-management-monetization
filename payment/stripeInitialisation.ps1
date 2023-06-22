@@ -93,55 +93,55 @@ foreach ($model in $monetizationModels) {
                 -d "product=$($model.id)" `
                 -d "currency=$($model.prices.metered.currency)" `
                 -d "unit_amount_decimal=$($model.prices.metered.unitAmount)" `
-                -d "`"recurring[interval]`"=$($model.recurring.interval)" `
-                -d "`"recurring[interval_count]`"=$($model.recurring.intervalCount)" `
-                -d "`"recurring[usage_type]`"=metered"
+                -d "recurring[interval]=$($model.recurring.interval)" `
+                -d "recurring[interval_count]=$($model.recurring.intervalCount)" `
+                -d "recurring[usage_type]=metered"
         }
         if (($model.pricingModelType -eq "Freemium") -or ($model.pricingModelType -eq "TierWithOverage")) {
             . $stripe post /v1/prices `
                 -d "product=$($model.id)" `
                 -d "currency=$($model.prices.metered.currency)" `
-                -d "`"recurring[interval]`"=$($model.recurring.interval)" `
-                -d "`"recurring[interval_count]`"=$($model.recurring.intervalCount)" `
-                -d "`"recurring[usage_type]`"=metered" `
+                -d "recurring[interval]=$($model.recurring.interval)" `
+                -d "recurring[interval_count]=$($model.recurring.intervalCount)" `
+                -d "recurring[usage_type]=metered" `
                 -d "billing_scheme=tiered" `
                 -d "tiers_mode=graduated" `
-                -d "`"tiers[0][up_to]`"=$($model.prices.unit.quota)" `
-                -d "`"tiers[0][flat_amount]`"=$($model.prices.unit.unitAmount)" `
-                -d "`"tiers[1][up_to]`"=inf" `
-                -d "`"tiers[1][unit_amount_decimal]`"=$($model.prices.metered.unitAmount)"
+                -d "tiers[0][up_to]=$($model.prices.unit.quota)" `
+                -d "tiers[0][flat_amount]=$($model.prices.unit.unitAmount)" `
+                -d "tiers[1][up_to]=inf" `
+                -d "tiers[1][unit_amount_decimal]=$($model.prices.metered.unitAmount)"
         }
         if (($model.pricingModelType -eq "Tier")) {
             . $stripe post /v1/prices `
                 -d "product=$($model.id)" `
                 -d "currency=$($model.prices.unit.currency)" `
                 -d "unit_amount_decimal=$($model.prices.unit.unitAmount)" `
-                -d "`"recurring[interval]`"=$($model.recurring.interval)" `
-                -d "`"recurring[interval_count]`"=$($model.recurring.intervalCount)" `
-                -d "`"recurring[usage_type]`"=licensed"
+                -d "recurring[interval]=$($model.recurring.interval)" `
+                -d "recurring[interval_count]=$($model.recurring.intervalCount)" `
+                -d "recurring[usage_type]=licensed"
         }
         if (($model.pricingModelType -eq "Unit")) {
             # NOTE: we're only going up to 5 tiers for this example
             . $stripe post /v1/prices `
                 -d "product=$($model.id)" `
                 -d "currency=$($model.prices.unit.currency)" `
-                -d "`"recurring[interval]`"=$($model.recurring.interval)" `
-                -d "`"recurring[interval_count]`"=$($model.recurring.intervalCount)" `
-                -d "`"recurring[usage_type]`"=metered" `
+                -d "recurring[interval]=$($model.recurring.interval)" `
+                -d "recurring[interval_count]=$($model.recurring.intervalCount)" `
+                -d "recurring[usage_type]=metered" `
                 -d "billing_scheme=tiered" `
                 -d "tiers_mode=graduated" `
-                -d "`"tiers[0][up_to]`"=$($model.prices.unit.quota)" `
-                -d "`"tiers[0][flat_amount]`"=$($model.prices.unit.unitAmount)" `
-                -d "`"tiers[1][up_to]`"=$(($model.prices.unit.quota) * 2)" `
-                -d "`"tiers[1][flat_amount]`"=$($model.prices.unit.unitAmount)" `
-                -d "`"tiers[2][up_to]`"=$(($model.prices.unit.quota) * 3)" `
-                -d "`"tiers[2][flat_amount]`"=$($model.prices.unit.unitAmount)" `
-                -d "`"tiers[3][up_to]`"=$(($model.prices.unit.quota) * 4)" `
-                -d "`"tiers[3][flat_amount]`"=$($model.prices.unit.unitAmount)" `
-                -d "`"tiers[4][up_to]`"=$(($model.prices.unit.quota) * 5)" `
-                -d "`"tiers[4][flat_amount]`"=$($model.prices.unit.unitAmount)" `
-                -d "`"tiers[5][up_to]`"=inf" `
-                -d "`"tiers[5][flat_amount]`"=$($model.prices.unit.unitAmount)"
+                -d "tiers[0][up_to]=$($model.prices.unit.quota)" `
+                -d "tiers[0][flat_amount]=$($model.prices.unit.unitAmount)" `
+                -d "tiers[1][up_to]=$(($model.prices.unit.quota) * 2)" `
+                -d "tiers[1][flat_amount]=$($model.prices.unit.unitAmount)" `
+                -d "tiers[2][up_to]=$(($model.prices.unit.quota) * 3)" `
+                -d "tiers[2][flat_amount]=$($model.prices.unit.unitAmount)" `
+                -d "tiers[3][up_to]=$(($model.prices.unit.quota) * 4)" `
+                -d "tiers[3][flat_amount]=$($model.prices.unit.unitAmount)" `
+                -d "tiers[4][up_to]=$(($model.prices.unit.quota) * 5)" `
+                -d "tiers[4][flat_amount]=$($model.prices.unit.unitAmount)" `
+                -d "tiers[5][up_to]=inf" `
+                -d "tiers[5][flat_amount]=$($model.prices.unit.unitAmount)"
         }
     }
 
@@ -157,9 +157,9 @@ if ($webhookEndpoint) {
 }
 
 $webhookEndpoint = (. $stripe post /v1/webhook_endpoints `
-    -d "`"enabled_events[]`"=`"customer.subscription.created`"" `
-    -d "`"enabled_events[]`"=`"customer.subscription.updated`"" `
-    -d "`"enabled_events[]`"=`"customer.subscription.deleted`"" `
+    -d "enabled_events[]=customer.subscription.created" `
+    -d "enabled_events[]=customer.subscription.updated" `
+    -d "enabled_events[]=customer.subscription.deleted" `
     -d "url=$StripeWebhookUrl") | ConvertFrom-Json
 
 $webhookSecret = $webhookEndpoint.secret

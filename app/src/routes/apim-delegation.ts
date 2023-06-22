@@ -211,13 +211,6 @@ function validateRequest(queryParams: string[], expectedSignature: string): bool
     return calculatedSignature === expectedSignature;
 }
 
-interface SignUpSignInRequest {
-    operation: string;
-    returnUrl: string;
-    salt: string;
-    sig: string;
-}
-
 interface SubscriptionRequest {
     operation: string;
     productId?: string;

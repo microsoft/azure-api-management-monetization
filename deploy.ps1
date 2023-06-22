@@ -22,13 +22,13 @@ param (
 
     [Parameter()]
     [string]
-    $ParameterFilePath = "$(Split-Path -Parent $PSCommandPath)/output/main.parameters.json"
+    $ParameterFilePath = "$(Split-Path -Parent $PSCommandPath)/output/devtest.parameters.json"
 )
 
 $ErrorActionPreference = "Stop"
 $here = Split-Path -Parent $PSCommandPath
 
-$deploymentName = "apim-monetization-{0}" -f (Get-Date).ToString("yyyyMMddHHmmss")
+$deploymentName = "ApimMonetization{0}" -f (Get-Date).ToString("yyyyMMddHHmmss")
 
 $account = (az account show) | ConvertFrom-Json
 
