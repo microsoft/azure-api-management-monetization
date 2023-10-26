@@ -43,6 +43,9 @@ export class StripeBillingService implements BillingService {
 
             // For each Stripe subscription
             stripeSubscriptionListResponse.data.forEach(async stripeSubscription => {
+
+                startingAfter = stripeSubscription.id;
+
                 const subscriptionItem = stripeSubscription.items.data[0];
 
                 // Find the subscriptions with a metered usage type, as these are the only ones which depend on usage
@@ -99,7 +102,6 @@ export class StripeBillingService implements BillingService {
                 // Update Stripe's record for when the usage was last updated to now
                 await stripe.subscriptions.update(stripeSubscription.id, { metadata: { [LastUsageUpdateKey]: now.toISOString() } });
 
-                startingAfter = stripeSubscription.id;
             });
         }
         while (stripeSubscriptionListResponse.has_more)
