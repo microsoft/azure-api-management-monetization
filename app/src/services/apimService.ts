@@ -125,7 +125,7 @@ export class ApimService {
             const url = `${managementApiUrl}/identity?api-version=2019-12-01`
             const response = await fetch(url, { method: "GET", headers: { Authorization: credentials } });
             const sasToken = response.headers.get("Ocp-Apim-Sas-Token");
-            const identity = await response.json();
+            const identity = await response.json() as { id: string };
 
             return {
                 authenticated: true,
