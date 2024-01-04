@@ -1,4 +1,4 @@
-import * as msRestNodeAuth from "@azure/ms-rest-nodeauth";
+import { ClientSecretCredential } from "@azure/identity";
 import { ApiManagementClient } from "@azure/arm-apimanagement";
 import { ProductGetResponse, ProductListByServiceResponse, ReportRecordContract, SubscriptionCreateOrUpdateResponse, SubscriptionGetResponse, SubscriptionListResponse, SubscriptionState, UserCreateOrUpdateResponse, UserGetResponse, UserGetSharedAccessTokenResponse } from "@azure/arm-apimanagement/esm/models";
 import { Utils } from "../utils";
@@ -140,13 +140,11 @@ export class ApimService {
 
     private async initialize() {
         if (!this.initialized) {
-            const authResponse = await msRestNodeAuth.loginWithServicePrincipalSecretWithAuthResponse(
+            const credentials = new ClientSecretCredential(
+                process.env.AZURE_AD_SERVICE_PRINCIPAL_TENANT_ID,
                 process.env.AZURE_AD_SERVICE_PRINCIPAL_APP_ID,
-                process.env.AZURE_AD_SERVICE_PRINCIPAL_PASSWORD,
-                process.env.AZURE_AD_SERVICE_PRINCIPAL_TENANT_ID
-            );
-
-            const credentials = authResponse.credentials;
+                process.env.AZURE_AD_SERVICE_PRINCIPAL_PASSWORD
+            )
 
             const client = new ApiManagementClient(credentials, this.subscriptionId);
 
