@@ -25,8 +25,8 @@ To prepare for this demo, you'll need to:
 
     | Key name               | Description                                                                                | Permissions                                                                                                                                               |
     |------------------------|--------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
-    | **Initialization key** | Use to initialize Stripe with products, prices, and webhooks                               | <ul><li>Products: `write`</li><li>Plans: `write`</li><li>Webhook endpoints: `write`</li></ul>                                                             |
-    | **App key**            | Used by application to create checkout sessions, subscriptions, and payments for consumers | <ul><li>Checkout sessions: `write`</li><li>Subscriptions: `write`</li><li>Usage records: `write`</li><li>Plans: `read`</li><li>Products: `read`</li></ul> |
+    | **Initialization key** | Use to initialize Stripe with products, prices, and webhooks                               | <ul><li>Products: `write`</li><li>Prices: `write`</li><li>Webhook endpoints: `write`</li></ul>                                                             |
+    | **App key**            | Used by application to create checkout sessions, subscriptions, and payments for consumers | <ul><li>Checkout sessions: `write`</li><li>Subscriptions: `write`</li><li>Usage records: `write`</li><li>Prices: `read`</li><li>Products: `read`</li></ul> |
 
 ### Install and set up the required tools
 
@@ -76,7 +76,7 @@ You can deploy the monetization resource via either Azure portal or PowerShell s
 ### Azure portal
 
 Click the button below to deploy the example to Azure and fill in the required parameters in the Azure portal.
-n
+
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fazure-api-management-monetization%2Fmain%2Foutput%2Fmain.json)
 
 ### PowerShell script
