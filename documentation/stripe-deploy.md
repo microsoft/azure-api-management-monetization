@@ -61,7 +61,7 @@ The simplest method is using the Azure CLI.
 4. Retrieve the **object ID** of your new service principal for deployment:
 
     ```azurecli-interactive
-    az ad sp show --id "<id-of-your-service-principal>"
+    az ad sp show --id <appId-of-service-principal> --query '{displayName: displayName, appId: appId, objectId: id}'
     ```
 
 The correct role assignments for the service principal will be assigned as part of the deployment.
