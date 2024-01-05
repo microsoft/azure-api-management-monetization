@@ -28,7 +28,7 @@
     "express": "^4.17.1",
     "express-ejs-layouts": "^2.5.0",
     "js-guid": "^1.0.0",
-    "node-fetch": "^3.1.1",
+    "node-fetch": "^2.7.0",
     "stripe": "^8.145.0"
   },
   "devDependencies": {
@@ -38,7 +38,7 @@
     "@types/express-ejs-layouts": "^2.3.2",
     "@types/fs-extra": "^9.0.11",
     "@types/node": "^14.14.41",
-    "@types/node-fetch": "^2.5.10",
+    "@types/node-fetch": "^2.6.10",
     "@types/shelljs": "^0.8.8",
     "fs-extra": "^9.1.0",
     "nodemon": "^2.0.7",

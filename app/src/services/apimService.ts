@@ -143,12 +143,14 @@ export class ApimService {
             const credentials = new ClientSecretCredential(
                 process.env.AZURE_AD_SERVICE_PRINCIPAL_TENANT_ID,
                 process.env.AZURE_AD_SERVICE_PRINCIPAL_APP_ID,
-                process.env.AZURE_AD_SERVICE_PRINCIPAL_PASSWORD
+                process.env.AZURE_AD_SERVICE_PRINCIPAL_PASSWORD,
             )
 
             const client = new ApiManagementClient(credentials, this.subscriptionId);
 
             this.managementClient = client
+
+            this.initialized = true;
         }
     }
 }

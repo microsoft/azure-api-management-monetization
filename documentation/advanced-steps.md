@@ -19,7 +19,7 @@ To modify the infrastructure templates, you'll run a build script to generate a 
 
 To modify the billing portal app and run the app locally:
 
-1. Install [NodeJS](https://nodejs.org/en/download/) (version 14.16.1 or later).
+1. Install [NodeJS](https://nodejs.org/en/download/) (version 20.10 or later).
 1. Deploy an instance of the API Management infrastructure, following the instructions in either:
     * [Deploy with Stripe](./stripe-deploy.md), or
     * [Deploy with Adyen](./adyen-deploy.md) documents).
