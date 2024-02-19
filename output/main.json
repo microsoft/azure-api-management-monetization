@@ -125,7 +125,7 @@
     },
     "appServiceContainerImage": {
       "type": "string",
-      "defaultValue": "mcr.microsoft.com/azure-api-management/samples/monetization:0.1.0",
+      "defaultValue": "mcr.microsoft.com/azure-api-management/samples/monetization:0.2.0",
       "metadata": {
         "description": "The container image to deploy to the app service. By default is retrieved from Github"
       }
@@ -1349,7 +1349,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.3.126.58533",
-      "templateHash": "11348185216968898809"
+      "templateHash": "14192113757725124433"
     }
   }
 }
