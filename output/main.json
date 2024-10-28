@@ -125,7 +125,7 @@
     },
     "appServiceContainerImage": {
       "type": "string",
-      "defaultValue": "mcr.microsoft.com/azure-api-management/samples/monetization:0.2.0",
+      "defaultValue": "mcr.microsoft.com/azure-api-management/samples/monetization:0.3.0",
       "metadata": {
         "description": "The container image to deploy to the app service. By default is retrieved from Github"
       }
